@@ -1,0 +1,17 @@
+{
+  "name": "BIJAK MATEMATIK — Matematik Tahun 5",
+  "short_name": "BijakMatematik",
+  "description": "Makmal pembelajaran Matematik Tahun 5 yang interaktif, selaras KSSR Semakan 2017.",
+  "lang": "ms",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#4f46e5",
+  "theme_color": "#4f46e5",
+  "categories": ["education", "kids"],
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

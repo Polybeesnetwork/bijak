@@ -1,0 +1,16 @@
+{
+  "name": "bijak-matematik",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BIJAK MATEMATIK — Interactive Mathematics Learning Lab, Tahun 5 (KSSR Semakan 2017)",
+  "type": "module",
+  "scripts": {
+    "start": "node serve.mjs",
+    "dev": "node serve.mjs",
+    "test": "node tests/run-all.mjs",
+    "test:math": "node tests/math.mjs",
+    "test:smoke": "node tests/smoke.mjs",
+    "test:pwa": "node tests/pwa.mjs"
+  },
+  "devDependencies": { "jsdom": "^25.0.0" }
+}

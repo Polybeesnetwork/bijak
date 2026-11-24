@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<meta name="description" content="BIJAK MATEMATIK — Belajar, Bermain, Faham dan Kuasai! Interactive Mathematics Learning Lab for Malaysian Year 5 students.">
+<title>BIJAK MATEMATIK — Belajar, Bermain, Faham dan Kuasai!</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{
+  --blue:#2563eb;--indigo:#4f46e5;--purple:#7c3aed;--emerald:#059669;--orange:#ea580c;
+  --yellow:#f59e0b;--pink:#db2777;--ink:#1e1b4b;--muted:#64748b;--bg:#eef2ff;
+  --card:#ffffff;--radius:20px;--shadow:0 10px 30px rgba(30,27,75,.12);
+  --font:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font);background:linear-gradient(180deg,#dbeafe 0%,#eef2ff 45%,#ecfdf5 100%);color:var(--ink);min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:radial-gradient(circle at 12% 18%,rgba(245,158,11,.18) 0 46px,transparent 47px),
+  radial-gradient(circle at 88% 12%,rgba(124,58,237,.14) 0 60px,transparent 61px),
+  radial-gradient(circle at 82% 82%,rgba(5,150,105,.14) 0 52px,transparent 53px),
+  radial-gradient(circle at 8% 86%,rgba(219,39,119,.10) 0 40px,transparent 41px)}
+#app{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 14px 90px}
+a{color:var(--indigo)}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px;border-radius:10px}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;padding:10px 14px;
+  background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border-bottom:3px solid #e0e7ff}
+.logo{display:flex;align-items:center;gap:9px;font-weight:900;font-size:1.15rem;color:var(--indigo);text-decoration:none}
+.logo .tiger{width:40px;height:40px;flex:0 0 auto}
+.tagline{font-size:.72rem;color:var(--muted);font-weight:700}
+.topbar .spacer{flex:1}
+.pill{display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid #e0e7ff;border-radius:999px;padding:6px 12px;font-weight:800;font-size:.85rem;box-shadow:0 2px 8px rgba(30,27,75,.08)}
+.pill.xp{color:#b45309;border-color:#fde68a;background:#fffbeb}
+.pill.lvl{color:var(--purple);border-color:#ddd6fe;background:#f5f3ff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:16px;
+  padding:13px 20px;font-size:1rem;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--indigo),var(--purple));
+  box-shadow:0 6px 16px rgba(79,70,229,.35);transition:transform .15s,box-shadow .15s;text-decoration:none;min-height:48px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(79,70,229,.4)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn.green{background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 6px 16px rgba(5,150,105,.35)}
+.btn.orange{background:linear-gradient(135deg,#ea580c,#f59e0b);box-shadow:0 6px 16px rgba(234,88,12,.35)}
+.btn.pink{background:linear-gradient(135deg,#db2777,#f472b6);box-shadow:0 6px 16px rgba(219,39,119,.35)}
+.btn.ghost{background:#fff;color:var(--indigo);border:2px solid #c7d2fe;box-shadow:none}
+.btn.small{padding:9px 14px;font-size:.88rem;min-height:40px;border-radius:12px}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.hero{text-align:center;padding:34px 10px 8px}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem);margin:.2em 0;color:var(--indigo);letter-spacing:-.02em}
+.hero h1 .grad{background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:1.08rem;max-width:620px;margin:8px auto 18px}
+.grid{display:grid;gap:16px}
+.grid.cols2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.grid.cols3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;border:3px solid transparent}
+.card h3{margin:.2em 0 .4em}
+.muted{color:var(--muted)}
+.big-emoji{font-size:2.6rem;line-height:1}
+.menu-card{display:block;text-decoration:none;color:inherit;transition:transform .15s}
+.menu-card:hover{transform:translateY(-4px) scale(1.01)}
+.map-wrap{position:relative;padding:10px 0 4px}
+.map-path{position:absolute;left:50%;top:0;bottom:0;width:14px;transform:translateX(-50%);
+  background:repeating-linear-gradient(180deg,#fbbf24 0 22px,#f59e0b 22px 44px);border-radius:10px;opacity:.55}
+.map-node{position:relative;display:flex;align-items:center;gap:14px;margin:16px 0;text-decoration:none;color:inherit}
+.map-node .dot{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.7rem;
+  background:#fff;border:4px solid var(--mc,#4f46e5);box-shadow:var(--shadow);flex:0 0 auto;z-index:1}
+.map-node .info{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:12px 16px;flex:1;border-left:6px solid var(--mc,#4f46e5)}
+.map-node:nth-child(even){flex-direction:row-reverse;text-align:right}
+.map-node:nth-child(even) .info{border-left:none;border-right:6px solid var(--mc,#4f46e5)}
+.stars{color:var(--yellow);letter-spacing:2px;font-size:1rem}
+.progressbar{height:14px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin:8px 0}
+.progressbar>div{height:100%;background:linear-gradient(90deg,var(--emerald),#34d399);border-radius:99px;transition:width .5s}
+.lesson-nav{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.lesson-nav a{padding:9px 14px;border-radius:12px;background:#fff;border:2px solid #e0e7ff;text-decoration:none;font-weight:700;font-size:.9rem;color:var(--indigo)}
+.lesson-nav a.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.sim-box{background:#f8fafc;border:3px dashed #c7d2fe;border-radius:var(--radius);padding:18px;margin:16px 0}
+.sim-box h3{margin-top:0;color:var(--indigo)}
+.sim-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.sim-controls label{font-weight:700;font-size:.92rem}
+input[type=range]{accent-color:var(--indigo);width:170px;height:34px}
+input[type=text],input[type=number],select{padding:11px 13px;border:2px solid #cbd5e1;border-radius:12px;font-size:1rem;font-family:inherit;min-height:46px}
+input[type=text]:focus,input[type=number]:focus,select:focus{border-color:var(--indigo);outline:none}
+.answer-input{font-size:1.3rem;text-align:center;font-weight:800;max-width:220px}
+.qcard{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin:16px 0;border-top:8px solid var(--indigo)}
+.qtext{font-size:1.25rem;font-weight:800;line-height:1.5}
+.opts{display:grid;gap:10px;margin-top:14px}
+.opt{padding:14px 16px;border:3px solid #e2e8f0;border-radius:14px;background:#f8fafc;font-weight:700;font-size:1.05rem;text-align:left;transition:all .15s}
+.opt:hover{border-color:var(--indigo);background:#eef2ff}
+.opt.correct{border-color:var(--emerald);background:#ecfdf5}
+.opt.wrong{border-color:#ef4444;background:#fef2f2}
+.feedback{border-radius:14px;padding:14px 16px;margin-top:14px;font-weight:600;line-height:1.55}
+.feedback.good{background:#ecfdf5;border:2px solid #6ee7b7}
+.feedback.bad{background:#fef2f2;border:2px solid #fca5a5}
+.feedback.hint{background:#fffbeb;border:2px solid #fcd34d}
+.steps{background:#f5f3ff;border:2px solid #ddd6fe;border-radius:14px;padding:14px 18px;margin-top:12px;line-height:1.7}
+.steps li{margin:6px 0}
+.mascot-row{display:flex;gap:14px;align-items:flex-start;background:linear-gradient(135deg,#fff7ed,#fffbeb);border:3px solid #fde68a;border-radius:var(--radius);padding:16px;margin:16px 0}
+.mascot-row .tiger{width:84px;height:84px;flex:0 0 auto}
+.bubble{background:#fff;border-radius:16px;padding:12px 16px;box-shadow:0 4px 12px rgba(30,27,75,.1);position:relative;font-weight:600;line-height:1.55;flex:1}
+.bubble::before{content:"";position:absolute;left:-9px;top:26px;width:18px;height:18px;background:#fff;transform:rotate(45deg)}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.badge{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:16px;text-align:center}
+.badge.locked{opacity:.45;filter:grayscale(1)}
+.badge .bi{font-size:2.4rem}
+table.data{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+table.data th,table.data td{padding:10px 12px;border-bottom:1px solid #e2e8f0;text-align:left}
+table.data th{background:var(--indigo);color:#fff}
+table.data tr:nth-child(even) td{background:#f8fafc}
+.bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+  border-top:3px solid #e0e7ff;display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+.bottomnav a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;color:var(--muted);font-size:.68rem;font-weight:800;padding:6px 8px;border-radius:12px;min-width:56px}
+.bottomnav a .ni{font-size:1.3rem}
+.bottomnav a.active{color:var(--indigo);background:#eef2ff}
+.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;
+  padding:13px 22px;border-radius:14px;font-weight:800;opacity:0;pointer-events:none;transition:all .3s;z-index:100;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}
+.confetti span{position:absolute;top:-20px;width:12px;height:18px;border-radius:3px;animation:fall 2.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.floaty{animation:floaty 3s ease-in-out infinite}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.pop{animation:pop .4s ease-out}
+.flex{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.mt{margin-top:16px}.mb{margin-bottom:16px}.center{text-align:center}
+.kbd-hint{font-size:.8rem;color:var(--muted)}
+svg.mathviz{max-width:100%;height:auto;display:block;margin:10px auto}
+.drag-item{display:inline-block;padding:10px 16px;margin:5px;background:#fff;border:3px solid #c7d2fe;border-radius:12px;font-weight:800;cursor:grab;user-select:none}
+.drag-item:active{cursor:grabbing}
+.drop-zone{min-height:56px;border:3px dashed #94a3b8;border-radius:12px;padding:10px;background:#f8fafc}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.shop-item{background:#fff;border:3px solid #e2e8f0;border-radius:16px;padding:14px;text-align:center}
+.shop-item .pi{font-size:2.2rem}
+.clock-face{cursor:grab}
+.coord-cell{width:34px;height:34px;border:1px solid #cbd5e1;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem;background:#fff;cursor:pointer}
+.coord-cell:hover{background:#eef2ff}
+.coord-cell.marked{background:#fde68a;font-weight:900}
+.spinner-wheel{transition:transform 2.4s cubic-bezier(.15,.9,.25,1)}
+details.faq{background:#fff;border-radius:14px;padding:12px 16px;margin:10px 0;box-shadow:var(--shadow)}
+details.faq summary{font-weight:800;cursor:pointer}
+@media (max-width:640px){
+  .map-node:nth-child(even){flex-direction:row;text-align:left}
+  .map-node:nth-child(even) .info{border-left:6px solid var(--mc,#4f46e5);border-right:none}
+  .mascot-row .tiger{width:64px;height:64px}
+  .qtext{font-size:1.12rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<div id="toast" class="toast" role="status"></div>
+<div id="confetti" class="confetti" aria-hidden="true"></div>
+<script>
+"use strict";
+/* ================= UTILS ================= */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1}
+function lcm(a,b){return Math.abs(a*b)/gcd(a,b)}
+function frac(n,d){if(d<0){n=-n;d=-d}const g=gcd(n,d);return{n:n/g,d:d/g}}
+const fadd=(a,b)=>frac(a.n*b.d+b.n*a.d,a.d*b.d), fsub=(a,b)=>frac(a.n*b.d-b.n*a.d,a.d*b.d),
+      fmul=(a,b)=>frac(a.n*b.n,a.d*b.d), fdiv=(a,b)=>frac(a.n*b.d,a.d*b.n),
+      feq=(a,b)=>a.n===b.n&&a.d===b.d, fval=a=>a.n/a.d;
+const fstr=a=>a.d===1?String(a.n):a.n+"/"+a.d;
+const cents=rm=>Math.round(rm*100), rmstr=c=>"RM "+(c/100).toFixed(2);
+function mulberry32(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+let rng=mulberry32((Date.now()%2147483647)||42);
+function reseed(s){rng=mulberry32(s)}
+const ri=(a,b)=>a+Math.floor(rng()*(b-a+1)), pick=arr=>arr[Math.floor(rng()*arr.length)];
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function shuffleSeeded(a,seed){const r=mulberry32(seed);a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const fmt=n=>Number(n).toLocaleString("ms-MY");
+const fmtDec=(n,d=2)=>Number(n).toFixed(d).replace(/\.?0+$/,"").replace(/\.$/,".0");
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),2600)}
+function confetti(){if(S.settings.motion==="reduced")return;const c=$("#confetti");const cols=["#f59e0b","#7c3aed","#059669","#db2777","#2563eb"];
+  for(let i=0;i<36;i++){const s=document.createElement("span");s.style.left=Math.random()*100+"%";s.style.background=pick(cols);
+  s.style.animationDelay=(Math.random()*.5)+"s";c.appendChild(s);setTimeout(()=>s.remove(),3400)}}
+/* Sound: tiny WebAudio bleeps, no external files */
+let AC=null;
+function beep(freq=660,dur=.12,type="sine"){if(!S.settings.sound)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.12,AC.currentTime);
+  g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+dur);o.connect(g).connect(AC.destination);o.start();o.stop(AC.currentTime+dur)}catch(e){}}
+const sfx={good:()=>{beep(660);setTimeout(()=>beep(880),110)},bad:()=>beep(220,.2,"sawtooth"),click:()=>beep(520,.06),win:()=>{[523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.16),i*120))}};
+
+/* ================= I18N ================= */
+const T={
+bm:{home:"Laman Utama",map:"Peta Pengembaraan",practice:"Latihan",arena:"Arena",lab:"Makmal",review:"Ulang Kaji",ach:"Lencana",parent:"Ibu Bapa",settings:"Tetapan",
+learn:"Belajar",start:"Mula Belajar",continue:"Teruskan",xp:"XP",level:"Tahap",stars:"Bintang",welcome:"Selamat Datang ke",tagline:"Belajar, Bermain, Faham dan Kuasai!",
+choose:"Pilih modul untuk memulakan pengembaraan matematik anda!",lessons:"pelajaran",mastery:"Penguasaan",play:"Main",open:"Buka",back:"Kembali",next:"Seterusnya",prev:"Sebelumnya",
+hint:"Petunjuk",check:"Semak Jawapan",tryAgain:"Cuba Lagi",correct:"Tepat sekali! Hebat!",wrong:"Belum tepat. Jangan putus asa — mari belajar daripada kesilapan ini.",
+showSteps:"Lihat Langkah Penyelesaian",newQ:"Soalan Baharu",reset:"Set Semula",replay:"Main Semula",save:"Simpan",export:"Eksport Kemajuan",import:"Import Kemajuan",
+quiz:"Kuiz Penguasaan",summary:"Rumkasan",examples:"Contoh Selesai",mistakes:"Kesilapan Biasa",application:"Aplikasi Kehidupan Sebenar",objectives:"Objektif Pembelajaran",
+terms:"Istilah Penting",simulation:"Simulasi Interaktif",guided:"Latihan Berpandu",independent:"Latihan Bebas",diagnostic:"Penilaian Diagnostik",
+difficulty:"Tahap Kesukaran",easy:"Asas",medium:"Sederhana",hard:"Mencabar",kbat:"KBAT",score:"Skor",question:"Soalan",of:"daripada",
+welldone:"Syabas! Anda telah melengkapkan",keepgoing:"Teruskan usaha! Setiap kesilapan mengajar kita sesuatu yang baharu.",
+parentTitle:"Mod Ibu Bapa",parentNote:"Skor penguasaan di sini adalah untuk tujuan pembelajaran sahaja — bukan keputusan penilaian rasmi sekolah.",
+weak:"Topik Perlu Pengukuhan",strong:"Topik Kuat",recommend:"Cadangan Ulang Kaji",noData:"Belum ada data. Mainkan beberapa kuiz dahulu!",
+sound:"Kesan Bunyi",motion:"Animasi",motionFull:"Penuh",motionReduced:"Kurang (aksesibiliti)",language:"Bahasa",nickname:"Nama Samaran (fiktif sahaja)",
+daily:"Cabaran Harian",toolbox:"Peti Alat Matematik",progress:"Laporan Kemajuan",settingsTitle:"Tetapan",resetAll:"Padam Semua Kemajuan",
+tigerHi:"Hai! Saya TIGER BIJAK, rakan belajar anda. Mari belajar matematik bersama-sama!",
+tigerGood:"Hebat! Jawapan yang tepat. Teruskan!",tigerBad:"Tidak mengapa! Kesilapan ialah guru terbaik. Cuba lagi, saya percaya anda boleh!",
+tigerHint:"Petunjuk: baca soalan dengan perlahan dan kenal pasti apa yang perlu dicari.",tigerWin:"Tahniah! Anda seorang pejuang matematik yang hebat!",
+tigerTry:"Jangan menyerah! Cuba langkah demi langkah.",minutes:"minit belajar",accuracy:"Ketepatan",done:"Selesai",locked:"Terkunci",unlocked:"Dibuka!",
+dragHint:"Seret kad ke kotak jawapan.",tapHint:"Ketik untuk memilih.",sliderHint:"Geser untuk mengubah nilai.",typeAnswer:"Taip jawapan anda:",chooseAnswer:"Pilih jawapan yang betul:",
+arenaTitle:"Arena Matematik",arenaDesc:"Cabaran pantas — pilih mod tanpa had masa atau berlumba dengan masa!",timed:"Berlumba Masa (60 saat)",untimed:"Tanpa Had Masa",
+labTitle:"Makmal Matematik",labDesc:"Terokai semua alat matematik secara bebas. Tiada skor — hanya penerokaan!",
+reviewTitle:"Ulang Kaji",reviewDesc:"Semak topik lemah dan jawapan salah anda di sini.",
+quizDone:"Kuiz Selesai!",yourScore:"Skor anda",playAgain:"Main Lagi",backMap:"Kembali ke Peta",module:"Modul",lesson:"Pelajaran",
+curriculumRef:"Rujukan DSKP",answer:"Jawapan",explanation:"Penjelasan",step:"Langkah",totalXP:"Jumlah XP",badges:"Lencana",earned:"Diperoleh",notYet:"Belum diperoleh",
+exportDone:"Kemajuan dieksport!",importDone:"Kemajuan diimport!",importFail:"Fail tidak sah.",confirmReset:"Padam semua kemajuan? Tindakan ini tidak boleh dibatalkan.",
+namePh:"cth: Ali Bijak",startBtn:"Mula Pengembaraan!",skip:"Langkau",finish:"Tamatkan",correctCount:"betul",wrongCount:"salah",
+howTo:"Cara Bermain",how1:"1. Pilih modul di peta pengembaraan.",how2:"2. Baca pelajaran dan cuba simulasi interaktif.",how3:"3. Jawab kuiz untuk memperoleh XP dan bintang!",
+offline:"Aplikasi ini berfungsi sepenuhnya di luar talian selepas dimuatkan.",privacy:"Tiada nama sebenar, tiada penjejakan, tiada iklan. Semua kemajuan disimpan di peranti anda sahaja.",
+tool_placevalue:"Mesin Nilai Tempat",tool_numberline:"Penjelajah Garis Nombor",tool_rounding:"Simulator Pembundaran",tool_longops:"Operasi Panjang Beranimasi",
+tool_fraction:"Simulator Piza Pecahan",tool_fractionbar:"Bar Pecahan",tool_percent:"Grid Peratus 100",tool_converter:"Penukar Pecahan–Perpuluhan–Peratus",
+tool_shop:"Kedai Runcit Maya",tool_cashier:"Simulator Juruwang",tool_savings:"Simulator Matlamat Simpanan",
+tool_clock:"Jam Analog Boleh Seret",tool_digital:"Penukar Jam Digital",tool_duration:"Kalkulator Tempoh Perjalanan",
+tool_ruler:"Pembaris Maya",tool_scale:"Penimbang Interaktif",tool_cylinder:"Silinder Penyukat",tool_units:"Mesin Penukaran Unit",
+tool_geometry:"Kanvas Geometri",tool_protractor:"Protraktor",tool_area:"Penjelajah Grid Luas",tool_cube:"Simulasi Isipadu Kiub",
+tool_coord:"Berburu Harta Karun Koordinat",tool_ratio:"Pengadun Nisbah",tool_recipe:"Penskala Resipi",
+tool_chart:"Pembina Carta",tool_table:"Jadual Data",
+tool_dice:"Dadu Maya",tool_coin:"Lontaran Syiling",tool_spinner:"Pemutar Kebolehjadian",
+},
+en:{home:"Home",map:"Adventure Map",practice:"Practice",arena:"Arena",lab:"Math Lab",review:"Review",ach:"Badges",parent:"Parents",settings:"Settings",
+learn:"Learn",start:"Start Learning",continue:"Continue",xp:"XP",level:"Level",stars:"Stars",welcome:"Welcome to",tagline:"Learn, Play, Understand and Master!",
+choose:"Choose a module to start your mathematics adventure!",lessons:"lessons",mastery:"Mastery",play:"Play",open:"Open",back:"Back",next:"Next",prev:"Previous",
+hint:"Hint",check:"Check Answer",tryAgain:"Try Again",correct:"Exactly right! Great job!",wrong:"Not quite yet. Don't give up — let's learn from this mistake.",
+showSteps:"Show Solution Steps",newQ:"New Question",reset:"Reset",replay:"Replay",save:"Save",export:"Export Progress",import:"Import Progress",
+quiz:"Mastery Quiz",summary:"Summary",examples:"Worked Examples",mistakes:"Common Mistakes",application:"Real-World Application",objectives:"Learning Objectives",
+terms:"Key Terms",simulation:"Interactive Simulation",guided:"Guided Practice",independent:"Independent Practice",diagnostic:"Diagnostic Assessment",
+difficulty:"Difficulty",easy:"Basic",medium:"Moderate",hard:"Challenging",kbat:"KBAT (Higher-Order)",score:"Score",question:"Question",of:"of",
+welldone:"Well done! You have completed",keepgoing:"Keep trying! Every mistake teaches us something new.",
+parentTitle:"Parent Mode",parentNote:"Mastery scores here are for learning purposes only — not official school assessment results.",
+weak:"Topics Needing Reinforcement",strong:"Strong Topics",recommend:"Revision Recommendations",noData:"No data yet. Play a few quizzes first!",
+sound:"Sound Effects",motion:"Animation",motionFull:"Full",motionReduced:"Reduced (accessibility)",language:"Language",nickname:"Nickname (fictional only)",
+daily:"Daily Challenge",toolbox:"Mathematical Toolbox",progress:"Progress Report",settingsTitle:"Settings",resetAll:"Erase All Progress",
+tigerHi:"Hi! I'm TIGER BIJAK, your learning buddy. Let's learn mathematics together!",
+tigerGood:"Awesome! That's correct. Keep it up!",tigerBad:"It's okay! Mistakes are the best teachers. Try again — I believe in you!",
+tigerHint:"Hint: read the question slowly and identify what you need to find.",tigerWin:"Congratulations! You are a fantastic maths warrior!",
+tigerTry:"Don't give up! Try step by step.",minutes:"minutes of learning",accuracy:"Accuracy",done:"Done",locked:"Locked",unlocked:"Unlocked!",
+dragHint:"Drag the cards into the answer box.",tapHint:"Tap to choose.",sliderHint:"Slide to change the value.",typeAnswer:"Type your answer:",chooseAnswer:"Choose the correct answer:",
+arenaTitle:"Mathematics Arena",arenaDesc:"Quick challenges — pick timed mode or play without a timer!",timed:"Timed Race (60 seconds)",untimed:"Untimed Mode",
+labTitle:"Mathematics Lab",labDesc:"Explore every maths tool freely. No scores — just exploration!",
+reviewTitle:"Review",reviewDesc:"Check your weak topics and wrong answers here.",
+quizDone:"Quiz Complete!",yourScore:"Your score",playAgain:"Play Again",backMap:"Back to Map",module:"Module",lesson:"Lesson",
+curriculumRef:"DSKP Reference",answer:"Answer",explanation:"Explanation",step:"Step",totalXP:"Total XP",badges:"Badges",earned:"Earned",notYet:"Not yet earned",
+exportDone:"Progress exported!",importDone:"Progress imported!",importFail:"Invalid file.",confirmReset:"Erase all progress? This cannot be undone.",
+namePh:"e.g. Ali the Smart",startBtn:"Start Adventure!",skip:"Skip",finish:"Finish",correctCount:"correct",wrongCount:"wrong",
+howTo:"How to Play",how1:"1. Pick a module on the adventure map.",how2:"2. Read the lesson and try the interactive simulation.",how3:"3. Answer quizzes to earn XP and stars!",
+offline:"This app works fully offline after loading.",privacy:"No real names, no tracking, no ads. All progress stays on your device only.",
+tool_placevalue:"Place Value Machine",tool_numberline:"Number Line Explorer",tool_rounding:"Rounding Simulator",tool_longops:"Animated Long Operations",
+tool_fraction:"Fraction Pizza Simulator",tool_fractionbar:"Fraction Bars",tool_percent:"100 Percent Grid",tool_converter:"Fraction–Decimal–Percent Converter",
+tool_shop:"Virtual Grocery Shop",tool_cashier:"Cashier Simulator",tool_savings:"Savings Goal Simulator",
+tool_clock:"Draggable Analogue Clock",tool_digital:"Digital Clock Converter",tool_duration:"Travel Duration Calculator",
+tool_ruler:"Virtual Ruler",tool_scale:"Interactive Weighing Scale",tool_cylinder:"Measuring Cylinder",tool_units:"Unit Conversion Machine",
+tool_geometry:"Geometry Canvas",tool_protractor:"Protractor",tool_area:"Area Grid Explorer",tool_cube:"Cube Volume Simulator",
+tool_coord:"Coordinate Treasure Hunt",tool_ratio:"Ratio Mixer",tool_recipe:"Recipe Scaler",
+tool_chart:"Chart Builder",tool_table:"Data Tables",
+tool_dice:"Virtual Dice",tool_coin:"Coin Toss",tool_spinner:"Probability Spinner",
+}};
+const t=k=>(T[S.lang]&&T[S.lang][k])||T.bm[k]||k;
+const L=(bm,en)=>S.lang==="en"?en:bm;
+
+/* ================= STATE ================= */
+const DEF={lang:"bm",name:"",xp:0,stars:{},skill:{},history:[],badges:[],settings:{sound:true,motion:"full"},lastDaily:"",minutes:0,seenWelcome:false};
+let S;
+try{S=Object.assign({},DEF,JSON.parse(localStorage.getItem("bijak_v1")||"{}"));S.settings=Object.assign({},DEF.settings,S.settings)}catch(e){S=JSON.parse(JSON.stringify(DEF))}
+function save(){try{localStorage.setItem("bijak_v1",JSON.stringify(S))}catch(e){}}
+function level(){return Math.floor(S.xp/200)+1}
+function addXP(n,why){S.xp+=n;save();toast(`+${n} XP${why?" — "+why:""}`);sfx.good();checkBadges()}
+function skillStat(sk){return S.skill[sk]||(S.skill[sk]={c:0,w:0})}
+function recordAnswer(sk,ok){const st=skillStat(sk);ok?st.c++:st.w++;S.history.unshift({sk,ok,ts:Date.now()});S.history=S.history.slice(0,300);save()}
+function skillAcc(sk){const st=S.skill[sk];if(!st||st.c+st.w===0)return null;return st.c/(st.c+st.w)}
+const BADGES=[
+ {id:"first",icon:"🌟",bm:"Langkah Pertama",en:"First Steps",desc:{bm:"Jawab soalan pertama dengan betul",en:"Answer your first question correctly"}},
+ {id:"xp100",icon:"⚡",bm:"Pengumpul XP",en:"XP Collector",desc:{bm:"Kumpul 100 XP",en:"Collect 100 XP"}},
+ {id:"xp500",icon:"🚀",bm:"Roket Matematik",en:"Maths Rocket",desc:{bm:"Kumpul 500 XP",en:"Collect 500 XP"}},
+ {id:"m1",icon:"🔢",bm:"Juara Nombor Bulat",en:"Whole Number Champion",desc:{bm:"Dapatkan 3 bintang Modul 1",en:"Earn 3 stars in Module 1"}},
+ {id:"m2",icon:"🍕",bm:"Master Pecahan",en:"Fraction Master",desc:{bm:"Dapatkan 3 bintang Modul 2",en:"Earn 3 stars in Module 2"}},
+ {id:"m3",icon:"💰",bm:"Bijak Wang",en:"Money Smart",desc:{bm:"Dapatkan 3 bintang Modul 3",en:"Earn 3 stars in Module 3"}},
+ {id:"m4",icon:"⏰",bm:"Master Masa",en:"Time Master",desc:{bm:"Dapatkan 3 bintang Modul 4",en:"Earn 3 stars in Module 4"}},
+ {id:"m5",icon:"📏",bm:"Master Ukuran",en:"Measurement Master",desc:{bm:"Dapatkan 3 bintang Modul 5",en:"Earn 3 stars in Module 5"}},
+ {id:"m6",icon:"📐",bm:"Master Geometri",en:"Geometry Master",desc:{bm:"Dapatkan 3 bintang Modul 6",en:"Earn 3 stars in Module 6"}},
+ {id:"m7",icon:"🗺️",bm:"Penjelajah Koordinat",en:"Coordinate Explorer",desc:{bm:"Dapatkan 3 bintang Modul 7",en:"Earn 3 stars in Module 7"}},
+ {id:"m8",icon:"📊",bm:"Detektif Data",en:"Data Detective",desc:{bm:"Dapatkan 3 bintang Modul 8",en:"Earn 3 stars in Module 8"}},
+ {id:"m9",icon:"🎲",bm:"Master Kebolehjadian",en:"Probability Master",desc:{bm:"Dapatkan 3 bintang Modul 9",en:"Earn 3 stars in Module 9"}},
+ {id:"streak10",icon:"🔥",bm:"Sepuluh Betul Berturut-turut",en:"10 in a Row",desc:{bm:"Jawab 10 soalan betul berturut-turut",en:"Answer 10 questions correctly in a row"}},
+ {id:"all9",icon:"👑",bm:"Juara Matematik",en:"Maths Champion",desc:{bm:"Dapatkan sekurang-kurangnya 1 bintang dalam semua 9 modul",en:"Earn at least 1 star in all 9 modules"}},
+];
+function checkBadges(){const total=S.history.filter(h=>h.ok).length;
+  const rules={first:()=>total>=1,xp100:()=>S.xp>=100,xp500:()=>S.xp>=500,
+   m1:()=>(S.stars.m1||0)>=3,m2:()=>(S.stars.m2||0)>=3,m3:()=>(S.stars.m3||0)>=3,m4:()=>(S.stars.m4||0)>=3,
+   m5:()=>(S.stars.m5||0)>=3,m6:()=>(S.stars.m6||0)>=3,m7:()=>(S.stars.m7||0)>=3,m8:()=>(S.stars.m8||0)>=3,m9:()=>(S.stars.m9||0)>=3,
+   streak10:()=>{let n=0;for(const h of S.history){if(h.ok)n++;else break}return n>=10},
+   all9:()=>["m1","m2","m3","m4","m5","m6","m7","m8","m9"].every(m=>(S.stars[m]||0)>=1)};
+  for(const b of BADGES){if(!S.badges.includes(b.id)&&rules[b.id]&&rules[b.id]()){S.badges.push(b.id);save();toast(`🏅 ${t("unlocked")} ${L(b.bm,b.en)}!`);sfx.win();confetti()}}}
+
+/* ================= MASCOT ================= */
+const TIGER_SVG=`<svg class="tiger floaty" viewBox="0 0 120 120" role="img" aria-label="TIGER BIJAK mascot">
+<ellipse cx="60" cy="68" rx="42" ry="38" fill="#f59e0b"/>
+<circle cx="30" cy="34" r="16" fill="#f59e0b"/><circle cx="90" cy="34" r="16" fill="#f59e0b"/>
+<circle cx="30" cy="34" r="8" fill="#fde68a"/><circle cx="90" cy="34" r="8" fill="#fde68a"/>
+<ellipse cx="60" cy="80" rx="24" ry="17" fill="#fef3c7"/>
+<circle cx="45" cy="60" r="6" fill="#1e1b4b"/><circle cx="75" cy="60" r="6" fill="#1e1b4b"/>
+<circle cx="47" cy="58" r="2" fill="#fff"/><circle cx="77" cy="58" r="2" fill="#fff"/>
+<ellipse cx="60" cy="74" rx="6" ry="4.5" fill="#1e1b4b"/>
+<path d="M60 78 q0 6 -7 7 M60 78 q0 6 7 7" stroke="#1e1b4b" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<path d="M18 52 l10 4 M16 66 l11 1 M102 52 l-10 4 M104 66 l-11 1 M44 26 l3 10 M76 26 l-3 10" stroke="#1e1b4b" stroke-width="3.4" stroke-linecap="round"/>
+<circle cx="34" cy="76" r="6" fill="#fda4af" opacity=".7"/><circle cx="86" cy="76" r="6" fill="#fda4af" opacity=".7"/>
+<rect x="38" y="98" width="44" height="14" rx="7" fill="#4f46e5"/><text x="60" y="109" text-anchor="middle" font-size="9" font-weight="900" fill="#fff" font-family="sans-serif">BIJAK</text>
+</svg>`;
+function mascot(msg){return `<div class="mascot-row">${TIGER_SVG}<div class="bubble">${esc(msg)}</div></div>`}
+/* ================= CURRICULUM (KSSR Semakan 2017, Matematik Tahun 5) ================= */
+const MODULES=[
+{id:"m1",icon:"🔢",color:"#4f46e5",title:{bm:"Nombor Bulat dan Operasi Asas",en:"Whole Numbers and Basic Operations"},
+ desc:{bm:"Nombor hingga 1,000,000, nilai tempat, tambah, tolak, darab dan bahagi.",en:"Numbers up to 1,000,000, place value, addition, subtraction, multiplication and division."},
+ lessons:[
+ {id:"m1l1",title:{bm:"Nilai Tempat dan Nilai Digit",en:"Place Value and Digit Value"},sim:"placevalue",skills:["placevalue","compare","round"],
+  ref:"DSKP 4.1.1–4.1.4 (Nombor Bulat hingga 1,000,000)",
+  objectives:{bm:["Menyatakan nilai tempat dan nilai digit bagi nombor hingga 1,000,000.","Membanding dan menyusun nombor.","Membundarkan nombor kepada puluh, ratus dan ribu terdekat."],en:["State the place value and digit value of numbers up to 1,000,000.","Compare and order numbers.","Round numbers to the nearest ten, hundred and thousand."]},
+  terms:{bm:{"Nilai tempat":"Kedudukan digit dalam nombor (sa, puluh, ratus, ribu…).","Nilai digit":"Nilai sebenar digit mengikut kedudukannya.","Membundar":"Menukar nombor kepada nilai terdekat yang lebih mudah."},en:{"Place value":"The position of a digit in a number (ones, tens, hundreds, thousands…).","Digit value":"The actual value of a digit based on its position.","Rounding":"Changing a number to the nearest easier value."}},
+  explain:{bm:`<p>Setiap digit dalam nombor mempunyai <b>nilai tempat</b> yang bergantung pada kedudukannya. Dari kanan: <b>sa → puluh → ratus → ribu → puluh ribu → ratus ribu</b>.</p>
+  <p>Contoh: dalam <b>345,678</b>, digit <b>4</b> berada di tempat <b>puluh ribu</b>, jadi nilainya ialah <b>40,000</b>.</p>
+  <p><b>Membandingkan nombor:</b> bandingkan bilangan digit dahulu. Jika sama, bandingkan dari digit paling kiri.</p>
+  <p><b>Membundarkan:</b> lihat digit di sebelah kanan tempat yang dibundarkan. Jika 5 atau lebih, bundarkan ke atas; jika kurang daripada 5, kekalkan.</p>`,
+  en:`<p>Each digit in a number has a <b>place value</b> based on its position. From the right: <b>ones → tens → hundreds → thousands → ten-thousands → hundred-thousands</b>.</p>
+  <p>Example: in <b>345,678</b>, the digit <b>4</b> is in the <b>ten-thousands</b> place, so its value is <b>40,000</b>.</p>
+  <p><b>Comparing numbers:</b> compare the number of digits first. If equal, compare from the leftmost digit.</p>
+  <p><b>Rounding:</b> look at the digit to the right of the rounding place. If 5 or more, round up; if less than 5, keep as is.</p>`},
+  examples:[
+   {q:{bm:"Apakah nilai digit 7 dalam 72,450?",en:"What is the value of the digit 7 in 72,450?"},steps:{bm:["Digit 7 berada di tempat puluh ribu.","Nilai tempat puluh ribu = 10,000.","Jadi nilai digit 7 ialah 7 × 10,000 = 70,000."],en:["The digit 7 is in the ten-thousands place.","Ten-thousands place = 10,000.","So the value of digit 7 is 7 × 10,000 = 70,000."]}},
+   {q:{bm:"Bundarkan 456,789 kepada ratus terdekat.",en:"Round 456,789 to the nearest hundred."},steps:{bm:["Tempat ratus ialah digit 7.","Digit di sebelah kanan ialah 8 (≥ 5).","Bundarkan ke atas: 456,789 → 456,800."],en:["The hundreds place is digit 7.","The digit to its right is 8 (≥ 5).","Round up: 456,789 → 456,800."]}},
+   {q:{bm:"Susun nombor berikut dari terkecil ke terbesar: 98,765; 89,765; 98,675.",en:"Order these numbers from smallest to largest: 98,765; 89,765; 98,675."},steps:{bm:["Semua mempunyai 5 digit.","Bandingkan digit paling kiri: 89,765 paling kecil.","Bandingkan 98,765 dan 98,675: digit ketiga 7 > 6, jadi 98,675 lebih kecil.","Susunan: 89,765 < 98,675 < 98,765."],en:["All have 5 digits.","Compare the leftmost digit: 89,765 is smallest.","Compare 98,765 and 98,675: third digit 7 > 6, so 98,675 is smaller.","Order: 89,765 < 98,675 < 98,765."]}}],
+  mistakes:{bm:"Kesilapan biasa: membaca nilai digit tanpa mengira kedudukannya (cth: mengatakan nilai 7 ialah 7 dalam 72,450). Ingat: nilai digit = digit × nilai tempatnya!",en:"Common mistake: reading a digit's value without considering its position (e.g. saying the value of 7 is 7 in 72,450). Remember: digit value = digit × its place value!"},
+  application:{bm:"Membaca nombor telefon, nombor rumah, harga barang di pasar malam dan jumlah penonton di stadium.",en:"Reading phone numbers, house numbers, prices at the night market and stadium crowd sizes."},
+  summary:{bm:"Nilai tempat menentukan nilai digit. Bandingkan nombor dari kiri. Bundarkan mengikut digit di sebelah kanan (5 ke atas → naik).",en:"Place value determines digit value. Compare numbers from the left. Round based on the digit to the right (5 or more → round up)."}},
+ {id:"m1l2",title:{bm:"Tambah, Tolak, Darab dan Bahagi",en:"Add, Subtract, Multiply and Divide"},sim:"longops",skills:["addsub","mult","divide","combined"],
+  ref:"DSKP 4.2.1–4.2.6 (Operasi Asas)",
+  objectives:{bm:["Melakukan tambah dan tolak hingga 1,000,000.","Melakukan darab hingga 1,000 × 1,000 dan bahagi hingga 1,000 ÷ 10.","Menyelesaikan operasi gabungan mengikut urutan operasi."],en:["Add and subtract numbers up to 1,000,000.","Multiply up to 1,000 × 1,000 and divide up to 1,000 ÷ 10.","Solve combined operations following the order of operations."]},
+  terms:{bm:{"Mengumpul semula":"Memindahkan nilai 10 dari satu tempat ke tempat yang lebih besar.","Mengurai":"Memecahkan 10 dari satu tempat ke tempat yang lebih kecil.","Urutan operasi":"Darab dan bahagi dahulu, kemudian tambah dan tolak (kurungan dahulu)."},en:{"Regrouping":"Moving 10 from one place to a larger place.","Breaking apart":"Splitting 10 from one place into a smaller place.","Order of operations":"Multiply and divide first, then add and subtract (brackets first)."}},
+  explain:{bm:`<p><b>Tambah & tolak:</b> jajar mengikut nilai tempat. Jika jumlah melebihi 9, <b>kumpul semula</b> (bawa 1 ke tempat seterusnya). Jika perlu menolak, <b>uraikan</b> 10 dari tempat yang lebih besar.</p>
+  <p><b>Darab:</b> darabkan setiap digit, kumpul semula bila perlu. Contoh: 345 × 27.</p>
+  <p><b>Bahagi:</b> bahagi dari digit paling kiri, tulis hasil di atas, darab semula dan tolak.</p>
+  <p><b>Operasi gabungan:</b> selesaikan <b>kurungan → darab/bahagi → tambah/tolak</b>.</p>`,
+  en:`<p><b>Addition & subtraction:</b> align by place value. If a column exceeds 9, <b>regroup</b> (carry 1 to the next place). If subtraction needs it, <b>break apart</b> 10 from a larger place.</p>
+  <p><b>Multiplication:</b> multiply each digit, regroup when needed. Example: 345 × 27.</p>
+  <p><b>Division:</b> divide from the leftmost digit, write the result on top, multiply back and subtract.</p>
+  <p><b>Combined operations:</b> solve <b>brackets → multiply/divide → add/subtract</b>.</p>`},
+  examples:[
+   {q:{bm:"345 × 27 = ?",en:"345 × 27 = ?"},steps:{bm:["345 × 7 = 2,415 (darab sa dahulu).","345 × 20 = 6,900 (darab puluh).","Jumlahkan: 2,415 + 6,900 = 9,315."],en:["345 × 7 = 2,415 (multiply ones first).","345 × 20 = 6,900 (multiply tens).","Add: 2,415 + 6,900 = 9,315."]}},
+   {q:{bm:"8,432 − 2,759 = ?",en:"8,432 − 2,759 = ?"},steps:{bm:["Sa: 2 − 9 tidak boleh → uraikan 1 puluh: 12 − 9 = 3.","Puluh: 2 (tinggal 2) − 5 tidak boleh → uraikan 1 ratus: 12 − 5 = 7.","Ratus: 3 (tinggal 3) − 7 tidak boleh → uraikan 1 ribu: 13 − 7 = 6.","Ribu: 7 − 2 = 5. Jawapan: 5,673."],en:["Ones: 2 − 9 impossible → break apart 1 ten: 12 − 9 = 3.","Tens: 2 (now 2) − 5 impossible → break apart 1 hundred: 12 − 5 = 7.","Hundreds: 3 (now 3) − 7 impossible → break apart 1 thousand: 13 − 7 = 6.","Thousands: 7 − 2 = 5. Answer: 5,673."]}},
+   {q:{bm:"120 ÷ 8 = ?",en:"120 ÷ 8 = ?"},steps:{bm:["8 × 10 = 80. Baki 120 − 80 = 40.","8 × 5 = 40. Baki 0.","Jadi 120 ÷ 8 = 10 + 5 = 15."],en:["8 × 10 = 80. Remainder 120 − 80 = 40.","8 × 5 = 40. Remainder 0.","So 120 ÷ 8 = 10 + 5 = 15."]}}],
+  mistakes:{bm:"Kesilapan biasa: tertukar darab dengan tambah (cth: 3 × 4 = 7). Ingat: darab ialah tambah berulang — 3 × 4 = 4 + 4 + 4 = 12. Juga jangan lupa jajar mengikut nilai tempat!",en:"Common mistake: confusing multiplication with addition (e.g. 3 × 4 = 7). Remember: multiplication is repeated addition — 3 × 4 = 4 + 4 + 4 = 12. Also don't forget to align by place value!"},
+  application:{bm:"Mengira jumlah belanja, membahagi makanan sama rata antara ahli keluarga, dan mengira baki wang.",en:"Calculating shopping totals, sharing food equally among family members, and counting change."},
+  summary:{bm:"Jajar mengikut nilai tempat. Kumpul semula bila perlu. Darab = tambah berulang. Urutan: kurungan → darab/bahagi → tambah/tolak.",en:"Align by place value. Regroup when needed. Multiplication = repeated addition. Order: brackets → multiply/divide → add/subtract."}},
+ {id:"m1l3",title:{bm:"Corak Nombor dan Penyelesaian Masalah",en:"Number Patterns and Problem Solving"},sim:"numberline",skills:["patterns","wordproblem"],
+  ref:"DSKP 4.3.1–4.3.3 (Corak dan Penyelesaian Masalah)",
+  objectives:{bm:["Mengenal pasti dan melengkapkan corak nombor.","Menyelesaikan masalah ayat melibatkan operasi asas."],en:["Identify and complete number patterns.","Solve word problems involving basic operations."]},
+  terms:{bm:{"Corak nombor":"Urutan nombor yang mengikut peraturan tertentu.","Masalah ayat":"Soalan berbentuk ayat yang perlu diterjemahkan kepada operasi matematik."},en:{"Number pattern":"A sequence of numbers following a rule.","Word problem":"A question in sentence form that must be translated into a maths operation."}},
+  explain:{bm:`<p><b>Corak nombor:</b> cari perbezaan antara nombor berturutan. Perbezaan yang sama = corak tambah/tolak. Jika setiap nombor dua kali ganda = corak darab.</p>
+  <p><b>Penyelesaian masalah:</b> (1) Baca dan faham. (2) Kenal pasti operasi. (3) Kira. (4) Semak jawapan dengan ayat penuh.</p>`,
+  en:`<p><b>Number patterns:</b> find the difference between consecutive numbers. Equal differences = addition/subtraction pattern. If each number doubles = multiplication pattern.</p>
+  <p><b>Problem solving:</b> (1) Read and understand. (2) Identify the operation. (3) Calculate. (4) Check with a full sentence.</p>`},
+  examples:[
+   {q:{bm:"Lengkapkan corak: 12, 24, 36, 48, …",en:"Complete the pattern: 12, 24, 36, 48, …"},steps:{bm:["Perbezaan: 24−12=12, 36−24=12, 48−36=12.","Corak tambah 12.","Nombor seterusnya: 48+12=60, kemudian 72."],en:["Differences: 24−12=12, 36−24=12, 48−36=12.","Pattern: add 12.","Next numbers: 48+12=60, then 72."]}},
+   {q:{bm:"Sebuah bas membawa 40 murid. Berapa bas diperlukan untuk 320 murid?",en:"A bus carries 40 pupils. How many buses are needed for 320 pupils?"},steps:{bm:["Operasi: bahagi. 320 ÷ 40.","40 × 8 = 320.","Diperlukan 8 bas."],en:["Operation: division. 320 ÷ 40.","40 × 8 = 320.","8 buses are needed."]}},
+   {q:{bm:"Ali mempunyai 3 kotak pensel. Setiap kotak ada 24 pensel. Dia memberi 5 pensel kepada kawan. Berapa pensel tinggal?",en:"Ali has 3 boxes of pencils. Each box has 24 pencils. He gives 5 pencils to a friend. How many pencils remain?"},steps:{bm:["Jumlah pensel: 3 × 24 = 72.","Selepas memberi: 72 − 5 = 67.","Tinggal 67 pensel."],en:["Total pencils: 3 × 24 = 72.","After giving: 72 − 5 = 67.","67 pencils remain."]}}],
+  mistakes:{bm:"Kesilapan biasa: terus mengira tanpa membaca soalan. Gariskan maklumat penting dan tentukan operasi dahulu!",en:"Common mistake: calculating without reading the question. Underline key information and decide the operation first!"},
+  application:{bm:"Mengira bilangan hari sehingga cuti sekolah, mengira kos tiket dan merancang bilangan bas untuk lawatan sekolah.",en:"Counting days until school holidays, calculating ticket costs and planning buses for a school trip."},
+  summary:{bm:"Cari perbezaan untuk corak. Untuk masalah ayat: faham → pilih operasi → kira → semak.",en:"Find the difference for patterns. For word problems: understand → choose operation → calculate → check."}}]},
+{id:"m2",icon:"🍕",color:"#db2777",title:{bm:"Pecahan, Perpuluhan dan Peratus",en:"Fractions, Decimals and Percentages"},
+ desc:{bm:"Pecahan setara, darab pecahan, operasi perpuluhan dan hubungan pecahan–perpuluhan–peratus.",en:"Equivalent fractions, multiplying fractions, decimal operations and the fraction–decimal–percent relationship."},
+ lessons:[
+ {id:"m2l1",title:{bm:"Pecahan Setara dan Perbandingan",en:"Equivalent Fractions and Comparison"},sim:"fraction",skills:["fractions","fractioncompare"],
+  ref:"DSKP 5.1.1–5.1.3 (Pecahan)",
+  objectives:{bm:["Mengenal pasti pecahan setara.","Membandingkan pecahan menggunakan bar pecahan.","Mendarab pecahan dengan nombor bulat."],en:["Identify equivalent fractions.","Compare fractions using fraction bars.","Multiply fractions by whole numbers."]},
+  terms:{bm:{"Pengangka":"Nombor di atas garis pecahan (bilangan bahagian yang diambil).","Penyebut":"Nombor di bawah garis pecahan (bilangan bahagian yang sama besar).","Pecahan setara":"Pecahan yang mempunyai nilai yang sama walaupun pengangka dan penyebut berbeza."},en:{"Numerator":"The number above the fraction line (parts taken).","Denominator":"The number below the line (equal parts).","Equivalent fraction":"Fractions with the same value even though numerator and denominator differ."}},
+  explain:{bm:`<p>Pecahan <b>a/b</b> bermaksud <b>a</b> bahagian daripada <b>b</b> bahagian yang sama besar.</p>
+  <p><b>Pecahan setara:</b> darab atau bahagi pengangka dan penyebut dengan nombor yang sama. Contoh: 1/2 = 2/4 = 3/6.</p>
+  <p><b>Membandingkan:</b> jika penyebut sama, bandingkan pengangka. Jika pengangka sama, pecahan dengan penyebut lebih kecil adalah lebih besar.</p>
+  <p><b>Darab pecahan dengan nombor bulat:</b> darabkan pengangka sahaja. Contoh: 3 × 2/5 = 6/5.</p>`,
+  en:`<p>The fraction <b>a/b</b> means <b>a</b> parts out of <b>b</b> equal parts.</p>
+  <p><b>Equivalent fractions:</b> multiply or divide both numerator and denominator by the same number. Example: 1/2 = 2/4 = 3/6.</p>
+  <p><b>Comparing:</b> if denominators are equal, compare numerators. If numerators are equal, the fraction with the smaller denominator is larger.</p>
+  <p><b>Multiplying a fraction by a whole number:</b> multiply only the numerator. Example: 3 × 2/5 = 6/5.</p>`},
+  examples:[
+   {q:{bm:"Tulis pecahan setara bagi 2/3 dengan penyebut 12.",en:"Write an equivalent fraction for 2/3 with denominator 12."},steps:{bm:["3 × 4 = 12, jadi darabkan dengan 4.","2 × 4 = 8.","2/3 = 8/12."],en:["3 × 4 = 12, so multiply by 4.","2 × 4 = 8.","2/3 = 8/12."]}},
+   {q:{bm:"Yang mana lebih besar: 3/4 atau 5/8?",en:"Which is larger: 3/4 or 5/8?"},steps:{bm:["Samakan penyebut: 3/4 = 6/8.","Bandingkan 6/8 dengan 5/8.","6 > 5, jadi 3/4 lebih besar."],en:["Make denominators equal: 3/4 = 6/8.","Compare 6/8 with 5/8.","6 > 5, so 3/4 is larger."]}},
+   {q:{bm:"4 × 3/7 = ?",en:"4 × 3/7 = ?"},steps:{bm:["Darabkan pengangka: 4 × 3 = 12.","Penyebut kekal 7.","Jawapan: 12/7 = 1 5/7."],en:["Multiply the numerator: 4 × 3 = 12.","Denominator stays 7.","Answer: 12/7 = 1 5/7."]}}],
+  mistakes:{bm:"Kesilapan biasa: menambah penyebut semasa menambah pecahan (cth: 1/2 + 1/3 = 2/5 — SALAH!). Penyebut mesti disamakan dahulu. Juga, jangan tertukar pengangka dengan penyebut!",en:"Common mistake: adding denominators when adding fractions (e.g. 1/2 + 1/3 = 2/5 — WRONG!). Denominators must be made equal first. Also, don't swap numerator and denominator!"},
+  application:{bm:"Membahagi piza dan kek sama rata, mengukur bahan masakan (1/2 cawan tepung), dan membahagi masa.",en:"Sharing pizza and cake equally, measuring ingredients (1/2 cup of flour), and dividing time."},
+  summary:{bm:"Pecahan setara dikekalkan dengan mendarab/membahagi kedua-dua bahagian. Samakan penyebut untuk membandingkan. Darab pecahan dengan nombor bulat: darab pengangka sahaja.",en:"Equivalent fractions keep the same value by multiplying/dividing both parts. Make denominators equal to compare. To multiply a fraction by a whole number: multiply the numerator only."}},
+ {id:"m2l2",title:{bm:"Perpuluhan dan Peratus",en:"Decimals and Percentages"},sim:"percent",skills:["decimals","percent","convert"],
+  ref:"DSKP 5.2.1–5.3.2 (Perpuluhan dan Peratus)",
+  objectives:{bm:["Melakukan operasi tambah, tolak dan darab perpuluhan.","Menukar pecahan kepada perpuluhan dan peratus.","Mengira peratus daripada kuantiti."],en:["Add, subtract and multiply decimals.","Convert fractions to decimals and percentages.","Calculate percentages of quantities."]},
+  terms:{bm:{"Perpuluhan":"Nombor dengan titik perpuluhan (cth: 0.5, 3.25).","Peratus":"Bilangan bahagian daripada 100. Simbol %."},en:{"Decimal":"A number with a decimal point (e.g. 0.5, 3.25).","Percentage":"Parts out of 100. Symbol %."}},
+  explain:{bm:`<p><b>Perpuluhan:</b> digit selepas titik perpuluhan ialah persepuluhan, perseratus, perseribu. Apabila menambah/menolak, <b>jajarkan titik perpuluhan</b>!</p>
+  <p><b>Peratus:</b> 1% = 1/100 = 0.01. Jadi 50% = 50/100 = 0.5.</p>
+  <p><b>Penukaran:</b> pecahan → peratus: bahagi pengangka dengan penyebut, kemudian darab 100. Contoh: 3/4 = 0.75 = 75%.</p>
+  <p><b>Mengira peratus:</b> 20% daripada 250 = 20/100 × 250 = 50.</p>`,
+  en:`<p><b>Decimals:</b> digits after the decimal point are tenths, hundredths, thousandths. When adding/subtracting, <b>align the decimal points</b>!</p>
+  <p><b>Percentages:</b> 1% = 1/100 = 0.01. So 50% = 50/100 = 0.5.</p>
+  <p><b>Conversion:</b> fraction → percent: divide numerator by denominator, then multiply by 100. Example: 3/4 = 0.75 = 75%.</p>
+  <p><b>Calculating percentages:</b> 20% of 250 = 20/100 × 250 = 50.</p>`},
+  examples:[
+   {q:{bm:"3.45 + 2.6 = ?",en:"3.45 + 2.6 = ?"},steps:{bm:["Jajarkan titik perpuluhan: 3.45 + 2.60.","Sa: 5 + 0 = 5. Perseratus: 4 + 6 = 10 → tulis 0, kumpul 1.","Persepuluhan: 5 + 2 + 1 (kumpulan) = 8.","Sa: 3 + 2 = 5. Jawapan: 6.05."],en:["Align decimal points: 3.45 + 2.60.","Hundredths: 5 + 0 = 5. Tenths: 4 + 6 = 10 → write 0, carry 1.","Tenths: 5 + 2 + 1 (carry) = 8.","Ones: 3 + 2 = 5. Answer: 6.05."]}},
+   {q:{bm:"Tukar 3/8 kepada peratus.",en:"Convert 3/8 to a percentage."},steps:{bm:["3 ÷ 8 = 0.375.","0.375 × 100 = 37.5.","3/8 = 37.5%."],en:["3 ÷ 8 = 0.375.","0.375 × 100 = 37.5.","3/8 = 37.5%."]}},
+   {q:{bm:"25% daripada RM 80 = ?",en:"25% of RM 80 = ?"},steps:{bm:["25% = 25/100 = 1/4.","1/4 × 80 = 20.","Jawapan: RM 20."],en:["25% = 25/100 = 1/4.","1/4 × 80 = 20.","Answer: RM 20."]}}],
+  mistakes:{bm:"Kesilapan biasa: tidak menjajarkan titik perpuluhan (cth: 3.45 + 2.6 ditulis sebagai 3.45 + 2.6 tanpa menambah 0). Ingat: 2.6 = 2.60!",en:"Common mistake: not aligning decimal points (e.g. adding 3.45 + 2.6 without adding the 0). Remember: 2.6 = 2.60!"},
+  application:{bm:"Diskaun di kedai (20% OFF), markah ujian, kadar faedah simpanan dan peratusan bateri telefon.",en:"Shop discounts (20% OFF), test marks, savings interest rates and phone battery percentages."},
+  summary:{bm:"Jajarkan titik perpuluhan untuk tambah/tolak. Peratus = bahagian daripada 100. Tukar pecahan kepada peratus dengan membahagi kemudian darab 100.",en:"Align decimal points for add/subtract. Percent = parts out of 100. Convert fractions to percents by dividing then multiplying by 100."}}]},
+{id:"m3",icon:"💰",color:"#059669",title:{bm:"Wang",en:"Money"},
+ desc:{bm:"Mata wang Malaysia, operasi wang, simpanan, bajet dan literasi kewangan.",en:"Malaysian currency, money operations, savings, budgeting and financial literacy."},
+ lessons:[
+ {id:"m3l1",title:{bm:"Operasi Wang dan Baki",en:"Money Operations and Change"},sim:"shop",skills:["money","change"],
+  ref:"DSKP 6.1.1–6.2.2 (Wang)",
+  objectives:{bm:["Melakukan tambah, tolak, darab dan bahagi melibatkan wang.","Mengira baki wang selepas pembelian."],en:["Add, subtract, multiply and divide involving money.","Calculate change after a purchase."]},
+  terms:{bm:{"Baki":"Wang yang dikembalikan selepas pembayaran.","Sen":"Unit wang yang lebih kecil: RM 1 = 100 sen."},en:{"Change":"Money returned after payment.","Sen (cent)":"Smaller money unit: RM 1 = 100 sen."}},
+  explain:{bm:`<p>Gunakan <b>sen</b> untuk mengelakkan kesilapan perpuluhan: RM 12.50 = 1,250 sen.</p>
+  <p><b>Baki</b> = wang dibayar − harga barang. Contoh: bayar RM 50 untuk barang RM 37.80 → baki RM 12.20.</p>
+  <p><b>Darab wang:</b> 4 × RM 6.50 = RM 26.00. <b>Bahagi wang:</b> RM 90 ÷ 3 = RM 30 setiap orang.</p>`,
+  en:`<p>Use <b>cents</b> to avoid decimal errors: RM 12.50 = 1,250 cents.</p>
+  <p><b>Change</b> = money paid − price. Example: pay RM 50 for items costing RM 37.80 → change RM 12.20.</p>
+  <p><b>Multiply money:</b> 4 × RM 6.50 = RM 26.00. <b>Divide money:</b> RM 90 ÷ 3 = RM 30 each.</p>`},
+  examples:[
+   {q:{bm:"Baki daripada RM 50 selepas membeli barang RM 37.80?",en:"Change from RM 50 after buying items for RM 37.80?"},steps:{bm:["Baki = 50.00 − 37.80.","50.00 − 37.80 = 12.20.","Baki: RM 12.20."],en:["Change = 50.00 − 37.80.","50.00 − 37.80 = 12.20.","Change: RM 12.20."]}},
+   {q:{bm:"Harga 3 buku ialah RM 8.50 setiap satu. Jumlah kos?",en:"3 books cost RM 8.50 each. Total cost?"},steps:{bm:["3 × 8.50.","8.50 × 3 = 25.50.","Jumlah: RM 25.50."],en:["3 × 8.50.","8.50 × 3 = 25.50.","Total: RM 25.50."]}},
+   {q:{bm:"RM 96 dibahagi sama rata antara 4 orang. Setiap orang dapat?",en:"RM 96 shared equally among 4 people. Each gets?"},steps:{bm:["96 ÷ 4 = 24.","Setiap orang: RM 24."],en:["96 ÷ 4 = 24.","Each person: RM 24."]}}],
+  mistakes:{bm:"Kesilapan biasa: melupakan titik perpuluhan dalam wang (cth: RM 12.5 bermaksud RM 12.50, bukan RM 125!). Sentiasa tulis dua digit sen.",en:"Common mistake: forgetting the decimal point in money (e.g. RM 12.5 means RM 12.50, not RM 125!). Always write two sen digits."},
+  application:{bm:"Membeli-belah di pasar, mengira baki di kedai runcit, dan membahagi kos makanan bersama keluarga.",en:"Shopping at the market, counting change at the grocery shop, and splitting food costs with family."},
+  summary:{bm:"Tukar wang kepada sen untuk pengiraan tepat. Baki = wang dibayar − harga. Sentiasa tulis dua digit sen.",en:"Convert money to cents for exact calculation. Change = money paid − price. Always write two sen digits."}},
+ {id:"m3l2",title:{bm:"Simpanan, Bajet dan Faedah",en:"Savings, Budgeting and Interest"},sim:"savings",skills:["savings","budget","interest"],
+  ref:"DSKP 6.3.1–6.4.2 (Simpanan dan Faedah)",
+  objectives:{bm:["Merancang bajet perbelanjaan.","Mengira simpanan dan faedah mudah.","Membezakan keperluan dan kehendak."],en:["Plan a spending budget.","Calculate savings and simple interest.","Distinguish needs from wants."]},
+  terms:{bm:{"Bajet":"Pelan perbelanjaan yang dirancang mengikut pendapatan.","Faedah":"Wang tambahan yang diperoleh daripada simpanan di bank.","Keperluan":"Perkara penting untuk hidup (makanan, pakaian, buku).","Kehendak":"Perkara yang diinginkan tetapi tidak penting (mainan, snek)."},en:{"Budget":"A planned spending list based on income.","Interest":"Extra money earned from savings in a bank.","Needs":"Important things for living (food, clothes, books).","Wants":"Things we desire but don't need (toys, snacks)."}},
+  explain:{bm:`<p><b>Bajet:</b> senaraikan pendapatan, tolak keperluan dahulu, kemudian kehendak, dan simpan selebihnya.</p>
+  <p><b>Faedah mudah:</b> Faedah = Pokok × Kadar × Masa. Contoh: RM 1,000 pada 4% setahun selama 1 tahun = 1,000 × 0.04 × 1 = RM 40.</p>
+  <p><b>Matlamat simpanan:</b> jumlah perlu disimpan ÷ bilangan minggu = simpanan setiap minggu.</p>`,
+  en:`<p><b>Budget:</b> list income, subtract needs first, then wants, and save the rest.</p>
+  <p><b>Simple interest:</b> Interest = Principal × Rate × Time. Example: RM 1,000 at 4% per year for 1 year = 1,000 × 0.04 × 1 = RM 40.</p>
+  <p><b>Savings goal:</b> total to save ÷ number of weeks = savings per week.</p>`},
+  examples:[
+   {q:{bm:"Faedah bagi RM 2,000 pada kadar 5% setahun selama 2 tahun?",en:"Interest on RM 2,000 at 5% per year for 2 years?"},steps:{bm:["Faedah setahun: 2,000 × 0.05 = RM 100.","Untuk 2 tahun: 100 × 2 = RM 200.","Jumlah simpanan: 2,000 + 200 = RM 2,200."],en:["Interest per year: 2,000 × 0.05 = RM 100.","For 2 years: 100 × 2 = RM 200.","Total savings: 2,000 + 200 = RM 2,200."]}},
+   {q:{bm:"Matlamat RM 480 dalam 12 minggu. Berapa setiap minggu?",en:"Goal of RM 480 in 12 weeks. How much per week?"},steps:{bm:["480 ÷ 12 = 40.","Simpan RM 40 setiap minggu."],en:["480 ÷ 12 = 40.","Save RM 40 every week."]}},
+   {q:{bm:"Pendapatan RM 100. Keperluan RM 70, simpanan RM 20. Berapa untuk kehendak?",en:"Income RM 100. Needs RM 70, savings RM 20. How much for wants?"},steps:{bm:["100 − 70 − 20 = 10.","RM 10 untuk kehendak."],en:["100 − 70 − 20 = 10.","RM 10 for wants."]}}],
+  mistakes:{bm:"Kesilapan biasa: membelanjakan kehendak dahulu sebelum keperluan dan simpanan. Ingat: keperluan → simpanan → kehendak!",en:"Common mistake: spending on wants before needs and savings. Remember: needs → savings → wants!"},
+  application:{bm:"Menyimpan untuk basikal, merancang belanja sekolah, dan memahami faedah simpanan bank.",en:"Saving for a bicycle, planning school spending, and understanding bank savings interest."},
+  summary:{bm:"Bajet: keperluan dahulu, kemudian simpanan, akhir sekali kehendak. Faedah mudah = Pokok × Kadar × Masa.",en:"Budget: needs first, then savings, wants last. Simple interest = Principal × Rate × Time."}}]},
+{id:"m4",icon:"⏰",color:"#ea580c",title:{bm:"Masa dan Waktu",en:"Time"},
+ desc:{bm:"Unit masa, penukaran, tempoh, operasi masa dan jadual harian.",en:"Time units, conversions, duration, time operations and daily schedules."},
+ lessons:[
+ {id:"m4l1",title:{bm:"Unit Masa dan Penukaran",en:"Time Units and Conversions"},sim:"clock",skills:["timeunits","timeconvert"],
+  ref:"DSKP 7.1.1–7.2.2 (Masa dan Waktu)",
+  objectives:{bm:["Menukar unit masa (saat, minit, jam, hari, minggu).","Membaca jam analog dan digital.","Menukar masa 12 jam kepada 24 jam."],en:["Convert time units (seconds, minutes, hours, days, weeks).","Read analogue and digital clocks.","Convert 12-hour time to 24-hour time."]},
+  terms:{bm:{"Tempoh":"Jangka masa antara dua waktu.","Jam 24":"Sistem masa 00:00–23:59 tanpa AM/PM."},en:{"Duration":"The length of time between two times.","24-hour clock":"Time system 00:00–23:59 without AM/PM."}},
+  explain:{bm:`<p>Ingat: <b>60 saat = 1 minit</b>, <b>60 minit = 1 jam</b>, <b>24 jam = 1 hari</b>, <b>7 hari = 1 minggu</b>.</p>
+  <p><b>Jam analog:</b> jarum pendek = jam, jarum panjang = minit (setiap nombor = 5 minit).</p>
+  <p><b>Jam 24:</b> 2:30 PM = 14:30. Tengah hari (12 PM) = 12:00, tengah malam (12 AM) = 00:00.</p>`,
+  en:`<p>Remember: <b>60 seconds = 1 minute</b>, <b>60 minutes = 1 hour</b>, <b>24 hours = 1 day</b>, <b>7 days = 1 week</b>.</p>
+  <p><b>Analogue clock:</b> short hand = hours, long hand = minutes (each number = 5 minutes).</p>
+  <p><b>24-hour clock:</b> 2:30 PM = 14:30. Noon (12 PM) = 12:00, midnight (12 AM) = 00:00.</p>`},
+  examples:[
+   {q:{bm:"Tukar 3 jam kepada minit.",en:"Convert 3 hours to minutes."},steps:{bm:["1 jam = 60 minit.","3 × 60 = 180.","3 jam = 180 minit."],en:["1 hour = 60 minutes.","3 × 60 = 180.","3 hours = 180 minutes."]}},
+   {q:{bm:"Tukar 14:45 kepada masa 12 jam.",en:"Convert 14:45 to 12-hour time."},steps:{bm:["14 − 12 = 2.","14:45 ialah selepas tengah hari → PM.","2:45 PM."],en:["14 − 12 = 2.","14:45 is after noon → PM.","2:45 PM."]}},
+   {q:{bm:"Tukar 2.5 jam kepada minit.",en:"Convert 2.5 hours to minutes."},steps:{bm:["2 jam = 120 minit.","0.5 jam = 30 minit.","Jumlah: 150 minit."],en:["2 hours = 120 minutes.","0.5 hour = 30 minutes.","Total: 150 minutes."]}}],
+  mistakes:{bm:"Kesilapan biasa: tertukar jarum jam dan jarum minit. Jarum pendek = jam (bergerak perlahan), jarum panjang = minit (bergerak pantas)!",en:"Common mistake: swapping the hour and minute hands. Short hand = hours (moves slowly), long hand = minutes (moves quickly)!"},
+  application:{bm:"Membaca jadual bas, mengira masa perjalanan ke sekolah, dan merancang aktiviti harian.",en:"Reading bus timetables, calculating travel time to school, and planning daily activities."},
+  summary:{bm:"60 saat = 1 minit, 60 minit = 1 jam, 24 jam = 1 hari. Jarum pendek = jam, jarum panjang = minit.",en:"60 seconds = 1 minute, 60 minutes = 1 hour, 24 hours = 1 day. Short hand = hours, long hand = minutes."}},
+ {id:"m4l2",title:{bm:"Tempoh dan Operasi Masa",en:"Duration and Time Operations"},sim:"duration",skills:["duration","timetable"],
+  ref:"DSKP 7.3.1–7.4.2 (Tempoh dan Jadual)",
+  objectives:{bm:["Mengira tempoh antara dua waktu.","Menyelesaikan masalah melibatkan jadual dan tempoh."],en:["Calculate the duration between two times.","Solve problems involving timetables and durations."]},
+  terms:{bm:{"Jadual":"Senarai waktu aktiviti yang tersusun."},en:{"Timetable":"An organised list of activity times."}},
+  explain:{bm:`<p><b>Tempoh</b> = waktu tamat − waktu mula. Jika minit perlu dipinjam, pinjam 1 jam = 60 minit.</p>
+  <p>Contoh: dari 9:50 AM hingga 11:20 AM → 11:20 − 9:50 = 1 jam 30 minit.</p>
+  <p><b>Menambah masa:</b> 2 jam 45 minit + 1 jam 30 minit = 4 jam 15 minit.</p>`,
+  en:`<p><b>Duration</b> = end time − start time. If minutes need borrowing, borrow 1 hour = 60 minutes.</p>
+  <p>Example: from 9:50 AM to 11:20 AM → 11:20 − 9:50 = 1 hour 30 minutes.</p>
+  <p><b>Adding time:</b> 2 hours 45 minutes + 1 hour 30 minutes = 4 hours 15 minutes.</p>`},
+  examples:[
+   {q:{bm:"Tempoh dari 9:50 AM hingga 11:20 AM?",en:"Duration from 9:50 AM to 11:20 AM?"},steps:{bm:["11:20 − 9:50.","Pinjam 1 jam: 11:20 → 10:80.","10:80 − 9:50 = 1 jam 30 minit."],en:["11:20 − 9:50.","Borrow 1 hour: 11:20 → 10:80.","10:80 − 9:50 = 1 hour 30 minutes."]}},
+   {q:{bm:"Bas bertolak 7:15 AM, tiba 8:45 AM. Tempoh perjalanan?",en:"Bus departs 7:15 AM, arrives 8:45 AM. Travel duration?"},steps:{bm:["8:45 − 7:15.","Jam: 8 − 7 = 1. Minit: 45 − 15 = 30.","1 jam 30 minit."],en:["8:45 − 7:15.","Hours: 8 − 7 = 1. Minutes: 45 − 15 = 30.","1 hour 30 minutes."]}},
+   {q:{bm:"Kelas bermula 10:00 AM dan berlangsung 1 jam 45 minit. Bila tamat?",en:"Class starts 10:00 AM and lasts 1 hour 45 minutes. When does it end?"},steps:{bm:["10:00 + 1 jam = 11:00.","11:00 + 45 minit = 11:45.","Tamat pada 11:45 AM."],en:["10:00 + 1 hour = 11:00.","11:00 + 45 minutes = 11:45.","Ends at 11:45 AM."]}}],
+  mistakes:{bm:"Kesilapan biasa: melupakan bahawa 1 jam = 60 minit semasa meminjam. Tulis semula waktu dengan 60 minit tambahan sebelum menolak!",en:"Common mistake: forgetting that 1 hour = 60 minutes when borrowing. Rewrite the time with 60 extra minutes before subtracting!"},
+  application:{bm:"Mengira masa perjalanan, merancang jadual belajar, dan memastikan tidak terlewat kelas.",en:"Calculating travel time, planning study schedules, and not missing classes."},
+  summary:{bm:"Tempoh = tamat − mula. Pinjam 60 minit bila perlu. Tambah jam dan minit secara berasingan, kemudian kumpulkan lebihan 60 minit.",en:"Duration = end − start. Borrow 60 minutes when needed. Add hours and minutes separately, then regroup excess 60 minutes."}}]},
+{id:"m5",icon:"📏",color:"#0ea5e9",title:{bm:"Ukuran dan Sukatan",en:"Measurement"},
+ desc:{bm:"Panjang, jisim, isipadu cecair, penukaran unit dan penyelesaian masalah.",en:"Length, mass, liquid volume, unit conversions and problem solving."},
+ lessons:[
+ {id:"m5l1",title:{bm:"Panjang, Jisim dan Isipadu",en:"Length, Mass and Volume"},sim:"ruler",skills:["length","mass","volume"],
+  ref:"DSKP 8.1.1–8.3.2 (Ukuran)",
+  objectives:{bm:["Mengukur panjang, jisim dan isipadu dengan unit piawai.","Menukar unit (m↔cm, kg↔g, L↔mL).","Melakukan operasi melibatkan ukuran."],en:["Measure length, mass and volume with standard units.","Convert units (m↔cm, kg↔g, L↔mL).","Perform operations involving measurements."]},
+  terms:{bm:{"Unit piawai":"Unit ukuran yang diterima di seluruh dunia (meter, kilogram, liter).","Perimeter":"Jumlah panjang semua sisi bentuk."},en:{"Standard unit":"Measurement units accepted worldwide (metre, kilogram, litre).","Perimeter":"The total length of all sides of a shape."}},
+  explain:{bm:`<p><b>Panjang:</b> mm, cm, m, km. <b>Jisim:</b> g, kg. <b>Isipadu cecair:</b> mL, L.</p>
+  <p>Penukaran penting: <b>1 m = 100 cm</b>, <b>1 km = 1,000 m</b>, <b>1 kg = 1,000 g</b>, <b>1 L = 1,000 mL</b>.</p>
+  <p>Untuk menukar kepada unit lebih kecil, <b>darab</b>. Kepada unit lebih besar, <b>bahagi</b>.</p>`,
+  en:`<p><b>Length:</b> mm, cm, m, km. <b>Mass:</b> g, kg. <b>Liquid volume:</b> mL, L.</p>
+  <p>Key conversions: <b>1 m = 100 cm</b>, <b>1 km = 1,000 m</b>, <b>1 kg = 1,000 g</b>, <b>1 L = 1,000 mL</b>.</p>
+  <p>To convert to a smaller unit, <b>multiply</b>. To a larger unit, <b>divide</b>.</p>`},
+  examples:[
+   {q:{bm:"Tukar 2.5 m kepada cm.",en:"Convert 2.5 m to cm."},steps:{bm:["1 m = 100 cm.","2.5 × 100 = 250.","2.5 m = 250 cm."],en:["1 m = 100 cm.","2.5 × 100 = 250.","2.5 m = 250 cm."]}},
+   {q:{bm:"Tukar 3,500 g kepada kg.",en:"Convert 3,500 g to kg."},steps:{bm:["1 kg = 1,000 g.","3,500 ÷ 1,000 = 3.5.","3,500 g = 3.5 kg."],en:["1 kg = 1,000 g.","3,500 ÷ 1,000 = 3.5.","3,500 g = 3.5 kg."]}},
+   {q:{bm:"Sebuah botol mengandungi 750 mL jus. Berapa liter?",en:"A bottle contains 750 mL of juice. How many litres?"},steps:{bm:["1 L = 1,000 mL.","750 ÷ 1,000 = 0.75.","750 mL = 0.75 L."],en:["1 L = 1,000 mL.","750 ÷ 1,000 = 0.75.","750 mL = 0.75 L."]}}],
+  mistakes:{bm:"Kesilapan biasa: melupakan penukaran unit sebelum mengira (cth: 2 m + 50 cm tidak boleh ditambah terus!). Tukar kepada unit yang sama dahulu!",en:"Common mistake: forgetting to convert units before calculating (e.g. 2 m + 50 cm cannot be added directly!). Convert to the same unit first!"},
+  application:{bm:"Mengukur tinggi, menimbang bahan masakan, menyukat air dan mengira jarak perjalanan.",en:"Measuring height, weighing cooking ingredients, measuring water and calculating travel distances."},
+  summary:{bm:"1 m = 100 cm, 1 kg = 1,000 g, 1 L = 1,000 mL. Unit lebih kecil → darab; unit lebih besar → bahagi.",en:"1 m = 100 cm, 1 kg = 1,000 g, 1 L = 1,000 mL. Smaller unit → multiply; larger unit → divide."}},
+ {id:"m5l2",title:{bm:"Penyelesaian Masalah Ukuran",en:"Measurement Problem Solving"},sim:"units",skills:["measureword","measureops"],
+  ref:"DSKP 8.4.1–8.5.2 (Masalah Ukuran)",
+  objectives:{bm:["Menyelesaikan masalah ayat melibatkan ukuran.","Mengira perimeter dan menggunakan ukuran dalam kehidupan harian."],en:["Solve word problems involving measurement.","Calculate perimeter and use measurement in daily life."]},
+  terms:{bm:{"Perimeter":"Jumlah semua sisi bentuk."},en:{"Perimeter":"The sum of all sides of a shape."}},
+  explain:{bm:`<p><b>Perimeter</b> segi empat tepat = 2 × (panjang + lebar).</p>
+  <p>Apabila menyelesaikan masalah ukuran: (1) tukar unit kepada yang sama, (2) pilih operasi, (3) kira, (4) tulis unit dalam jawapan!</p>`,
+  en:`<p><b>Perimeter</b> of a rectangle = 2 × (length + width).</p>
+  <p>When solving measurement problems: (1) convert to the same unit, (2) choose the operation, (3) calculate, (4) write the unit in your answer!</p>`},
+  examples:[
+   {q:{bm:"Perimeter segi empat tepat 12 cm × 8 cm?",en:"Perimeter of a 12 cm × 8 cm rectangle?"},steps:{bm:["Perimeter = 2 × (12 + 8).","12 + 8 = 20.","2 × 20 = 40 cm."],en:["Perimeter = 2 × (12 + 8).","12 + 8 = 20.","2 × 20 = 40 cm."]}},
+   {q:{bm:"Tali sepanjang 3 m dipotong kepada 6 bahagian sama panjang. Setiap bahagian?",en:"A 3 m rope is cut into 6 equal parts. Each part?"},steps:{bm:["3 m = 300 cm.","300 ÷ 6 = 50.","Setiap bahagian 50 cm."],en:["3 m = 300 cm.","300 ÷ 6 = 50.","Each part is 50 cm."]}},
+   {q:{bm:"Sebuah jag 2 L diisi dengan cawan 250 mL. Berapa cawan?",en:"A 2 L jug is filled with 250 mL cups. How many cups?"},steps:{bm:["2 L = 2,000 mL.","2,000 ÷ 250 = 8.","8 cawan."],en:["2 L = 2,000 mL.","2,000 ÷ 250 = 8.","8 cups."]}}],
+  mistakes:{bm:"Kesilapan biasa: meninggalkan unit dalam jawapan atau tertukar unit. Sentiasa semak: adakah jawapan masuk akal? (cth: tinggi manusia tidak mungkin 300 m!)",en:"Common mistake: leaving out units or mixing units. Always check: does the answer make sense? (e.g. a person's height cannot be 300 m!)"},
+  application:{bm:"Mengira pagar taman, mengukur bahan binaan, dan menyukat minuman untuk majlis.",en:"Calculating garden fencing, measuring building materials, and measuring drinks for a party."},
+  summary:{bm:"Tukar unit dahulu. Perimeter = jumlah semua sisi. Sentiasa tulis unit dalam jawapan.",en:"Convert units first. Perimeter = sum of all sides. Always write the unit in your answer."}}]},
+{id:"m6",icon:"📐",color:"#7c3aed",title:{bm:"Ruang",en:"Space and Geometry"},
+ desc:{bm:"Bentuk 2D dan 3D, sudut, perimeter, luas dan isipadu.",en:"2D and 3D shapes, angles, perimeter, area and volume."},
+ lessons:[
+ {id:"m6l1",title:{bm:"Bentuk 2D dan 3D",en:"2D and 3D Shapes"},sim:"geometry",skills:["shapes2d","shapes3d"],
+  ref:"DSKP 9.1.1–9.2.2 (Ruang)",
+  objectives:{bm:["Mengenal pasti bentuk 2D dan 3D.","Mengenal pasti sifat bentuk (sisi, bucu, muka).","Mengira sudut menggunakan protraktor."],en:["Identify 2D and 3D shapes.","Identify shape properties (sides, vertices, faces).","Measure angles with a protractor."]},
+  terms:{bm:{"Bucu":"Titik pertemuan dua sisi.","Muka":"Permukaan rata bagi bentuk 3D.","Sudut":"Putaran antara dua garis yang bertemu pada satu titik."},en:{"Vertex":"The point where two sides meet.","Face":"A flat surface of a 3D shape.","Angle":"The turn between two lines meeting at a point."}},
+  explain:{bm:`<p><b>Bentuk 2D</b> (rata): segi tiga (3 sisi), segi empat sama (4 sisi sama), segi empat tepat, bulatan.</p>
+  <p><b>Bentuk 3D</b>: kubus (6 muka segi empat sama, 8 bucu), kuboid, silinder, kon, sfera, piramid.</p>
+  <p><b>Sudut</b> diukur dalam darjah (°). Sudut tegak = 90°. Jumlah sudut segi tiga = 180°.</p>`,
+  en:`<p><b>2D shapes</b> (flat): triangle (3 sides), square (4 equal sides), rectangle, circle.</p>
+  <p><b>3D shapes</b>: cube (6 square faces, 8 vertices), cuboid, cylinder, cone, sphere, pyramid.</p>
+  <p><b>Angles</b> are measured in degrees (°). A right angle = 90°. Angles in a triangle sum to 180°.</p>`},
+  examples:[
+   {q:{bm:"Berapa bucu pada kubus?",en:"How many vertices does a cube have?"},steps:{bm:["Kubus mempunyai 6 muka segi empat sama.","Setiap muka mempunyai 4 bucu.","Jumlah bucu: 8."],en:["A cube has 6 square faces.","Each face has 4 vertices.","Total vertices: 8."]}},
+   {q:{bm:"Sudut ketiga segi tiga dengan sudut 60° dan 70°?",en:"Third angle of a triangle with angles 60° and 70°?"},steps:{bm:["Jumlah sudut segi tiga = 180°.","180 − 60 − 70 = 50.","Sudut ketiga = 50°."],en:["Angles in a triangle sum to 180°.","180 − 60 − 70 = 50.","Third angle = 50°."]}},
+   {q:{bm:"Bentuk manakah yang mempunyai 5 muka?",en:"Which shape has 5 faces?"},steps:{bm:["Piramid segi empat mempunyai 1 tapak + 4 muka segi tiga.","Jumlah muka = 5.","Jawapan: piramid segi empat."],en:["A square pyramid has 1 base + 4 triangular faces.","Total faces = 5.","Answer: square pyramid."]}}],
+  mistakes:{bm:"Kesilapan biasa: mengira bucu kubus sebagai 6 (itu bilangan muka!). Ingat: kubus = 6 muka, 12 tepi, 8 bucu.",en:"Common mistake: counting a cube's vertices as 6 (that's the number of faces!). Remember: cube = 6 faces, 12 edges, 8 vertices."},
+  application:{bm:"Mengenal bentuk dalam bangunan, kotak, tin minuman dan bola.",en:"Recognising shapes in buildings, boxes, drink cans and balls."},
+  summary:{bm:"2D = rata, 3D = pepejal. Kubus: 6 muka, 12 tepi, 8 bucu. Jumlah sudut segi tiga = 180°.",en:"2D = flat, 3D = solid. Cube: 6 faces, 12 edges, 8 vertices. Triangle angles sum to 180°."}},
+ {id:"m6l2",title:{bm:"Perimeter, Luas dan Isipadu",en:"Perimeter, Area and Volume"},sim:"area",skills:["perimeter","area","volume"],
+  ref:"DSKP 9.3.1–9.4.2 (Perimeter, Luas, Isipadu)",
+  objectives:{bm:["Mengira perimeter bentuk 2D.","Mengira luas segi empat tepat dan segi tiga.","Mengira isipadu kubus dan kuboid."],en:["Calculate the perimeter of 2D shapes.","Calculate the area of rectangles and triangles.","Calculate the volume of cubes and cuboids."]},
+  terms:{bm:{"Luas":"Kawasan yang diliputi oleh bentuk (unit²).","Isipadu":"Ruang yang dipenuhi oleh bentuk 3D (unit³)."},en:{"Area":"The space covered by a shape (unit²).","Volume":"The space filled by a 3D shape (unit³)."}},
+  explain:{bm:`<p><b>Perimeter</b> = jumlah semua sisi.</p>
+  <p><b>Luas</b> segi empat tepat = panjang × lebar. <b>Luas</b> segi tiga = ½ × tapak × tinggi.</p>
+  <p><b>Isipadu</b> kuboid = panjang × lebar × tinggi. <b>Isipadu</b> kubus = sisi × sisi × sisi.</p>`,
+  en:`<p><b>Perimeter</b> = sum of all sides.</p>
+  <p><b>Area</b> of a rectangle = length × width. <b>Area</b> of a triangle = ½ × base × height.</p>
+  <p><b>Volume</b> of a cuboid = length × width × height. <b>Volume</b> of a cube = side × side × side.</p>`},
+  examples:[
+   {q:{bm:"Luas segi empat tepat 9 cm × 6 cm?",en:"Area of a 9 cm × 6 cm rectangle?"},steps:{bm:["Luas = panjang × lebar.","9 × 6 = 54.","Luas = 54 cm²."],en:["Area = length × width.","9 × 6 = 54.","Area = 54 cm²."]}},
+   {q:{bm:"Luas segi tiga tapak 10 cm, tinggi 6 cm?",en:"Area of a triangle with base 10 cm, height 6 cm?"},steps:{bm:["Luas = ½ × tapak × tinggi.","½ × 10 × 6 = 30.","Luas = 30 cm²."],en:["Area = ½ × base × height.","½ × 10 × 6 = 30.","Area = 30 cm²."]}},
+   {q:{bm:"Isipadu kubus bersisi 5 cm?",en:"Volume of a cube with side 5 cm?"},steps:{bm:["Isipadu = sisi × sisi × sisi.","5 × 5 × 5 = 125.","Isipadu = 125 cm³."],en:["Volume = side × side × side.","5 × 5 × 5 = 125.","Volume = 125 cm³."]}}],
+  mistakes:{bm:"Kesilapan biasa: tertukar perimeter dengan luas (perimeter = keliling, luas = kawasan dalam). Juga, luas segi tiga mesti didarab ½!",en:"Common mistake: confusing perimeter with area (perimeter = boundary, area = inside space). Also, triangle area must be multiplied by ½!"},
+  application:{bm:"Mengira cat dinding, jubin lantai, dan isipadu kotak untuk membungkus hadiah.",en:"Calculating wall paint, floor tiles, and box volume for wrapping gifts."},
+  summary:{bm:"Perimeter = jumlah sisi. Luas segi empat tepat = P×L. Luas segi tiga = ½×T×t. Isipadu kuboid = P×L×t.",en:"Perimeter = sum of sides. Rectangle area = L×W. Triangle area = ½×B×H. Cuboid volume = L×W×H."}}]},
+{id:"m7",icon:"🗺️",color:"#0891b2",title:{bm:"Koordinat, Nisbah dan Kadaran",en:"Coordinates, Ratio and Proportion"},
+ desc:{bm:"Koordinat kartesian, nisbah, hubungan berkadar dan aplikasi kehidupan sebenar.",en:"Cartesian coordinates, ratios, proportional relationships and real-world applications."},
+ lessons:[
+ {id:"m7l1",title:{bm:"Koordinat Kartesian",en:"Cartesian Coordinates"},sim:"coord",skills:["coordinates"],
+  ref:"DSKP 10.1.1–10.2.2 (Koordinat)",
+  objectives:{bm:["Membaca dan memplot titik pada grid koordinat.","Mengenal pasti kedudukan objek menggunakan koordinat (x, y)."],en:["Read and plot points on a coordinate grid.","Identify object positions using (x, y) coordinates."]},
+  terms:{bm:{"Paksi-x":"Garis mengufuk (bergerak ke kanan).","Paksi-y":"Garis menegak (bergerak ke atas).","Koordinat":"Pasangan nombor (x, y) yang menunjukkan kedudukan titik."},en:{"x-axis":"The horizontal line (moves right).","y-axis":"The vertical line (moves up).","Coordinates":"A pair of numbers (x, y) showing a point's position."}},
+  explain:{bm:`<p>Koordinat ditulis sebagai <b>(x, y)</b>: bergerak <b>sepanjang paksi-x dahulu</b> (kanan), kemudian <b>naik paksi-y</b>.</p>
+  <p>Contoh: titik (3, 2) → 3 unit ke kanan, 2 unit ke atas dari asalan (0,0).</p>
+  <p>Ingat: <b>masuk pintu, naik tangga</b> — x dahulu, kemudian y!</p>`,
+  en:`<p>Coordinates are written as <b>(x, y)</b>: move <b>along the x-axis first</b> (right), then <b>up the y-axis</b>.</p>
+  <p>Example: point (3, 2) → 3 units right, 2 units up from the origin (0,0).</p>
+  <p>Remember: <b>walk through the door, climb the stairs</b> — x first, then y!</p>`},
+  examples:[
+   {q:{bm:"Apakah koordinat titik yang 4 unit ke kanan dan 1 unit ke atas?",en:"What are the coordinates of a point 4 units right and 1 unit up?"},steps:{bm:["x = 4 (kanan).","y = 1 (atas).","Koordinat: (4, 1)."],en:["x = 4 (right).","y = 1 (up).","Coordinates: (4, 1)."]}},
+   {q:{bm:"Titik (2, 5) dan (5, 2) — adakah sama?",en:"Points (2, 5) and (5, 2) — are they the same?"},steps:{bm:["(2, 5): 2 kanan, 5 atas.","(5, 2): 5 kanan, 2 atas.","Tidak sama! Urutan penting."],en:["(2, 5): 2 right, 5 up.","(5, 2): 5 right, 2 up.","Not the same! Order matters."]}},
+   {q:{bm:"Berapa unit jarak antara (1, 3) dan (1, 7)?",en:"How many units between (1, 3) and (1, 7)?"},steps:{bm:["Kedua-dua mempunyai x = 1 (garis menegak yang sama).","Jarak = 7 − 3 = 4 unit."],en:["Both have x = 1 (same vertical line).","Distance = 7 − 3 = 4 units."]}}],
+  mistakes:{bm:"Kesilapan biasa: tertukar x dan y. Ingat: (x, y) — x dahulu (kanan), y kemudian (atas). Bayangkan anda masuk melalui pintu (x) lalu naik tangga (y)!",en:"Common mistake: swapping x and y. Remember: (x, y) — x first (right), y second (up). Imagine walking through the door (x) then climbing stairs (y)!"},
+  application:{bm:"Membaca peta, mencari alamat, dan bermain permainan video (kedudukan watak).",en:"Reading maps, finding addresses, and playing video games (character positions)."},
+  summary:{bm:"Koordinat (x, y): x = kanan, y = atas. Urutan penting — (2,5) ≠ (5,2).",en:"Coordinates (x, y): x = right, y = up. Order matters — (2,5) ≠ (5,2)."}},
+ {id:"m7l2",title:{bm:"Nisbah dan Kadaran",en:"Ratio and Proportion"},sim:"ratio",skills:["ratio","proportion"],
+  ref:"DSKP 10.3.1–10.4.2 (Nisbah dan Kadaran)",
+  objectives:{bm:["Menyatakan nisbah dalam bentuk paling mudah.","Menyelesaikan masalah nisbah dan kadaran.","Menggunakan nisbah dalam resipi dan campuran."],en:["Express ratios in simplest form.","Solve ratio and proportion problems.","Use ratios in recipes and mixtures."]},
+  terms:{bm:{"Nisbah":"Perbandingan dua kuantiti, ditulis sebagai a : b.","Kadaran":"Hubungan yang menunjukkan dua kuantiti berubah bersama."},en:{"Ratio":"A comparison of two quantities, written as a : b.","Proportion":"A relationship showing two quantities changing together."}},
+  explain:{bm:`<p><b>Nisbah</b> a : b membandingkan dua kuantiti. Untuk memudahkan, bahagi kedua-dua dengan faktor sepunya terbesar (FSTB).</p>
+  <p>Contoh: 12 : 18 → bahagi dengan 6 → <b>2 : 3</b>.</p>
+  <p><b>Kadaran:</b> jika 2 cawan tepung untuk 4 cawan air, maka untuk 6 cawan air perlu 3 cawan tepung (darab kedua-dua dengan 1.5).</p>`,
+  en:`<p>A <b>ratio</b> a : b compares two quantities. To simplify, divide both by their greatest common factor (GCF).</p>
+  <p>Example: 12 : 18 → divide by 6 → <b>2 : 3</b>.</p>
+  <p><b>Proportion:</b> if 2 cups of flour need 4 cups of water, then 6 cups of water need 3 cups of flour (multiply both by 1.5).</p>`},
+  examples:[
+   {q:{bm:"Mudahkan nisbah 12 : 18.",en:"Simplify the ratio 12 : 18."},steps:{bm:["FSTB bagi 12 dan 18 ialah 6.","12 ÷ 6 = 2, 18 ÷ 6 = 3.","Nisbah paling mudah: 2 : 3."],en:["GCF of 12 and 18 is 6.","12 ÷ 6 = 2, 18 ÷ 6 = 3.","Simplest ratio: 2 : 3."]}},
+   {q:{bm:"Resipi memerlukan 2 cawan tepung : 3 cawan susu. Untuk 6 cawan susu, berapa tepung?",en:"A recipe needs 2 cups flour : 3 cups milk. For 6 cups milk, how much flour?"},steps:{bm:["3 → 6 ialah darab 2.","2 × 2 = 4.","Perlu 4 cawan tepung."],en:["3 → 6 is multiply by 2.","2 × 2 = 4.","Need 4 cups of flour."]}},
+   {q:{bm:"Nisbah lelaki : perempuan dalam kelas ialah 3 : 2. Jika ada 12 lelaki, berapa perempuan?",en:"Ratio of boys : girls in a class is 3 : 2. If there are 12 boys, how many girls?"},steps:{bm:["3 → 12 ialah darab 4.","2 × 4 = 8.","Ada 8 perempuan."],en:["3 → 12 is multiply by 4.","2 × 4 = 8.","There are 8 girls."]}}],
+  mistakes:{bm:"Kesilapan biasa: menambah nisbah seperti pecahan (cth: 2:3 + 1:2). Nisbah bukan pecahan yang boleh ditambah terus — ia perbandingan!",en:"Common mistake: adding ratios like fractions (e.g. 2:3 + 1:2). Ratios are not fractions that can be added directly — they are comparisons!"},
+  application:{bm:"Mengadun minuman, mengira resipi untuk lebih ramai orang, dan membahagi hadiah mengikut nisbah.",en:"Mixing drinks, scaling recipes for more people, and sharing prizes by ratio."},
+  summary:{bm:"Mudahkan nisbah dengan FSTB. Untuk kadaran, darabkan kedua-dua kuantiti dengan faktor yang sama.",en:"Simplify ratios with the GCF. For proportions, multiply both quantities by the same factor."}}]},
+{id:"m8",icon:"📊",color:"#65a30d",title:{bm:"Pengurusan Data",en:"Data Handling"},
+ desc:{bm:"Mengumpul dan menyusun data, membaca carta dan mentafsir statistik.",en:"Collecting and organising data, reading charts and interpreting statistics."},
+ lessons:[
+ {id:"m8l1",title:{bm:"Mengumpul dan Menyusun Data",en:"Collecting and Organising Data"},sim:"chart",skills:["data","tables"],
+  ref:"DSKP 11.1.1–11.2.2 (Pengurusan Data)",
+  objectives:{bm:["Mengumpul data melalui tinjauan mudah.","Menyusun data dalam jadual dan carta bar.","Membaca maklumat daripada carta."],en:["Collect data through simple surveys.","Organise data in tables and bar charts.","Read information from charts."]},
+  terms:{bm:{"Data":"Maklumat yang dikumpul (nombor, kategori).","Carta bar":"Carta yang menggunakan bar untuk menunjukkan kuantiti."},en:{"Data":"Collected information (numbers, categories).","Bar chart":"A chart using bars to show quantities."}},
+  explain:{bm:`<p><b>Data</b> boleh dikumpul melalui tinjauan, pemerhatian atau pengukuran.</p>
+  <p><b>Jadual</b> menyusun data dengan kemas. <b>Carta bar</b> menunjukkan perbandingan dengan mudah — bar yang lebih tinggi bermaksud nilai lebih besar.</p>
+  <p>Apabila membaca carta: (1) baca tajuk, (2) baca paksi, (3) bandingkan bar.</p>`,
+  en:`<p><b>Data</b> can be collected through surveys, observations or measurements.</p>
+  <p><b>Tables</b> organise data neatly. <b>Bar charts</b> show comparisons easily — taller bars mean larger values.</p>
+  <p>When reading a chart: (1) read the title, (2) read the axes, (3) compare the bars.</p>`},
+  examples:[
+   {q:{bm:"Carta bar menunjukkan: Epal 8, Oren 5, Pisang 11. Buah paling popular?",en:"Bar chart shows: Apples 8, Oranges 5, Bananas 11. Most popular fruit?"},steps:{bm:["Bandingkan ketinggian bar.","Pisang mempunyai bar tertinggi (11).","Buah paling popular: pisang."],en:["Compare bar heights.","Bananas have the tallest bar (11).","Most popular fruit: bananas."]}},
+   {q:{bm:"Jumlah murid dari carta: 8 + 5 + 11 = ?",en:"Total pupils from the chart: 8 + 5 + 11 = ?"},steps:{bm:["8 + 5 = 13.","13 + 11 = 24.","Jumlah: 24 murid."],en:["8 + 5 = 13.","13 + 11 = 24.","Total: 24 pupils."]}},
+   {q:{bm:"Perbezaan antara pisang dan oren?",en:"Difference between bananas and oranges?"},steps:{bm:["11 − 5 = 6.","Perbezaan: 6."],en:["11 − 5 = 6.","Difference: 6."]}}],
+  mistakes:{bm:"Kesilapan biasa: membaca skala carta dengan salah (cth: mengira setiap garis sebagai 1 padahal ia mewakili 5). Sentiasa semak nilai pada paksi!",en:"Common mistake: misreading the chart scale (e.g. counting each line as 1 when it represents 5). Always check the axis values!"},
+  application:{bm:"Mengira bilangan undian kelas, markah ujian, dan data cuaca.",en:"Counting class votes, test scores, and weather data."},
+  summary:{bm:"Kumpul data → susun dalam jadual → tunjukkan dalam carta bar. Baca tajuk dan skala dahulu.",en:"Collect data → organise in a table → display in a bar chart. Read the title and scale first."}},
+ {id:"m8l2",title:{bm:"Mentafsir Data dan Statistik",en:"Interpreting Data and Statistics"},sim:"table",skills:["interpret","statistics"],
+  ref:"DSKP 11.3.1–11.4.2 (Tafsiran Data)",
+  objectives:{bm:["Mentafsir maklumat daripada carta dan jadual.","Membuat kesimpulan mudah berdasarkan data.","Menyelesaikan masalah menggunakan data."],en:["Interpret information from charts and tables.","Draw simple conclusions based on data.","Solve problems using data."]},
+  terms:{bm:{"Purata":"Jumlah semua nilai dibahagi dengan bilangan nilai."},en:{"Average (mean)":"The sum of all values divided by the number of values."}},
+  explain:{bm:`<p><b>Purata</b> = jumlah semua nilai ÷ bilangan nilai. Contoh: markah 70, 80, 90 → purata = (70+80+90) ÷ 3 = 80.</p>
+  <p><b>Mentafsir data:</b> cari nilai tertinggi, terendah, perbezaan dan jumlah keseluruhan.</p>`,
+  en:`<p><b>Average (mean)</b> = sum of all values ÷ number of values. Example: marks 70, 80, 90 → average = (70+80+90) ÷ 3 = 80.</p>
+  <p><b>Interpreting data:</b> find the highest value, lowest value, difference and total.</p>`},
+  examples:[
+   {q:{bm:"Purata bagi 70, 80, 90?",en:"Average of 70, 80, 90?"},steps:{bm:["Jumlah: 70 + 80 + 90 = 240.","Bilangan nilai: 3.","Purata: 240 ÷ 3 = 80."],en:["Sum: 70 + 80 + 90 = 240.","Number of values: 3.","Average: 240 ÷ 3 = 80."]}},
+   {q:{bm:"Data suhu: 28, 30, 29, 31, 30. Suhu tertinggi?",en:"Temperature data: 28, 30, 29, 31, 30. Highest temperature?"},steps:{bm:["Bandingkan semua nilai.","Nilai terbesar ialah 31.","Suhu tertinggi: 31°C."],en:["Compare all values.","The largest value is 31.","Highest temperature: 31°C."]}},
+   {q:{bm:"Jika 5 murid mendapat 100 markah dan jumlah markah kelas ialah 2,500 untuk 25 murid, purata kelas?",en:"If the class total is 2,500 marks for 25 pupils, what is the class average?"},steps:{bm:["Purata = jumlah ÷ bilangan.","2,500 ÷ 25 = 100.","Purata kelas: 100."],en:["Average = total ÷ count.","2,500 ÷ 25 = 100.","Class average: 100."]}}],
+  mistakes:{bm:"Kesilapan biasa: melupakan membahagi dengan bilangan nilai semasa mengira purata. Purata = jumlah ÷ bilangan — jangan lupa bahagi!",en:"Common mistake: forgetting to divide by the number of values when calculating the average. Average = total ÷ count — don't forget to divide!"},
+  application:{bm:"Mengira purata markah, membandingkan jualan kedai, dan meramal cuaca.",en:"Calculating average marks, comparing shop sales, and forecasting weather."},
+  summary:{bm:"Purata = jumlah ÷ bilangan. Baca data dengan teliti: tertinggi, terendah, perbezaan, jumlah.",en:"Average = total ÷ count. Read data carefully: highest, lowest, difference, total."}}]},
+{id:"m9",icon:"🎲",color:"#c026d3",title:{bm:"Kebolehjadian",en:"Probability"},
+ desc:{bm:"Memahami kebolehjadian, peristiwa mungkin dan mustahil, serta eksperimen mudah.",en:"Understanding likelihood, possible and impossible events, and simple experiments."},
+ lessons:[
+ {id:"m9l1",title:{bm:"Memahami Kebolehjadian",en:"Understanding Probability"},sim:"coin",skills:["probability","likelihood"],
+  ref:"DSKP 12.1.1–12.2.2 (Kebolehjadian)",
+  objectives:{bm:["Mengenal pasti peristiwa yang pasti, mungkin, kurang mungkin dan mustahil.","Membandingkan kebolehjadian peristiwa."],en:["Identify certain, likely, unlikely and impossible events.","Compare the likelihood of events."]},
+  terms:{bm:{"Pasti":"Peristiwa yang akan berlaku (kebolehjadian 1).","Mustahil":"Peristiwa yang tidak akan berlaku (kebolehjadian 0).","Mungkin":"Peristiwa yang boleh berlaku atau tidak."},en:{"Certain":"An event that will definitely happen (probability 1).","Impossible":"An event that will never happen (probability 0).","Possible":"An event that may or may not happen."}},
+  explain:{bm:`<p><b>Kebolehjadian</b> mengukur peluang sesuatu peristiwa berlaku, dari <b>0 (mustahil)</b> hingga <b>1 (pasti)</b>.</p>
+  <p>Contoh: melontar syiling → peluang dapat kepala = 1/2.</p>
+  <p>Peristiwa <b>lebih mungkin</b> jika mempunyai lebih banyak hasil yang menguntungkan.</p>`,
+  en:`<p><b>Probability</b> measures how likely an event is, from <b>0 (impossible)</b> to <b>1 (certain)</b>.</p>
+  <p>Example: tossing a coin → chance of heads = 1/2.</p>
+  <p>An event is <b>more likely</b> if it has more favourable outcomes.</p>`},
+  examples:[
+   {q:{bm:"Peluang mendapat kepala apabila melontar syiling?",en:"Chance of heads when tossing a coin?"},steps:{bm:["Hasil mungkin: kepala atau ekor (2 hasil).","Hasil menguntungkan: kepala (1 hasil).","Peluang = 1/2."],en:["Possible outcomes: heads or tails (2 outcomes).","Favourable outcomes: heads (1 outcome).","Probability = 1/2."]}},
+   {q:{bm:"Beg mengandungi 3 guli merah dan 1 guli biru. Peluang guli biru?",en:"A bag has 3 red marbles and 1 blue marble. Chance of blue?"},steps:{bm:["Jumlah guli: 3 + 1 = 4.","Guli biru: 1.","Peluang = 1/4."],en:["Total marbles: 3 + 1 = 4.","Blue marbles: 1.","Probability = 1/4."]}},
+   {q:{bm:"Peristiwa manakah yang mustahil? (a) Matahari terbit (b) Ikan terbang (c) Hujan turun",en:"Which event is impossible? (a) Sun rises (b) Fish fly (c) Rain falls"},steps:{bm:["Matahari terbit setiap hari — pasti.","Ikan tidak boleh terbang — mustahil.","Hujan boleh turun — mungkin.","Jawapan: (b) ikan terbang."],en:["The sun rises daily — certain.","Fish cannot fly — impossible.","Rain can fall — possible.","Answer: (b) fish flying."]}}],
+  mistakes:{bm:"Kesilapan biasa: menganggap setiap hasil mempunyai peluang yang sama walaupun bilangannya berbeza. Kira jumlah hasil dahulu!",en:"Common mistake: assuming every outcome has the same chance even when counts differ. Count the total outcomes first!"},
+  application:{bm:"Meramal cuaca, bermain permainan papan, dan membuat keputusan berdasarkan peluang.",en:"Forecasting weather, playing board games, and making decisions based on chances."},
+  summary:{bm:"Kebolehjadian = hasil menguntungkan ÷ jumlah hasil. Dari 0 (mustahil) hingga 1 (pasti).",en:"Probability = favourable outcomes ÷ total outcomes. From 0 (impossible) to 1 (certain)."}},
+ {id:"m9l2",title:{bm:"Eksperimen Kebolehjadian",en:"Probability Experiments"},sim:"dice",skills:["experiment","spinner"],
+  ref:"DSKP 12.3.1–12.3.2 (Eksperimen Kebolehjadian)",
+  objectives:{bm:["Menjalankan eksperimen mudah (dadu, syiling, pemutar).","Merekod hasil eksperimen dan membandingkan dengan ramalan."],en:["Conduct simple experiments (dice, coin, spinner).","Record experiment results and compare with predictions."]},
+  terms:{bm:{"Eksperimen":"Aktiviti untuk menguji ramalan kebolehjadian.","Hasil":"Keputusan yang diperoleh daripada eksperimen."},en:{"Experiment":"An activity to test a probability prediction.","Outcome":"The result obtained from an experiment."}},
+  explain:{bm:`<p><b>Eksperimen kebolehjadian:</b> buat ramalan, jalankan eksperimen banyak kali, rekod hasil, dan bandingkan dengan ramalan.</p>
+  <p>Semakin banyak percubaan, semakin dekat hasil eksperimen dengan kebolehjadian teori!</p>
+  <p>Contoh: lontar dadu 30 kali — setiap nombor harus muncul kira-kira 5 kali (30 ÷ 6).</p>`,
+  en:`<p><b>Probability experiments:</b> make a prediction, run the experiment many times, record results, and compare with the prediction.</p>
+  <p>The more trials, the closer experimental results get to theoretical probability!</p>
+  <p>Example: roll a die 30 times — each number should appear about 5 times (30 ÷ 6).</p>`},
+  examples:[
+   {q:{bm:"Dadu dilontar 36 kali. Berapa kali nombor 6 dijangka muncul?",en:"A die is rolled 36 times. How many times is 6 expected to appear?"},steps:{bm:["Peluang nombor 6 = 1/6.","36 × 1/6 = 6.","Dijangka muncul 6 kali."],en:["Probability of 6 = 1/6.","36 × 1/6 = 6.","Expected to appear 6 times."]}},
+   {q:{bm:"Pemutar mempunyai 4 bahagian sama besar: merah, biru, hijau, kuning. Peluang merah?",en:"A spinner has 4 equal sections: red, blue, green, yellow. Chance of red?"},steps:{bm:["Jumlah bahagian: 4.","Bahagian merah: 1.","Peluang = 1/4."],en:["Total sections: 4.","Red sections: 1.","Probability = 1/4."]}},
+   {q:{bm:"Syiling dilontar 20 kali, kepala muncul 12 kali. Kebolehjadian eksperimen kepala?",en:"A coin is tossed 20 times, heads appears 12 times. Experimental probability of heads?"},steps:{bm:["Kebolehjadian eksperimen = kepala ÷ jumlah lontaran.","12 ÷ 20 = 3/5 = 0.6.","Kebolehjadian eksperimen: 0.6."],en:["Experimental probability = heads ÷ total tosses.","12 ÷ 20 = 3/5 = 0.6.","Experimental probability: 0.6."]}}],
+  mistakes:{bm:"Kesilapan biasa: membuat kesimpulan daripada terlalu sedikit percubaan. Jalankan eksperimen sekurang-kurangnya 20 kali untuk hasil yang lebih dipercayai!",en:"Common mistake: drawing conclusions from too few trials. Run the experiment at least 20 times for more reliable results!"},
+  application:{bm:"Bermain permainan peluang, membuat undian, dan memahami risiko dalam kehidupan.",en:"Playing chance games, conducting draws, and understanding risk in life."},
+  summary:{bm:"Ramalan → eksperimen → rekod → bandingkan. Lebih banyak percubaan = hasil lebih tepat.",en:"Predict → experiment → record → compare. More trials = more accurate results."}}]}];
+/* ================= QUESTION ENGINE (procedural, seeded, validated) ================= */
+let qCounter=0;
+function mkQ(module,skill,diff,type,q,answer,opts){return{id:"Q"+(++qCounter)+"-"+skill+"-"+diff,module,skill,diff,type,
+  q,answer,opts:opts||{},seed:Math.floor(rng()*1e9)}}
+/* Build 4 unique options. Always terminates: pools with <3 distinct distractors
+   are topped up with format-preserving variants (numbers, fractions, RM). */
+function mcqOpts(correct,pool){
+  const c=String(correct), s=new Set([c]);
+  for(const v of (pool||[])){if(s.size>=4)break;const t=String(v);
+    if(t!==c&&!/^(null|undefined|NaN|)$/.test(t))s.add(t)}
+  let k=1;
+  while(s.size<4&&k<=40){
+    const fracM=c.match(/^(-?\d+)\/(\d+)$/), rmM=c.match(/^RM\s*([\d.]+)$/i), numM=c.match(/^(-?\d+(?:\.\d+)?)$/);
+    let cand;
+    if(fracM){const n=+fracM[1],d=+fracM[2];
+      const o=[[n+1,d],[n,d+1],[Math.max(0,n-1)||1,d],[n+1,d+1],[d,n],[n,d>1?d-1:2]][(k-1)%6];
+      cand=o[0]+"/"+o[1]}
+    else if(rmM){const v=+rmM[1];const adj=[v+0.5,v-0.5,v+1,v-1,v+0.1,v+2,v-2,v+5][(k-1)%8];
+      cand="RM "+Math.max(0,adj).toFixed(2)}
+    else if(numM){const v=+numM[1];const adj=[v+1,v-1,v+10,v-10,v+2,v-2,v+5,v-5,v+100,v-100][(k-1)%10];
+      const isInt=Number.isInteger(v);
+      cand=String(Math.max(0,adj));if(!isInt)cand=(Math.max(0,adj)).toFixed(2)}
+    else {cand=c+" "+["(i)","(ii)","(iii)","(iv)"][(k-1)%4]}
+    if(cand!==c)s.add(cand);
+    k++;
+  }
+  return shuffle([...s].slice(0,4))
+}
+const DIFFS=["easy","medium","hard","kbat"];
+function genQuestion(moduleId,skill,diff,seed){
+  if(seed!==undefined&&seed!==null)reseed(seed);
+  diff=diff||"medium";const R=(a,b)=>ri(a,b);
+  const M=(q,ans,extra)=>Object.assign(mkQ(moduleId,skill,diff,"mcq",q,ans),extra||{});
+  switch(skill){
+  case "placevalue":{const n=R(10000,999999),pos=R(0,String(n).length-1),d=Number(String(n)[pos]);
+    const placeVal=Math.pow(10,String(n).length-1-pos);
+    return M(L(`Apakah nilai digit ${d} dalam ${fmt(n)}?`,`What is the value of the digit ${d} in ${fmt(n)}?`),d*placeVal,
+      {options:mcqOpts(d*placeVal,[d*placeVal*10,d*placeVal/10||d*placeVal*2,d*placeVal+placeVal]),
+       hint:L("Kira nilai tempat digit tersebut, kemudian darabkan.","Find the place value of that digit, then multiply."),
+       expl:L(`Digit ${d} berada di tempat ${fmt(placeVal)}. Nilai = ${d} × ${fmt(placeVal)} = ${fmt(d*placeVal)}.`,`Digit ${d} is in the ${fmt(placeVal)} place. Value = ${d} × ${fmt(placeVal)} = ${fmt(d*placeVal)}.`),
+       ref:"DSKP 4.1.1"})}
+  case "compare":{const a=R(1000,999999);let b=a+R(-5000,5000);if(b===a)b+=1;if(b<0)b=a+100;
+    const small=Math.min(a,b),big=Math.max(a,b);
+    return M(L(`Yang mana lebih besar: ${fmt(a)} atau ${fmt(b)}?`,`Which is larger: ${fmt(a)} or ${fmt(b)}?`),fmt(big),
+      {options:shuffle([fmt(a),fmt(b),fmt(small-1),fmt(big+1)]),
+       hint:L("Bandingkan bilangan digit dahulu, kemudian dari kiri.","Compare the number of digits first, then from the left."),
+       expl:L(`${fmt(big)} lebih besar daripada ${fmt(small)}.`,`${fmt(big)} is larger than ${fmt(small)}.`),ref:"DSKP 4.1.3"})}
+  case "round":{const n=R(100,999999),p=pick([10,100,1000]);const r=Math.round(n/p)*p;
+    return M(L(`Bundarkan ${fmt(n)} kepada ${fmt(p)} terdekat.`,`Round ${fmt(n)} to the nearest ${fmt(p)}.`),fmt(r),
+      {options:mcqOpts(fmt(r),[fmt(r+p),fmt(r-p),fmt(n)]),
+       hint:L("Lihat digit di sebelah kanan tempat pembundaran.","Look at the digit right of the rounding place."),
+       expl:L(`Digit di sebelah kanan menentukan sama ada naik atau kekal. Hasil: ${fmt(r)}.`,`The digit to the right decides whether to round up or stay. Result: ${fmt(r)}.`),ref:"DSKP 4.1.4"})}
+  case "addsub":{const a=R(100,9999),b=R(100,9999),op=pick(["+","−"]);const ans=op==="+"?a+b:a-b;
+    return M(L(`Kira: ${fmt(a)} ${op} ${fmt(b)}`,`Calculate: ${fmt(a)} ${op} ${fmt(b)}`),String(ans),
+      {options:mcqOpts(String(ans),[String(ans+10),String(ans-10),String(ans+100),String(ans-100)]),
+       hint:L("Jajarkan mengikut nilai tempat. Kumpul semula bila perlu.","Align by place value. Regroup when needed."),
+       expl:L(`${fmt(a)} ${op} ${fmt(b)} = ${fmt(ans)}.`,`${fmt(a)} ${op} ${fmt(b)} = ${fmt(ans)}.`),ref:"DSKP 4.2.1"})}
+  case "mult":{const a=R(12,999),b=R(3,19);const ans=a*b;
+    return M(L(`Kira: ${a} × ${b}`,`Calculate: ${a} × ${b}`),String(ans),
+      {options:mcqOpts(String(ans),[String(ans+b),String(ans-b),String(ans+10),String(ans-10)]),
+       hint:L("Darabkan sa dahulu, kemudian puluh. Jumlahkan hasil.","Multiply ones first, then tens. Add the results."),
+       expl:L(`${a} × ${b} = ${fmt(ans)}.`,`${a} × ${b} = ${fmt(ans)}.`),ref:"DSKP 4.2.3"})}
+  case "divide":{const b=R(3,12),q=R(3,25),a=b*q;
+    return M(L(`Kira: ${a} ÷ ${b}`,`Calculate: ${a} ÷ ${b}`),String(q),
+      {options:mcqOpts(String(q),[String(q+1),String(q-1),String(q+2),String(q*2)]),
+       hint:L("Fikirkan: berapa kali ${b} masuk ke dalam ${a}?".replace("${b}",b).replace("${a}",a),`Think: how many times does ${b} fit into ${a}?`),
+       expl:L(`${a} ÷ ${b} = ${q} kerana ${b} × ${q} = ${a}.`,`${a} ÷ ${b} = ${q} because ${b} × ${q} = ${a}.`),ref:"DSKP 4.2.4"})}
+  case "combined":{const a=R(3,20),b=R(3,20),c=R(3,20);const ans=a+b*c;
+    return M(L(`Kira mengikut urutan operasi: ${a} + ${b} × ${c}`,`Calculate following the order of operations: ${a} + ${b} × ${c}`),String(ans),
+      {options:mcqOpts(String(ans),[String((a+b)*c),String(ans+10),String(ans-10)]),
+       hint:L("Darab dahulu, kemudian tambah!","Multiply first, then add!"),
+       expl:L(`${b} × ${c} = ${b*c}. Kemudian ${a} + ${b*c} = ${ans}.`,`${b} × ${c} = ${b*c}. Then ${a} + ${b*c} = ${ans}.`),ref:"DSKP 4.2.6"})}
+  case "patterns":{const start=R(2,50),step=pick([2,3,4,5,6,7,8,9,10,11,12,15,20]);const seq=[start,start+step,start+2*step,start+3*step];const ans=start+4*step;
+    return M(L(`Lengkapkan corak: ${seq.join(", ")}, …`,`Complete the pattern: ${seq.join(", ")}, …`),String(ans),
+      {options:mcqOpts(String(ans),[String(ans+step),String(ans-step),String(ans+1)]),
+       hint:L("Cari perbezaan antara nombor berturutan.","Find the difference between consecutive numbers."),
+       expl:L(`Perbezaan ialah ${step}. Nombor seterusnya: ${start+3*step} + ${step} = ${ans}.`,`The difference is ${step}. Next number: ${start+3*step} + ${step} = ${ans}.`),ref:"DSKP 4.3.1"})}
+  case "wordproblem":{const n=R(3,12),p=R(2,9),ans=n*p;const items=pick([L("buku","books"),L("pensel","pencils"),L("guli","marbles"),L("epal","apples")]);
+    return M(L(`Sebuah kotak mengandungi ${p} ${items}. Berapa ${items} dalam ${n} kotak?`,`A box contains ${p} ${items}. How many ${items} in ${n} boxes?`),String(ans),
+      {options:mcqOpts(String(ans),[String(ans+p),String(ans-p),String(n+p)]),
+       hint:L("Gunakan darab: bilangan kotak × setiap kotak.","Use multiplication: number of boxes × each box."),
+       expl:L(`${n} × ${p} = ${ans}.`,`${n} × ${p} = ${ans}.`),ref:"DSKP 4.3.2"})}
+  case "fractions":{const d=pick([2,3,4,5,6,8,10,12]),n=R(1,d-1),k=R(2,5);const e=frac(n*k,d*k);
+    return M(L(`Tulis pecahan setara bagi ${n}/${d} dengan penyebut ${d*k}.`,`Write an equivalent fraction for ${n}/${d} with denominator ${d*k}.`),fstr(e),
+      {options:mcqOpts(fstr(e),[fstr(frac(n,d*k)),fstr(frac(n*k,d)),fstr(frac(n+1,d*k))]),
+       hint:L("Darabkan pengangka dan penyebut dengan nombor yang sama.","Multiply numerator and denominator by the same number."),
+       expl:L(`Darab dengan ${k}: ${n}×${k}=${e.n}, ${d}×${k}=${e.d}. Jadi ${n}/${d} = ${fstr(e)}.`,`Multiply by ${k}: ${n}×${k}=${e.n}, ${d}×${k}=${e.d}. So ${n}/${d} = ${fstr(e)}.`),ref:"DSKP 5.1.1"})}
+  case "fractioncompare":{const d1=pick([3,4,5,6,8]),d2=pick([3,4,5,6,8,10,12]);const a=frac(R(1,d1-1),d1),b=frac(R(1,d2-1),d2);
+    const big=fval(a)>fval(b)?a:b;
+    return M(L(`Yang mana lebih besar: ${fstr(a)} atau ${fstr(b)}?`,`Which is larger: ${fstr(a)} or ${fstr(b)}?`),fstr(big),
+      {options:mcqOpts(fstr(big),[fstr(a),fstr(b),fstr(frac((fval(a)>fval(b)?b:a).n+(fval(a)>fval(b)?b:a).d,(fval(a)>fval(b)?b:a).d)),fstr(frac(Math.max(1,Math.min(a.n,b.n)),Math.max(a.d,b.d)+1)),"1/2","3/4","2/5"]),
+       hint:L("Samakan penyebut dahulu, kemudian bandingkan pengangka.","Make denominators equal first, then compare numerators."),
+       expl:L(`${fstr(a)} = ${fval(a).toFixed(3)}, ${fstr(b)} = ${fval(b).toFixed(3)}. Jadi ${fstr(big)} lebih besar.`,`${fstr(a)} = ${fval(a).toFixed(3)}, ${fstr(b)} = ${fval(b).toFixed(3)}. So ${fstr(big)} is larger.`),ref:"DSKP 5.1.3"})}
+  case "decimals":{const a=(R(10,999)/100),b=(R(10,999)/100);const ans=(a+b).toFixed(2);
+    return M(L(`Kira: ${a.toFixed(2)} + ${b.toFixed(2)}`,`Calculate: ${a.toFixed(2)} + ${b.toFixed(2)}`),ans,
+      {options:mcqOpts(ans,[(a+b+0.1).toFixed(2),(a+b-0.1).toFixed(2),(a+b+1).toFixed(2)]),
+       hint:L("Jajarkan titik perpuluhan!","Align the decimal points!"),
+       expl:L(`${a.toFixed(2)} + ${b.toFixed(2)} = ${ans}.`,`${a.toFixed(2)} + ${b.toFixed(2)} = ${ans}.`),ref:"DSKP 5.2.1"})}
+  case "percent":{const p=pick([10,20,25,50,75]),q=pick([40,60,80,100,120,200,240]);const ans=p*q/100;
+    return M(L(`Kira ${p}% daripada ${q}.`,`Calculate ${p}% of ${q}.`),String(ans),
+      {options:mcqOpts(String(ans),[String(ans+5),String(ans-5),String(ans*2)]),
+       hint:L(`${p}% = ${p}/100. Darabkan dengan ${q}.`,`${p}% = ${p}/100. Multiply by ${q}.`),
+       expl:L(`${p}/100 × ${q} = ${ans}.`,`${p}/100 × ${q} = ${ans}.`),ref:"DSKP 5.3.2"})}
+  case "convert":{const d=pick([2,4,5,8,10,20,25,50]),n=R(1,d-1);const dec=n/d,pct=dec*100;
+    return M(L(`Tukar ${n}/${d} kepada peratus.`,`Convert ${n}/${d} to a percentage.`),String(pct)+"%",
+      {options:mcqOpts(String(pct)+"%",[String(pct+10)+"%",String(pct-10)+"%",String(pct*2)+"%"]),
+       hint:L("Bahagi pengangka dengan penyebut, kemudian darab 100.","Divide numerator by denominator, then multiply by 100."),
+       expl:L(`${n} ÷ ${d} = ${dec}. ${dec} × 100 = ${pct}%.`,`${n} ÷ ${d} = ${dec}. ${dec} × 100 = ${pct}%.`),ref:"DSKP 5.3.1"})}
+  case "money":{const c=R(150,4999),n=R(2,6);const total=c*n;
+    return M(L(`Harga sebiji ialah ${rmstr(c)}. Berapa kos ${n} biji?`,`One item costs ${rmstr(c)}. Cost of ${n} items?`),rmstr(total),
+      {options:mcqOpts(rmstr(total),[rmstr(total+100),rmstr(total-100),rmstr(total+50)]),
+       hint:L("Darabkan harga dengan bilangan.","Multiply the price by the quantity."),
+       expl:L(`${n} × ${rmstr(c)} = ${rmstr(total)} (gunakan sen: ${n} × ${c} sen = ${total} sen).`,`${n} × ${rmstr(c)} = ${rmstr(total)} (use cents: ${n} × ${c} cents = ${total} cents).`),ref:"DSKP 6.1.1"})}
+  case "change":{const price=R(500,4500),paid=pick([5000,10000]);const ch=paid-price;
+    return M(L(`Barang berharga ${rmstr(price)}. Dibayar dengan ${rmstr(paid)}. Berapa baki?`,`Items cost ${rmstr(price)}. Paid with ${rmstr(paid)}. What is the change?`),rmstr(ch),
+      {options:mcqOpts(rmstr(ch),[rmstr(ch+100),rmstr(ch-100),rmstr(ch+50)]),
+       hint:L("Baki = wang dibayar − harga.","Change = money paid − price."),
+       expl:L(`${rmstr(paid)} − ${rmstr(price)} = ${rmstr(ch)}.`,`${rmstr(paid)} − ${rmstr(price)} = ${rmstr(ch)}.`),ref:"DSKP 6.2.1"})}
+  case "savings":{const goal=pick([120,240,360,480,600]),weeks=pick([4,6,8,10,12]);const per=goal/weeks;
+    return M(L(`Matlamat simpanan ${rmstr(goal)} dalam ${weeks} minggu. Berapa setiap minggu?`,`Savings goal ${rmstr(goal)} in ${weeks} weeks. How much per week?`),rmstr(per*100),
+      {options:mcqOpts(rmstr(per*100),[rmstr(per*100+500),rmstr(per*100-500),rmstr(per*100+1000)]),
+       hint:L("Bahagikan matlamat dengan bilangan minggu.","Divide the goal by the number of weeks."),
+       expl:L(`${rmstr(goal)} ÷ ${weeks} = ${rmstr(per*100)} setiap minggu.`,`${rmstr(goal)} ÷ ${weeks} = ${rmstr(per*100)} per week.`),ref:"DSKP 6.3.1"})}
+  case "budget":{const inc=pick([100,150,200]),needs=R(40,80),save=R(10,30);const want=inc-needs-save;
+    return M(L(`Pendapatan ${rmstr(inc*100)}. Keperluan ${rmstr(needs*100)}, simpanan ${rmstr(save*100)}. Berapa untuk kehendak?`,`Income ${rmstr(inc*100)}. Needs ${rmstr(needs*100)}, savings ${rmstr(save*100)}. How much for wants?`),rmstr(want*100),
+      {options:mcqOpts(rmstr(want*100),[rmstr(want*100+1000),rmstr(want*100-1000),rmstr(want*100+500)]),
+       hint:L("Kehendak = pendapatan − keperluan − simpanan.","Wants = income − needs − savings."),
+       expl:L(`${rmstr(inc*100)} − ${rmstr(needs*100)} − ${rmstr(save*100)} = ${rmstr(want*100)}.`,`${rmstr(inc*100)} − ${rmstr(needs*100)} − ${rmstr(save*100)} = ${rmstr(want*100)}.`),ref:"DSKP 6.4.1"})}
+  case "interest":{const P=pick([500,1000,2000]),r=pick([2,4,5,10]),yrs=pick([1,2,3]);const I=P*r/100*yrs;
+    return M(L(`Faedah bagi ${rmstr(P*100)} pada ${r}% setahun selama ${yrs} tahun?`,`Interest on ${rmstr(P*100)} at ${r}% per year for ${yrs} years?`),rmstr(I*100),
+      {options:mcqOpts(rmstr(I*100),[rmstr(I*100+1000),rmstr(I*100-1000),rmstr(I*100+500)]),
+       hint:L("Faedah = Pokok × Kadar × Masa.","Interest = Principal × Rate × Time."),
+       expl:L(`${P} × ${r}/100 × ${yrs} = ${I}. Faedah: ${rmstr(I*100)}.`,`${P} × ${r}/100 × ${yrs} = ${I}. Interest: ${rmstr(I*100)}.`),ref:"DSKP 6.3.2"})}
+  case "timeunits":{const h=R(2,12);const m=h*60;
+    return M(L(`Tukar ${h} jam kepada minit.`,`Convert ${h} hours to minutes.`),String(m),
+      {options:mcqOpts(String(m),[String(m+60),String(m-60),String(h*100)]),
+       hint:L("1 jam = 60 minit.","1 hour = 60 minutes."),
+       expl:L(`${h} × 60 = ${m} minit.`,`${h} × 60 = ${m} minutes.`),ref:"DSKP 7.1.1"})}
+  case "timeconvert":{const h=R(13,23),m=pick([0,15,30,45]);const h12=h-12;
+    return M(L(`Tukar ${h}:${String(m).padStart(2,"0")} kepada masa 12 jam.`,`Convert ${h}:${String(m).padStart(2,"0")} to 12-hour time.`),`${h12}:${String(m).padStart(2,"0")} PM`,
+      {options:mcqOpts(`${h12}:${String(m).padStart(2,"0")} PM`,[`${h12}:${String(m).padStart(2,"0")} AM`,`${h}:${String(m).padStart(2,"0")} PM`,`${h12+1}:${String(m).padStart(2,"0")} PM`]),
+       hint:L("Tolak 12 dari jam, dan gunakan PM.","Subtract 12 from the hour, and use PM."),
+       expl:L(`${h} − 12 = ${h12}, selepas tengah hari → PM. Jawapan: ${h12}:${String(m).padStart(2,"0")} PM.`,`${h} − 12 = ${h12}, after noon → PM. Answer: ${h12}:${String(m).padStart(2,"0")} PM.`),ref:"DSKP 7.2.2"})}
+  case "duration":{const sh=R(7,10),sm=pick([0,15,30,45]),dh=R(1,3),dm=pick([0,15,30,45]);
+    let eh=sh+dh,em=sm+dm;if(em>=60){eh++;em-=60}
+    const totalMin=dh*60+dm;
+    return M(L(`Kelas bermula ${sh}:${String(sm).padStart(2,"0")} AM dan berlangsung ${dh} jam ${dm} minit. Bila tamat?`,`Class starts ${sh}:${String(sm).padStart(2,"0")} AM and lasts ${dh} hours ${dm} minutes. When does it end?`),`${eh}:${String(em).padStart(2,"0")} AM`,
+      {options:mcqOpts(`${eh}:${String(em).padStart(2,"0")} AM`,[`${eh}:${String(em).padStart(2,"0")} PM`,`${eh+1}:${String(em).padStart(2,"0")} AM`,`${eh}:${String((em+15)%60).padStart(2,"0")} AM`]),
+       hint:L("Tambahkan jam dan minit secara berasingan.","Add hours and minutes separately."),
+       expl:L(`${sh}:${String(sm).padStart(2,"0")} + ${dh} jam ${dm} minit = ${eh}:${String(em).padStart(2,"0")} AM.`,`${sh}:${String(sm).padStart(2,"0")} + ${dh} hours ${dm} minutes = ${eh}:${String(em).padStart(2,"0")} AM.`),ref:"DSKP 7.3.1"})}
+  case "timetable":{const sh=R(7,9),sm=pick([0,30]),dh=R(1,2),dm=pick([0,30,45]);
+    let eh=sh+dh,em=sm+dm;if(em>=60){eh++;em-=60}
+    return M(L(`Bas bertolak ${sh}:${String(sm).padStart(2,"0")} AM. Perjalanan mengambil ${dh} jam ${dm} minit. Waktu tiba?`,`Bus departs ${sh}:${String(sm).padStart(2,"0")} AM. Journey takes ${dh} hours ${dm} minutes. Arrival time?`),`${eh}:${String(em).padStart(2,"0")} AM`,
+      {options:mcqOpts(`${eh}:${String(em).padStart(2,"0")} AM`,[`${eh}:${String(em).padStart(2,"0")} PM`,`${eh+1}:${String(em).padStart(2,"0")} AM`,`${eh-1}:${String(em).padStart(2,"0")} AM`]),
+       hint:L("Tambahkan tempoh perjalanan kepada waktu bertolak.","Add the journey duration to the departure time."),
+       expl:L(`${sh}:${String(sm).padStart(2,"0")} + ${dh} jam ${dm} minit = ${eh}:${String(em).padStart(2,"0")} AM.`,`${sh}:${String(sm).padStart(2,"0")} + ${dh} hours ${dm} minutes = ${eh}:${String(em).padStart(2,"0")} AM.`),ref:"DSKP 7.4.1"})}
+  case "length":{const m=R(2,9),cm=R(10,90);const total=m*100+cm;
+    return M(L(`Tukar ${m} m ${cm} cm kepada cm.`,`Convert ${m} m ${cm} cm to cm.`),String(total),
+      {options:mcqOpts(String(total),[String(total+10),String(total-10),String(m*100+cm*10)]),
+       hint:L("1 m = 100 cm. Darabkan meter dengan 100.","1 m = 100 cm. Multiply metres by 100."),
+       expl:L(`${m} × 100 = ${m*100}. ${m*100} + ${cm} = ${total} cm.`,`${m} × 100 = ${m*100}. ${m*100} + ${cm} = ${total} cm.`),ref:"DSKP 8.1.1"})}
+  case "mass":{const kg=R(2,9),g=R(100,900);const total=kg*1000+g;
+    return M(L(`Tukar ${kg} kg ${g} g kepada g.`,`Convert ${kg} kg ${g} g to g.`),String(total),
+      {options:mcqOpts(String(total),[String(total+100),String(total-100),String(kg*1000+g*10)]),
+       hint:L("1 kg = 1,000 g.","1 kg = 1,000 g."),
+       expl:L(`${kg} × 1,000 = ${kg*1000}. ${kg*1000} + ${g} = ${total} g.`,`${kg} × 1,000 = ${kg*1000}. ${kg*1000} + ${g} = ${total} g.`),ref:"DSKP 8.2.1"})}
+  case "volume":{const L2=R(1,5),ml=R(100,900);const total=L2*1000+ml;
+    return M(L(`Tukar ${L2} L ${ml} mL kepada mL.`,`Convert ${L2} L ${ml} mL to mL.`),String(total),
+      {options:mcqOpts(String(total),[String(total+100),String(total-100),String(L2*1000+ml*10)]),
+       hint:L("1 L = 1,000 mL.","1 L = 1,000 mL."),
+       expl:L(`${L2} × 1,000 = ${L2*1000}. ${L2*1000} + ${ml} = ${total} mL.`,`${L2} × 1,000 = ${L2*1000}. ${L2*1000} + ${ml} = ${total} mL.`),ref:"DSKP 8.3.1"})}
+  case "measureword":{const l=R(5,20),w=R(3,15);const per=2*(l+w);
+    return M(L(`Perimeter segi empat tepat ${l} cm × ${w} cm?`,`Perimeter of a ${l} cm × ${w} cm rectangle?`),String(per),
+      {options:mcqOpts(String(per),[String(l*w),String(per+4),String(per-4)]),
+       hint:L("Perimeter = 2 × (panjang + lebar).","Perimeter = 2 × (length + width)."),
+       expl:L(`2 × (${l} + ${w}) = 2 × ${l+w} = ${per} cm.`,`2 × (${l} + ${w}) = 2 × ${l+w} = ${per} cm.`),ref:"DSKP 8.4.1"})}
+  case "measureops":{const total=R(200,900),parts=pick([2,3,4,5,6]);const each=total/parts;
+    return M(L(`Tali ${total} cm dipotong kepada ${parts} bahagian sama panjang. Setiap bahagian?`,`A ${total} cm rope is cut into ${parts} equal parts. Each part?`),String(each),
+      {options:mcqOpts(String(each),[String(each+10),String(each-10),String(each*2)]),
+       hint:L("Bahagikan jumlah dengan bilangan bahagian.","Divide the total by the number of parts."),
+       expl:L(`${total} ÷ ${parts} = ${each} cm.`,`${total} ÷ ${parts} = ${each} cm.`),ref:"DSKP 8.5.1"})}
+  case "shapes2d":{const n=pick([3,4,5,6]);const names={3:L("segi tiga","triangle"),4:L("segi empat","quadrilateral"),5:L("pentagon","pentagon"),6:L("heksagon","hexagon")};
+    return M(L(`Bentuk dengan ${n} sisi ialah…`,`A shape with ${n} sides is a…`),names[n],
+      {options:shuffle([names[3],names[4],names[5],names[6]]),
+       hint:L("Kira sisi bentuk tersebut.","Count the sides of the shape."),
+       expl:L(`Bentuk ${n} sisi ialah ${names[n]}.`,`A ${n}-sided shape is a ${names[n]}.`),ref:"DSKP 9.1.1"})}
+  case "shapes3d":{const q=pick(["cube","cuboid","cylinder","sphere"]);
+    const data={cube:{f:6,v:8,e:12,n:L("kubus","cube")},cuboid:{f:6,v:8,e:12,n:L("kuboid","cuboid")},cylinder:{f:3,v:0,e:2,n:L("silinder","cylinder")},sphere:{f:1,v:0,e:0,n:L("sfera","sphere")}};
+    const d=data[q];
+    return M(L(`Berapa muka pada ${d.n}?`,`How many faces does a ${d.n} have?`),String(d.f),
+      {options:mcqOpts(String(d.f),[String(d.f+1),String(d.f-1),String(d.f+2)]),
+       hint:L("Kira permukaan rata bentuk tersebut.","Count the flat surfaces of the shape."),
+       expl:L(`${d.n} mempunyai ${d.f} muka.`,`A ${d.n} has ${d.f} faces.`),ref:"DSKP 9.2.1"})}
+  case "perimeter":{const s=R(4,15);const per=4*s;
+    return M(L(`Perimeter segi empat sama bersisi ${s} cm?`,`Perimeter of a square with side ${s} cm?`),String(per),
+      {options:mcqOpts(String(per),[String(s*s),String(per+4),String(per-4)]),
+       hint:L("Segi empat sama mempunyai 4 sisi sama panjang.","A square has 4 equal sides."),
+       expl:L(`4 × ${s} = ${per} cm.`,`4 × ${s} = ${per} cm.`),ref:"DSKP 9.3.1"})}
+  case "area":{const l=R(4,15),w=R(3,12);const a=l*w;
+    return M(L(`Luas segi empat tepat ${l} cm × ${w} cm?`,`Area of a ${l} cm × ${w} cm rectangle?`),String(a),
+      {options:mcqOpts(String(a),[String(2*(l+w)),String(a+5),String(a-5)]),
+       hint:L("Luas = panjang × lebar.","Area = length × width."),
+       expl:L(`${l} × ${w} = ${a} cm².`,`${l} × ${w} = ${a} cm².`),ref:"DSKP 9.3.2"})}
+  case "volume":{const s=R(3,9);const v=s*s*s;
+    return M(L(`Isipadu kubus bersisi ${s} cm?`,`Volume of a cube with side ${s} cm?`),String(v),
+      {options:mcqOpts(String(v),[String(s*s*6),String(v+10),String(v-10)]),
+       hint:L("Isipadu kubus = sisi × sisi × sisi.","Cube volume = side × side × side."),
+       expl:L(`${s} × ${s} × ${s} = ${v} cm³.`,`${s} × ${s} × ${s} = ${v} cm³.`),ref:"DSKP 9.4.1"})}
+  case "coordinates":{const x=R(1,9),y=R(1,9);
+    return M(L(`Apakah koordinat titik yang ${x} unit ke kanan dan ${y} unit ke atas?`,`What are the coordinates of a point ${x} units right and ${y} units up?`),`(${x}, ${y})`,
+      {options:mcqOpts(`(${x}, ${y})`,[`(${y}, ${x})`,`(${x}, ${y+1})`,`(${x+1}, ${y})`]),
+       hint:L("Ingat: (x, y) — x dahulu (kanan), y kemudian (atas).","Remember: (x, y) — x first (right), y second (up)."),
+       expl:L(`x = ${x} (kanan), y = ${y} (atas). Koordinat: (${x}, ${y}).`,`x = ${x} (right), y = ${y} (up). Coordinates: (${x}, ${y}).`),ref:"DSKP 10.1.1"})}
+  case "ratio":{const a=R(2,6),b=R(2,6),k=R(2,5);const A=a*k,B=b*k;
+    return M(L(`Mudahkan nisbah ${A} : ${B}.`,`Simplify the ratio ${A} : ${B}.`),`${a} : ${b}`,
+      {options:mcqOpts(`${a} : ${b}`,[`${A} : ${B}`,`${a} : ${b+1}`,`${a+1} : ${b}`]),
+       hint:L("Bahagikan kedua-dua dengan faktor sepunya terbesar.","Divide both by their greatest common factor."),
+       expl:L(`Bahagi dengan ${k}: ${A}÷${k}=${a}, ${B}÷${k}=${b}. Nisbah: ${a} : ${b}.`,`Divide by ${k}: ${A}÷${k}=${a}, ${B}÷${k}=${b}. Ratio: ${a} : ${b}.`),ref:"DSKP 10.3.1"})}
+  case "proportion":{const a=R(2,5),b=R(2,5),k=R(2,4);const A=a*k;
+    return M(L(`Resipi memerlukan ${a} cawan tepung : ${b} cawan susu. Untuk ${A} cawan tepung, berapa susu?`,`A recipe needs ${a} cups flour : ${b} cups milk. For ${A} cups flour, how much milk?`),String(b*k),
+      {options:mcqOpts(String(b*k),[String(b*k+1),String(b*k-1),String(b*k+2)]),
+       hint:L("Cari faktor darab, kemudian darabkan kedua-dua.","Find the multiplier, then multiply both."),
+       expl:L(`Faktor darab = ${A} ÷ ${a} = ${k}. Susu: ${b} × ${k} = ${b*k} cawan.`,`Multiplier = ${A} ÷ ${a} = ${k}. Milk: ${b} × ${k} = ${b*k} cups.`),ref:"DSKP 10.4.1"})}
+  case "data":{const a=R(3,15),b=R(3,15),c=R(3,15);const items=[L("Epal","Apples"),L("Oren","Oranges"),L("Pisang","Bananas")];
+    const vals=[a,b,c];const mx=Math.max(a,b,c);const mi=items[vals.indexOf(mx)];
+    return M(L(`Carta bar: ${items[0]} ${a}, ${items[1]} ${b}, ${items[2]} ${c}. Yang paling popular?`,`Bar chart: ${items[0]} ${a}, ${items[1]} ${b}, ${items[2]} ${c}. Most popular?`),mi,
+      {options:shuffle([...items]),
+       hint:L("Cari bar tertinggi.","Find the tallest bar."),
+       expl:L(`Nilai tertinggi ialah ${mx} (${mi}).`,`The highest value is ${mx} (${mi}).`),ref:"DSKP 11.2.1"})}
+  case "tables":{const a=R(5,20),b=R(5,20),c=R(5,20);
+    return M(L(`Jadual: A=${a}, B=${b}, C=${c}. Jumlah semua?`,`Table: A=${a}, B=${b}, C=${c}. Total of all?`),String(a+b+c),
+      {options:mcqOpts(String(a+b+c),[String(a+b+c+5),String(a+b+c-5),String(a+b)]),
+       hint:L("Tambahkan semua nilai.","Add all the values."),
+       expl:L(`${a} + ${b} + ${c} = ${a+b+c}.`,`${a} + ${b} + ${c} = ${a+b+c}.`),ref:"DSKP 11.1.1"})}
+  case "interpret":{const a=R(5,15),b=R(5,15),c=R(5,15);
+    return M(L(`Data: ${a}, ${b}, ${c}. Perbezaan antara tertinggi dan terendah?`,`Data: ${a}, ${b}, ${c}. Difference between highest and lowest?`),String(Math.max(a,b,c)-Math.min(a,b,c)),
+      {options:mcqOpts(String(Math.max(a,b,c)-Math.min(a,b,c)),[String(Math.max(a,b,c)),String(Math.min(a,b,c)),String(a+b+c)]),
+       hint:L("Tolak nilai terendah daripada nilai tertinggi.","Subtract the lowest value from the highest value."),
+       expl:L(`${Math.max(a,b,c)} − ${Math.min(a,b,c)} = ${Math.max(a,b,c)-Math.min(a,b,c)}.`,`${Math.max(a,b,c)} − ${Math.min(a,b,c)} = ${Math.max(a,b,c)-Math.min(a,b,c)}.`),ref:"DSKP 11.3.1"})}
+  case "statistics":{const a=R(50,90),b=a+R(5,20),c=b+R(5,20);const avg=(a+b+c)/3;
+    return M(L(`Purata bagi ${a}, ${b}, ${c}?`,`Average of ${a}, ${b}, ${c}?`),String(avg),
+      {options:mcqOpts(String(avg),[String(avg+5),String(avg-5),String(a+b+c)]),
+       hint:L("Purata = jumlah ÷ bilangan (3).","Average = total ÷ count (3)."),
+       expl:L(`(${a}+${b}+${c}) ÷ 3 = ${a+b+c} ÷ 3 = ${avg}.`,`(${a}+${b}+${c}) ÷ 3 = ${a+b+c} ÷ 3 = ${avg}.`),ref:"DSKP 11.4.1"})}
+  case "probability":{const fav=R(1,3),tot=fav+R(1,4);
+    return M(L(`Beg mengandungi ${fav} guli merah dan ${tot-fav} guli biru. Peluang guli merah?`,`A bag has ${fav} red marbles and ${tot-fav} blue marbles. Chance of red?`),`${fav}/${tot}`,
+      {options:mcqOpts(`${fav}/${tot}`,[`${tot-fav}/${tot}`,`${fav}/${tot+1}`,`${fav+1}/${tot}`]),
+       hint:L("Peluang = guli merah ÷ jumlah guli.","Probability = red marbles ÷ total marbles."),
+       expl:L(`Jumlah guli = ${tot}. Peluang = ${fav}/${tot}.`,`Total marbles = ${tot}. Probability = ${fav}/${tot}.`),ref:"DSKP 12.1.1"})}
+  case "likelihood":{const opts=[{q:L("Matahari terbit esok pagi","The sun rises tomorrow morning"),a:L("Pasti","Certain")},
+    {q:L("Ikan terbang di langit","Fish fly in the sky"),a:L("Mustahil","Impossible")},
+    {q:L("Hujan turun minggu ini","It rains this week"),a:L("Mungkin","Possible")},
+    {q:L("Dadu menunjukkan nombor 7","A die shows 7"),a:L("Mustahil","Impossible")}];
+    const o=pick(opts);
+    return M(L(`Peristiwa berikut ialah…: ${o.q}`,`This event is…: ${o.q}`),o.a,
+      {options:shuffle([L("Pasti","Certain"),L("Mungkin","Possible"),L("Mustahil","Impossible"),L("Kurang mungkin","Unlikely")]),
+       hint:L("Fikirkan: adakah ia akan berlaku, boleh berlaku, atau tidak boleh berlaku?","Think: will it happen, could it happen, or can it never happen?"),
+       expl:L(`"${o.q}" ialah ${o.a}.`,`"${o.q}" is ${o.a}.`),ref:"DSKP 12.2.1"})}
+  case "experiment":{const n=pick([12,18,24,30,36]);const exp=n/6;
+    return M(L(`Dadu dilontar ${n} kali. Berapa kali nombor 3 dijangka muncul?`,`A die is rolled ${n} times. How many times is 3 expected to appear?`),String(exp),
+      {options:mcqOpts(String(exp),[String(exp+2),String(exp-2),String(exp*2)]),
+       hint:L("Peluang nombor 3 = 1/6. Darabkan dengan bilangan lontaran.","Probability of 3 = 1/6. Multiply by the number of rolls."),
+       expl:L(`${n} × 1/6 = ${exp} kali.`,`${n} × 1/6 = ${exp} times.`),ref:"DSKP 12.3.1"})}
+  case "spinner":{const cols=["merah","biru","hijau","kuning"];const fav=R(1,2),tot=4;
+    return M(L(`Pemutar mempunyai 4 bahagian sama besar. ${fav} bahagian berwarna merah. Peluang merah?`,`A spinner has 4 equal sections. ${fav} section(s) are red. Chance of red?`),`${fav}/${tot}`,
+      {options:mcqOpts(`${fav}/${tot}`,[`${tot-fav}/${tot}`,`${fav}/${tot+1}`,`${fav+1}/${tot}`]),
+       hint:L("Peluang = bahagian merah ÷ jumlah bahagian.","Probability = red sections ÷ total sections."),
+       expl:L(`Peluang = ${fav}/${tot}.`,`Probability = ${fav}/${tot}.`),ref:"DSKP 12.3.2"})}
+  default:{const a=R(2,20),b=R(2,20);return M(`${a} + ${b} = ?`,String(a+b),{options:mcqOpts(String(a+b),[String(a+b+1),String(a+b-1),String(a*b)]),hint:"",expl:`${a}+${b}=${a+b}`,ref:"DSKP"})}
+  }
+}
+/* Adaptive difficulty: deterministic, based on per-skill accuracy */
+function nextDifficulty(skill){const acc=skillAcc(skill);if(acc===null)return "easy";
+  if(acc>=0.85)return "hard";if(acc>=0.65)return "medium";if(acc>=0.4)return "easy";return "easy"}
+function weakSkills(){return Object.keys(S.skill).map(sk=>({sk,acc:skillAcc(sk)})).filter(x=>x.acc!==null&&x.acc<0.6).sort((a,b)=>a.acc-b.acc).map(x=>x.sk)}
+function allSkills(){return MODULES.flatMap(m=>m.lessons.flatMap(l=>l.skills))}
+/* Step-by-step solver for long multiplication/division */
+function solveSteps(a,b,op){
+  if(op==="×"){const ones=a*(b%10),tens=a*Math.floor(b/10)*10;return{L:`${a} × ${b}`,steps:[
+    L(`Darabkan dengan digit sa: ${a} × ${b%10} = ${ones}`,`Multiply by ones digit: ${a} × ${b%10} = ${ones}`),
+    L(`Darabkan dengan digit puluh: ${a} × ${Math.floor(b/10)*10} = ${tens}`,`Multiply by tens digit: ${a} × ${Math.floor(b/10)*10} = ${tens}`),
+    L(`Jumlahkan: ${ones} + ${tens} = ${ones+tens}`,`Add: ${ones} + ${tens} = ${ones+tens}`)],ans:ones+tens}}
+  const q=Math.floor(a/b),r=a%b;return{L:`${a} ÷ ${b}`,steps:[
+    L(`${b} × ${q} = ${b*q}. Baki: ${a} − ${b*q} = ${r}.`,`${b} × ${q} = ${b*q}. Remainder: ${a} − ${b*q} = ${r}.`),
+    r===0?L(`Baki 0, jadi jawapan tepat: ${q}.`,`Remainder 0, so the answer is exact: ${q}.`):L(`Jawapan: ${q} baki ${r}.`,`Answer: ${q} remainder ${r}.`)],ans:q}}
+/* ================= SIMULATIONS ================= */
+function simShell(el,title,body){el.innerHTML=`<div class="sim-box"><h3>🧪 ${esc(title)}</h3>${body}</div>`}
+const SIMS={};
+SIMS.placevalue=el=>{simShell(el,t("tool_placevalue"),`
+ <p class="muted">${L("Taip nombor hingga 1,000,000 dan lihat nilai setiap digit.","Type a number up to 1,000,000 and see each digit's value.")}</p>
+ <div class="sim-controls"><label>${L("Nombor:","Number:")}</label><input type="number" id="pv-n" value="345678" min="0" max="1000000" class="answer-input">
+ <button class="btn small" id="pv-go">${t("check")}</button><button class="btn small ghost" id="pv-rand">${t("newQ")}</button></div>
+ <div id="pv-out"></div>`);
+ const render=()=>{const n=Math.max(0,Math.min(1000000,parseInt($("#pv-n").value)||0));const s=String(n).padStart(6,"0");
+  const places=[["Ratus Ribu","Hundred Thousands",100000],["Puluh Ribu","Ten Thousands",10000],["Ribu","Thousands",1000],["Ratus","Hundreds",100],["Puluh","Tens",10],["Sa","Ones",1]];
+  $("#pv-out").innerHTML=`<div class="grid cols3">${places.map(([bm,en,v],i)=>{const d=Number(s[i]);return `<div class="card center"><div class="big-emoji">${"🟦🟩🟨🟧🟪⬜".split("")[i]||"🔵"}</div>
+   <div style="font-size:2rem;font-weight:900">${d}</div><div class="muted">${L(bm,en)}</div><div><b>${fmt(d*v)}</b></div></div>`}).join("")}</div>
+   <p class="center"><b>${fmt(n)}</b> = ${places.map((p,i)=>fmt(Number(s[i])*p[2])).filter(x=>x!=="0").join(" + ")||"0"}</p>`};
+ $("#pv-go").onclick=render;$("#pv-rand").onclick=()=>{$("#pv-n").value=ri(1000,999999);render()};render()};
+SIMS.numberline=el=>{simShell(el,t("tool_numberline"),`
+ <p class="muted">${L("Geser untuk meneroka nombor pada garis nombor 0–1,000.","Slide to explore numbers on the 0–1,000 number line.")}</p>
+ <div class="sim-controls"><label>${L("Nilai:","Value:")}</label><input type="range" id="nl-v" min="0" max="1000" value="500"><b id="nl-o">500</b></div>
+ <svg class="mathviz" viewBox="0 0 640 120"><line x1="20" y1="70" x2="620" y2="70" stroke="#4f46e5" stroke-width="4"/>
+ ${[0,100,200,300,400,500,600,700,800,900,1000].map(v=>`<line x1="${20+v*0.6}" y1="62" x2="${20+v*0.6}" y2="78" stroke="#4f46e5" stroke-width="2"/><text x="${20+v*0.6}" y="95" text-anchor="middle" font-size="11" fill="#64748b">${v}</text>`).join("")}
+ <circle id="nl-dot" cx="320" cy="70" r="12" fill="#f59e0b" stroke="#fff" stroke-width="3"/><text id="nl-lab" x="320" y="45" text-anchor="middle" font-size="18" font-weight="900" fill="#1e1b4b">500</text></svg>
+ <p class="center muted">${L("Setiap tanda besar = 100. Nombor di antara tanda ialah puluh dan sa.","Each big mark = 100. Numbers between marks are tens and ones.")}</p>`);
+ const r=()=>{const v=+$("#nl-v").value;$("#nl-o").textContent=v;$("#nl-dot").setAttribute("cx",20+v*0.6);$("#nl-lab").setAttribute("x",20+v*0.6);$("#nl-lab").textContent=v};
+ $("#nl-v").oninput=r;r()};
+SIMS.rounding=el=>{simShell(el,t("tool_rounding"),`
+ <div class="sim-controls"><label>${L("Nombor:","Number:")}</label><input type="range" id="rd-v" min="0" max="9999" value="4567"><b id="rd-o">4,567</b>
+ <label>${L("Bundarkan kepada:","Round to:")}</label><select id="rd-p"><option value="10">${L("Puluh","Tens")}</option><option value="100" selected>${L("Ratus","Hundreds")}</option><option value="1000">${L("Ribu","Thousands")}</option></select></div>
+ <div id="rd-out" class="center" style="font-size:1.4rem;font-weight:900"></div>`);
+ const r=()=>{const v=+$("#rd-v").value,p=+$("#rd-p").value;$("#rd-o").textContent=fmt(v);
+  const res=Math.round(v/p)*p;const digit=Math.floor((v%p*10)/p);
+  $("#rd-out").innerHTML=`${fmt(v)} → <span style="color:var(--emerald)">${fmt(res)}</span><br><span class="muted" style="font-size:.95rem">${L(`Digit menentukan: ${digit} (${digit>=5?"≥5 → naik":"<5 → kekal"})`,`Deciding digit: ${digit} (${digit>=5?"≥5 → round up":"<5 → stay"})`)}</span>`};
+ $("#rd-v").oninput=r;$("#rd-p").onchange=r;r()};
+SIMS.longops=el=>{simShell(el,t("tool_longops"),`
+ <div class="sim-controls"><label>A</label><input type="number" id="lo-a" value="345" class="answer-input" style="max-width:120px">
+ <label>B</label><input type="number" id="lo-b" value="27" class="answer-input" style="max-width:120px">
+ <select id="lo-op"><option value="×">×</option><option value="÷">÷</option></select>
+ <button class="btn small" id="lo-go">${L("Selesaikan Langkah demi Langkah","Solve Step by Step")}</button></div>
+ <div id="lo-out"></div>`);
+ $("#lo-go").onclick=()=>{const a=Math.max(1,parseInt($("#lo-a").value)||1),b=Math.max(1,parseInt($("#lo-b").value)||1),op=$("#lo-op").value;
+  const s=solveSteps(a,b,op);$("#lo-out").innerHTML=`<div class="steps"><b>${s.L} = ${s.ans}</b><ol>${s.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`}};
+SIMS.fraction=el=>{simShell(el,t("tool_fraction"),`
+ <div class="sim-controls"><label>${L("Pengangka (diambil):","Numerator (taken):")}</label><input type="range" id="fr-n" min="0" max="12" value="3"><b id="fr-no">3</b>
+ <label>${L("Penyebut (jumlah):","Denominator (total):")}</label><input type="range" id="fr-d" min="1" max="12" value="4"><b id="fr-do">4</b></div>
+ <div id="fr-out" class="center"></div>`);
+ const r=()=>{let n=+$("#fr-n").value,d=+$("#fr-d").value;if(n>d){n=d;$("#fr-n").value=d}
+  $("#fr-no").textContent=n;$("#fr-do").textContent=d;const f=frac(n,d);
+  let slices="";for(let i=0;i<d;i++){const a0=(i/d)*Math.PI*2-Math.PI/2,a1=((i+1)/d)*Math.PI*2-Math.PI/2;
+   const x0=100+80*Math.cos(a0),y0=100+80*Math.sin(a0),x1=100+80*Math.cos(a1),y1=100+80*Math.sin(a1);
+   slices+=`<path d="M100 100 L${x0} ${y0} A80 80 0 0 1 ${x1} ${y1} Z" fill="${i<n?"#f59e0b":"#e2e8f0"}" stroke="#fff" stroke-width="2"/>`}
+  $("#fr-out").innerHTML=`<svg class="mathviz" viewBox="0 0 200 200" style="max-width:260px">${slices}<circle cx="100" cy="100" r="80" fill="none" stroke="#94a3b8" stroke-width="3"/></svg>
+  <div style="font-size:1.6rem;font-weight:900">${n}/${d} = ${fstr(f)}</div><div class="muted">${L("Bahagian berwarna oren ialah pecahan yang diambil.","Orange parts are the fraction taken.")}</div>`};
+ $("#fr-n").oninput=r;$("#fr-d").oninput=r;r()};
+SIMS.fractionbar=el=>{simShell(el,t("tool_fractionbar"),`
+ <div class="sim-controls"><label>${L("Pecahan 1:","Fraction 1:")}</label><input type="range" id="fb-n1" min="0" max="10" value="3"><input type="range" id="fb-d1" min="1" max="10" value="4">
+ <label>${L("Pecahan 2:","Fraction 2:")}</label><input type="range" id="fb-n2" min="0" max="10" value="5"><input type="range" id="fb-d2" min="1" max="10" value="8"></div>
+ <div id="fb-out"></div>`);
+ const bar=(n,d,c)=>{let s="";for(let i=0;i<d;i++)s+=`<rect x="${i*40}" y="0" width="38" height="34" rx="4" fill="${i<n?c:"#e2e8f0"}" stroke="#fff"/>`;
+  return `<div class="flex"><b style="min-width:52px">${n}/${d}</b><svg viewBox="0 0 ${d*40} 34" style="flex:1;max-width:420px">${s}</svg></div>`};
+ const r=()=>{let n1=+$("#fb-n1").value,d1=+$("#fb-d1").value,n2=+$("#fb-n2").value,d2=+$("#fb-d2").value;
+  if(n1>d1){n1=d1;$("#fb-n1").value=d1}if(n2>d2){n2=d2;$("#fb-n2").value=d2}
+  const v1=n1/d1,v2=n2/d2;const msg=v1>v2?L("Pecahan 1 lebih besar!","Fraction 1 is larger!"):v2>v1?L("Pecahan 2 lebih besar!","Fraction 2 is larger!"):L("Kedua-dua sama besar!","Both are equal!");
+  $("#fb-out").innerHTML=bar(n1,d1,"#4f46e5")+bar(n2,d2,"#db2777")+`<p class="center"><b>${msg}</b> (${v1.toFixed(3)} vs ${v2.toFixed(3)})</p>`};
+ ["fb-n1","fb-d1","fb-n2","fb-d2"].forEach(id=>$("#"+id).oninput=r);r()};
+SIMS.percent=el=>{simShell(el,t("tool_percent"),`
+ <div class="sim-controls"><label>${L("Peratus:","Percent:")}</label><input type="range" id="pc-v" min="0" max="100" value="35"><b id="pc-o">35%</b></div>
+ <div id="pc-out" style="display:grid;grid-template-columns:repeat(10,1fr);gap:3px;max-width:340px;margin:0 auto"></div>
+ <p class="center muted">${L("Setiap petak = 1%. Petak berwarna = peratus yang dipilih.","Each square = 1%. Coloured squares = chosen percent.")}</p>`);
+ const r=()=>{const v=+$("#pc-v").value;$("#pc-o").textContent=v+"%";
+  $("#pc-out").innerHTML=Array.from({length:100},(_,i)=>`<div style="aspect-ratio:1;border-radius:4px;background:${i<v?"#059669":"#e2e8f0"}"></div>`).join("")};
+ $("#pc-v").oninput=r;r()};
+SIMS.converter=el=>{simShell(el,t("tool_converter"),`
+ <div class="sim-controls"><label>${L("Pengangka:","Numerator:")}</label><input type="number" id="cv-n" value="3" min="0" max="99" class="answer-input" style="max-width:100px">
+ <label>${L("Penyebut:","Denominator:")}</label><input type="number" id="cv-d" value="4" min="1" max="99" class="answer-input" style="max-width:100px">
+ <button class="btn small" id="cv-go">${t("check")}</button></div><div id="cv-out" class="center" style="font-size:1.3rem;font-weight:800"></div>`);
+ const r=()=>{const n=parseInt($("#cv-n").value)||0,d=Math.max(1,parseInt($("#cv-d").value)||1);const dec=n/d;
+  $("#cv-out").innerHTML=`${n}/${d} = ${dec.toFixed(4).replace(/0+$/,"").replace(/\.$/,".0")} = ${(dec*100).toFixed(1).replace(/\.0$/,"")}%`};
+ $("#cv-go").onclick=r;r()};
+SIMS.shop=el=>{simShell(el,t("tool_shop"),`
+ <p class="muted">${L("Tambahkan barang ke bakul, kemudian bayar dan kira baki!","Add items to the basket, then pay and count the change!")}</p>
+ <div class="shop-grid" id="sh-items"></div>
+ <div class="card mt"><b>${L("Bakul:","Basket:")}</b> <span id="sh-cart">—</span><br><b>${L("Jumlah:","Total:")}</b> <span id="sh-total">RM 0.00</span>
+ <div class="sim-controls"><label>${L("Bayar dengan:","Pay with:")}</label><select id="sh-pay"><option value="5000">RM 50</option><option value="10000">RM 100</option><option value="2000">RM 20</option><option value="1000">RM 10</option></select>
+ <button class="btn small green" id="sh-buy">${L("Bayar","Pay")}</button><button class="btn small ghost" id="sh-clear">${t("reset")}</button></div>
+ <div id="sh-out"></div></div>`);
+ const ITEMS=[["🍞",L("Roti","Bread"),350],["🥛",L("Susu","Milk"),420],["🍎",L("Epal","Apples"),250],["🍌",L("Pisang","Bananas"),180],["🥚",L("Telur (10)","Eggs (10)"),680],["🍚",L("Beras 1kg","Rice 1kg"),390],["🧀",L("Keju","Cheese"),890],["🍊",L("Oren","Oranges"),220]];
+ let cart={};
+ const draw=()=>{$("#sh-items").innerHTML=ITEMS.map(([ic,nm,pr],i)=>`<div class="shop-item"><div class="pi">${ic}</div><b>${nm}</b><div class="muted">${rmstr(pr)}</div>
+  <button class="btn small" data-i="${i}">+ ${L("Tambah","Add")}</button></div>`).join("");
+  $$("#sh-items button").forEach(b=>b.onclick=()=>{cart[b.dataset.i]=(cart[b.dataset.i]||0)+1;draw()});
+  const total=Object.entries(cart).reduce((s,[i,c])=>s+ITEMS[i][2]*c,0);
+  $("#sh-cart").textContent=Object.entries(cart).map(([i,c])=>`${ITEMS[i][1]} ×${c}`).join(", ")||"—";
+  $("#sh-total").textContent=rmstr(total);$("#sh-total").dataset.v=total};
+ $("#sh-clear").onclick=()=>{cart={};draw();$("#sh-out").innerHTML=""};
+ $("#sh-buy").onclick=()=>{const total=+$("#sh-total").dataset.v||0,pay=+$("#sh-pay").value;
+  if(total===0){$("#sh-out").innerHTML=`<div class="feedback hint">${L("Tambahkan barang dahulu!","Add items first!")}</div>`;return}
+  if(pay<total){$("#sh-out").innerHTML=`<div class="feedback bad">${L(`Wang tidak mencukupi! Perlu ${rmstr(total)}.`,"Not enough money! Need "+rmstr(total)+".")}</div>`;sfx.bad();return}
+  $("#sh-out").innerHTML=`<div class="feedback good">🎉 ${L(`Baki anda: ${rmstr(pay-total)}. Syabas membeli-belah!`,`Your change: ${rmstr(pay-total)}. Happy shopping!`)}</div>`;sfx.win();confetti();cart={};draw()};
+ draw()};
+SIMS.cashier=el=>{simShell(el,t("tool_cashier"),`
+ <p class="muted">${L("Pelanggan membayar dengan sekeping wang. Kira baki yang tepat!","A customer pays with one note. Count the exact change!")}</p>
+ <div class="card center"><div style="font-size:1.2rem">${L("Harga:","Price:")} <b id="cs-price"></b> &nbsp;|&nbsp; ${L("Dibayar:","Paid:")} <b id="cs-paid"></b></div>
+ <div id="cs-out" style="font-size:1.5rem;font-weight:900;margin:10px 0"></div>
+ <button class="btn small" id="cs-new">${t("newQ")}</button> <button class="btn small ghost" id="cs-show">${t("showSteps")}</button></div>`);
+ const gen=()=>{const price=ri(150,4950),paid=pick([5000,10000]);$("#cs-price").textContent=rmstr(price);$("#cs-paid").textContent=rmstr(paid);
+  $("#cs-out").textContent="???";$("#cs-out").dataset.ans=paid-price;$("#cs-out").dataset.paid=paid;$("#cs-out").dataset.price=price};
+ $("#cs-new").onclick=gen;$("#cs-show").onclick=()=>{const o=$("#cs-out");o.textContent=rmstr(+o.dataset.ans);
+  o.innerHTML+=`<div class="steps" style="font-size:.95rem;text-align:left">${rmstr(+o.dataset.paid)} − ${rmstr(+o.dataset.price)} = ${rmstr(+o.dataset.ans)}</div>`};gen()};
+SIMS.savings=el=>{simShell(el,t("tool_savings"),`
+ <div class="sim-controls"><label>${L("Matlamat (RM):","Goal (RM):")}</label><input type="range" id="sv-g" min="50" max="1000" step="10" value="480"><b id="sv-go">RM 480</b>
+ <label>${L("Simpan setiap minggu (RM):","Save per week (RM):")}</label><input type="range" id="sv-w" min="5" max="100" step="5" value="40"><b id="sv-wo">RM 40</b></div>
+ <div id="sv-out" class="center" style="font-size:1.25rem;font-weight:800"></div>`);
+ const r=()=>{const g=+$("#sv-g").value,w=+$("#sv-w").value;$("#sv-go").textContent="RM "+g;$("#sv-wo").textContent="RM "+w;
+  const weeks=Math.ceil(g/w);$("#sv-out").innerHTML=`${L("Anda akan mencapai matlamat dalam","You will reach your goal in")} <b>${weeks} ${L("minggu","weeks")}</b> (${L("tepat","exactly")} ${rmstr(weeks*w*100)})`};
+ $("#sv-g").oninput=r;$("#sv-w").oninput=r;r()};
+SIMS.clock=el=>{simShell(el,t("tool_clock"),`
+ <p class="muted">${L("Seret jarum jam untuk menetapkan masa!","Drag the clock hands to set the time!")}</p>
+ <div class="center"><svg class="mathviz clock-face" id="ck-svg" viewBox="0 0 200 200" style="max-width:280px;touch-action:none">
+ <circle cx="100" cy="100" r="92" fill="#fff" stroke="#4f46e5" stroke-width="5"/>
+ ${Array.from({length:12},(_,i)=>{const a=i*Math.PI/6;return `<text x="${100+74*Math.sin(a)}" y="${100-74*Math.cos(a)+5}" text-anchor="middle" font-size="15" font-weight="800" fill="#1e1b4b">${i===0?12:i}</text>`}).join("")}
+ <line id="ck-h" x1="100" y1="100" x2="100" y2="52" stroke="#1e1b4b" stroke-width="7" stroke-linecap="round"/>
+ <line id="ck-m" x1="100" y1="100" x2="100" y2="30" stroke="#db2777" stroke-width="4" stroke-linecap="round"/>
+ <circle cx="100" cy="100" r="7" fill="#f59e0b"/></svg>
+ <div style="font-size:1.6rem;font-weight:900" id="ck-out">3:00</div></div>`);
+ let h=3,m=0;const draw=()=>{const ha=((h%12)+m/60)*Math.PI/6,ma=m*Math.PI/30;
+  $("#ck-h").setAttribute("transform",`rotate(${ha*180/Math.PI} 100 100)`);$("#ck-m").setAttribute("transform",`rotate(${ma*180/Math.PI} 100 100)`);
+  $("#ck-out").textContent=`${h}:${String(m).padStart(2,"0")}`};
+ const svg=$("#ck-svg");let drag=null;
+ const setFromEvent=e=>{const r=svg.getBoundingClientRect();const x=(e.clientX-r.left)/r.width*200-100,y=(e.clientY-r.top)/r.height*200-100;
+  let ang=Math.atan2(x,-y)*180/Math.PI;if(ang<0)ang+=360;
+  if(drag==="m"){m=Math.round(ang/6)%60}else{h=Math.floor(ang/30)%12;if(h===0)h=12}draw()};
+ svg.addEventListener("pointerdown",e=>{const r=svg.getBoundingClientRect();const x=(e.clientX-r.left)/r.width*200-100,y=(e.clientY-r.top)/r.height*200-100;
+  const dh=Math.hypot(x-100*(Math.sin(((h%12)+m/60)*Math.PI/6)),y-100*(Math.cos(((h%12)+m/60)*Math.PI/6)));
+  drag=Math.hypot(x,y)<55?"h":"m";svg.setPointerCapture(e.pointerId);setFromEvent(e)});
+ svg.addEventListener("pointermove",e=>{if(drag)setFromEvent(e)});svg.addEventListener("pointerup",()=>drag=null);draw()};
+SIMS.digital=el=>{simShell(el,t("tool_digital"),`
+ <div class="sim-controls"><label>${L("Jam (24j):","Hour (24h):")}</label><input type="range" id="dg-h" min="0" max="23" value="14"><b id="dg-ho">14</b>
+ <label>${L("Minit:","Minutes:")}</label><input type="range" id="dg-m" min="0" max="59" value="30"><b id="dg-mo">30</b></div>
+ <div id="dg-out" class="center" style="font-size:1.5rem;font-weight:900"></div>`);
+ const r=()=>{const h=+$("#dg-h").value,m=+$("#dg-m").value;$("#dg-ho").textContent=h;$("#dg-mo").textContent=m;
+  const h12=h%12===0?12:h%12,ap=h<12?"AM":"PM";$("#dg-out").innerHTML=`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")} = ${h12}:${String(m).padStart(2,"0")} ${ap}`};
+ $("#dg-h").oninput=r;$("#dg-m").oninput=r;r()};
+SIMS.duration=el=>{simShell(el,t("tool_duration"),`
+ <div class="sim-controls"><label>${L("Mula (jam):","Start (hour):")}</label><input type="number" id="du-sh" value="9" min="0" max="23" class="answer-input" style="max-width:90px">
+ <label>${L("Minit:","Min:")}</label><input type="number" id="du-sm" value="50" min="0" max="59" class="answer-input" style="max-width:90px">
+ <label>${L("Tamat (jam):","End (hour):")}</label><input type="number" id="du-eh" value="11" min="0" max="23" class="answer-input" style="max-width:90px">
+ <label>${L("Minit:","Min:")}</label><input type="number" id="du-em" value="20" min="0" max="59" class="answer-input" style="max-width:90px">
+ <button class="btn small" id="du-go">${t("check")}</button></div><div id="du-out" class="center" style="font-size:1.3rem;font-weight:800"></div>`);
+ $("#du-go").onclick=()=>{let s=(+$("#du-sh").value||0)*60+(+$("#du-sm").value||0),e=(+$("#du-eh").value||0)*60+(+$("#du-em").value||0);
+  if(e<s)e+=1440;const d=e-s;$("#du-out").innerHTML=`${L("Tempoh:","Duration:")} <b>${Math.floor(d/60)} ${L("jam","hours")} ${d%60} ${L("minit","minutes")}</b> (${d} ${L("minit","minutes")})`}};
+SIMS.ruler=el=>{simShell(el,t("tool_ruler"),`
+ <div class="sim-controls"><label>${L("Panjang (cm):","Length (cm):")}</label><input type="range" id="ru-v" min="1" max="30" value="12"><b id="ru-o">12 cm</b></div>
+ <svg class="mathviz" viewBox="0 0 640 90"><rect x="20" y="20" width="600" height="50" rx="6" fill="#fef9c3" stroke="#a16207" stroke-width="2"/>
+ ${Array.from({length:31},(_,i)=>`<line x1="${20+i*20}" y1="20" x2="${20+i*20}" y2="${i%5===0?42:32}" stroke="#713f12" stroke-width="${i%5===0?2:1}"/>${i%5===0?`<text x="${20+i*20}" y="60" text-anchor="middle" font-size="11" fill="#713f12">${i}</text>`:""}`).join("")}
+ <rect id="ru-bar" x="20" y="20" width="240" height="50" fill="#4f46e5" opacity=".35"/></svg>`);
+ const r=()=>{const v=+$("#ru-v").value;$("#ru-o").textContent=v+" cm";$("#ru-bar").setAttribute("width",v*20)};
+ $("#ru-v").oninput=r;r()};
+SIMS.scale=el=>{simShell(el,t("tool_scale"),`
+ <div class="sim-controls"><label>${L("Jisim (g):","Mass (g):")}</label><input type="range" id="sc-v" min="0" max="2000" step="50" value="750"><b id="sc-o">750 g</b></div>
+ <svg class="mathviz" viewBox="0 0 400 160"><rect x="60" y="110" width="280" height="30" rx="8" fill="#0ea5e9"/>
+ <line x1="200" y1="110" x2="200" y2="60" stroke="#0369a1" stroke-width="4"/><rect x="140" y="30" width="120" height="30" rx="8" fill="#e0f2fe" stroke="#0369a1" stroke-width="2"/>
+ <text x="200" y="50" text-anchor="middle" font-size="14" font-weight="800" fill="#0369a1" id="sc-t">750 g</text>
+ <path d="M120 110 Q200 140 280 110" fill="none" stroke="#0369a1" stroke-width="3"/></svg>
+ <p class="center muted">${L("Penimbang menunjukkan jisim dalam gram dan kilogram.","The scale shows mass in grams and kilograms.")}</p>`);
+ const r=()=>{const v=+$("#sc-v").value;$("#sc-o").textContent=v+" g = "+(v/1000)+" kg";$("#sc-t").textContent=v+" g"};
+ $("#sc-v").oninput=r;r()};
+SIMS.cylinder=el=>{simShell(el,t("tool_cylinder"),`
+ <div class="sim-controls"><label>${L("Isipadu (mL):","Volume (mL):")}</label><input type="range" id="cy-v" min="0" max="1000" step="10" value="450"><b id="cy-o">450 mL</b></div>
+ <svg class="mathviz" viewBox="0 0 200 220"><rect x="60" y="20" width="80" height="180" rx="8" fill="#f0f9ff" stroke="#0369a1" stroke-width="3"/>
+ <rect id="cy-fill" x="60" y="110" width="80" height="90" fill="#38bdf8" opacity=".7"/>
+ ${[0,250,500,750,1000].map(v=>`<line x1="60" y1="${200-v*0.18}" x2="140" y2="${200-v*0.18}" stroke="#0369a1"/><text x="148" y="${204-v*0.18}" font-size="10" fill="#0369a1">${v}</text>`).join("")}</svg>`);
+ const r=()=>{const v=+$("#cy-v").value;$("#cy-o").textContent=v+" mL = "+(v/1000)+" L";$("#cy-fill").setAttribute("y",200-v*0.18);$("#cy-fill").setAttribute("height",v*0.18)};
+ $("#cy-v").oninput=r;r()};
+SIMS.units=el=>{simShell(el,t("tool_units"),`
+ <div class="sim-controls"><label>${L("Nilai:","Value:")}</label><input type="number" id="un-v" value="2.5" step="0.1" class="answer-input" style="max-width:110px">
+ <select id="un-from"><option value="m">m</option><option value="cm">cm</option><option value="km">km</option><option value="kg">kg</option><option value="g">g</option><option value="L">L</option><option value="mL">mL</option></select>
+ <label>→</label><select id="un-to"><option value="cm">cm</option><option value="m">m</option><option value="g">g</option><option value="kg">kg</option><option value="mL">mL</option><option value="L">L</option><option value="km">km</option></select>
+ <button class="btn small" id="un-go">${t("check")}</button></div><div id="un-out" class="center" style="font-size:1.3rem;font-weight:800"></div>`);
+ const F={m:1,cm:.01,km:1000,kg:1,g:.001,L:1,mL:.001};
+ $("#un-go").onclick=()=>{const v=parseFloat($("#un-v").value)||0,f=$("#un-from").value,t2=$("#un-to").value;
+  const groups=[["m","cm","km"],["kg","g"],["L","mL"]];
+  if(!groups.some(g=>g.includes(f)&&g.includes(t2))){$("#un-out").textContent=L("Pilih unit dalam kumpulan yang sama (panjang / jisim / cecair).","Choose units from the same group (length / mass / liquid).");return}
+  const res=v*F[f]/F[t2];$("#un-out").textContent=`${v} ${f} = ${res.toFixed(4).replace(/0+$/,"").replace(/\.$/,".0")} ${t2}`}};
+SIMS.geometry=el=>{simShell(el,t("tool_geometry"),`
+ <div class="sim-controls"><label>${L("Bentuk:","Shape:")}</label><select id="ge-s"><option value="rect">${L("Segi empat tepat","Rectangle")}</option><option value="tri">${L("Segi tiga","Triangle")}</option><option value="sq">${L("Segi empat sama","Square")}</option></select>
+ <label>${L("Sisi (cm):","Side (cm):")}</label><input type="range" id="ge-v" min="2" max="15" value="8"><b id="ge-o">8</b></div>
+ <div id="ge-out"></div>`);
+ const r=()=>{const s=+$("#ge-v").value,sh=$("#ge-s").value;$("#ge-o").textContent=s;let per,area,svg="";
+  if(sh==="rect"){per=2*(s+s*0.6);area=s*s*0.6;svg=`<rect x="60" y="40" width="${s*18}" height="${s*11}" fill="#c7d2fe" stroke="#4f46e5" stroke-width="3"/>`}
+  else if(sh==="sq"){per=4*s;area=s*s;svg=`<rect x="70" y="40" width="${s*16}" height="${s*16}" fill="#bbf7d0" stroke="#059669" stroke-width="3"/>`}
+  else{per=3*s;area=0.5*s*s*0.87;svg=`<polygon points="100,30 ${100-s*9},${30+s*14} ${100+s*9},${30+s*14}" fill="#fbcfe8" stroke="#db2777" stroke-width="3"/>`}
+  $("#ge-out").innerHTML=`<svg class="mathviz" viewBox="0 0 300 220" style="max-width:300px">${svg}</svg>
+  <p class="center"><b>${L("Perimeter","Perimeter")}: ${per.toFixed(1)} cm</b> &nbsp;|&nbsp; <b>${L("Luas","Area")}: ${area.toFixed(1)} cm²</b></p>`};
+ $("#ge-v").oninput=r;$("#ge-s").onchange=r;r()};
+SIMS.protractor=el=>{simShell(el,t("tool_protractor"),`
+ <div class="sim-controls"><label>${L("Sudut (°):","Angle (°):")}</label><input type="range" id="pr-v" min="0" max="180" value="45"><b id="pr-o">45°</b></div>
+ <svg class="mathviz" viewBox="0 0 300 190" style="max-width:320px"><path d="M30 160 A120 120 0 0 1 270 160 Z" fill="#fef9c3" stroke="#a16207" stroke-width="3"/>
+ ${Array.from({length:19},(_,i)=>{const a=i*10*Math.PI/180;return `<line x1="${150+105*Math.cos(a)}" y1="${160-105*Math.sin(a)}" x2="${150+118*Math.cos(a)}" y2="${160-118*Math.sin(a)}" stroke="#a16207" stroke-width="${i%9===0?2.5:1}"/>`}).join("")}
+ <line x1="150" y1="160" x2="270" y2="160" stroke="#1e1b4b" stroke-width="3"/>
+ <line id="pr-line" x1="150" y1="160" x2="235" y2="75" stroke="#db2777" stroke-width="4"/>
+ <path id="pr-arc" d="M210 160 A60 60 0 0 0 192 118" fill="none" stroke="#db2777" stroke-width="2"/></svg>
+ <p class="center muted">${L("Sudut tegak = 90°. Sudut segi tiga berjumlah 180°.","Right angle = 90°. Triangle angles sum to 180°.")}</p>`);
+ const r=()=>{const v=+$("#pr-v").value;$("#pr-o").textContent=v+"°";const a=v*Math.PI/180;
+  $("#pr-line").setAttribute("x2",150+118*Math.cos(a));$("#pr-line").setAttribute("y2",160-118*Math.sin(a));
+  $("#pr-arc").setAttribute("d",`M210 160 A60 60 0 0 0 ${150+60*Math.cos(a)} ${160-60*Math.sin(a)}`)};
+ $("#pr-v").oninput=r;r()};
+SIMS.area=el=>{simShell(el,t("tool_area"),`
+ <div class="sim-controls"><label>${L("Panjang:","Length:")}</label><input type="range" id="ar-l" min="1" max="10" value="6"><b id="ar-lo">6</b>
+ <label>${L("Lebar:","Width:")}</label><input type="range" id="ar-w" min="1" max="10" value="4"><b id="ar-wo">4</b></div>
+ <div id="ar-out"></div>`);
+ const r=()=>{const l=+$("#ar-l").value,w=+$("#ar-w").value;$("#ar-lo").textContent=l;$("#ar-wo").textContent=w;
+  let cells="";for(let y=0;y<10;y++)for(let x=0;x<10;x++)cells+=`<rect x="${x*26}" y="${y*26}" width="24" height="24" rx="3" fill="${x<l&&y<w?"#f59e0b":"#e2e8f0"}"/>`;
+  $("#ar-out").innerHTML=`<svg class="mathviz" viewBox="0 0 260 260" style="max-width:280px">${cells}</svg>
+  <p class="center"><b>${L("Luas","Area")} = ${l} × ${w} = ${l*w} ${L("petak unit","unit squares")}</b></p>`};
+ $("#ar-l").oninput=r;$("#ar-w").oninput=r;r()};
+SIMS.cube=el=>{simShell(el,t("tool_cube"),`
+ <div class="sim-controls"><label>${L("Sisi kubus (cm):","Cube side (cm):")}</label><input type="range" id="cu-v" min="1" max="10" value="4"><b id="cu-o">4</b></div>
+ <div id="cu-out"></div>`);
+ const r=()=>{const s=+$("#cu-v").value;$("#cu-o").textContent=s;const v=s*s*s;
+  let cubes="";for(let z=0;z<Math.min(s,4);z++)for(let y=0;y<Math.min(s,4);y++)for(let x=0;x<Math.min(s,4);x++)
+   cubes+=`<rect x="${40+x*22-z*8}" y="${120-y*20-z*10}" width="20" height="18" fill="${(x+y+z)%2?"#f59e0b":"#fbbf24"}" stroke="#92400e"/>`;
+  $("#cu-out").innerHTML=`<svg class="mathviz" viewBox="0 0 300 200" style="max-width:300px">${cubes}</svg>
+  <p class="center"><b>${L("Isipadu","Volume")} = ${s} × ${s} × ${s} = ${v} cm³</b></p>`};
+ $("#cu-v").oninput=r;r()};
+SIMS.coord=el=>{simShell(el,t("tool_coord"),`
+ <p class="muted">${L("Klik pada grid untuk meletakkan titik. Cari harta karun pada koordinat yang diberikan!","Click the grid to place a point. Find the treasure at the given coordinates!")}</p>
+ <div class="sim-controls"><label>${L("Harta karun pada:","Treasure at:")}</label><b id="co-t"></b><button class="btn small" id="co-new">${t("newQ")}</button></div>
+ <div id="co-grid" style="display:inline-block;border:3px solid #4f46e5;border-radius:8px;overflow:hidden;line-height:0"></div>
+ <div id="co-out" class="center" style="font-weight:800;margin-top:8px"></div>`);
+ let tx=ri(1,9),ty=ri(1,9),found=false;
+ const draw=()=>{let h="";for(let y=9;y>=0;y--)for(let x=0;x<=9;x++){const isT=x===tx&&y===ty;
+   h+=`<span class="coord-cell" data-x="${x}" data-y="${y}" style="${isT&&found?"background:#f59e0b":""}">${isT&&found?"💎":(x===0||y===0)?x+","+y:""}</span>`}
+  $("#co-grid").innerHTML=h;$("#co-t").textContent=`(${tx}, ${ty})`;
+  $$("#co-grid .coord-cell").forEach(c=>c.onclick=()=>{const x=+c.dataset.x,y=+c.dataset.y;
+   if(x===tx&&y===ty){found=true;$("#co-out").innerHTML=`<span style="color:var(--emerald)">🎉 ${L("Jumpa! Koordinat betul!","Found it! Correct coordinates!")}</span>`;sfx.win();confetti();draw()}
+   else{c.classList.add("marked");c.textContent=`(${x},${y})`;$("#co-out").textContent=L(`Bukan di situ. Cuba lagi! (Anda klik (${x}, ${y}))`,`Not there. Try again! (You clicked (${x}, ${y}))`);sfx.bad()}})};
+ $("#co-new").onclick=()=>{tx=ri(1,9);ty=ri(1,9);found=false;$("#co-out").textContent="";draw()};draw()};
+SIMS.ratio=el=>{simShell(el,t("tool_ratio"),`
+ <div class="sim-controls"><label>A</label><input type="range" id="ra-a" min="1" max="12" value="2"><b id="ra-ao">2</b>
+ <label>B</label><input type="range" id="ra-b" min="1" max="12" value="3"><b id="ra-bo">3</b>
+ <label>${L("Skala ×:","Scale ×:")}</label><input type="range" id="ra-k" min="1" max="6" value="2"><b id="ra-ko">2</b></div>
+ <div id="ra-out" class="center" style="font-size:1.3rem;font-weight:800"></div>`);
+ const r=()=>{const a=+$("#ra-a").value,b=+$("#ra-b").value,k=+$("#ra-k").value;$("#ra-ao").textContent=a;$("#ra-bo").textContent=b;$("#ra-ko").textContent=k;
+  const g=gcd(a,b);$("#ra-out").innerHTML=`${a} : ${b} &nbsp;→&nbsp; ${L("paling mudah","simplest")}: <b>${a/g} : ${b/g}</b> &nbsp;→&nbsp; ×${k}: <b>${a*k} : ${b*k}</b>`};
+ ["ra-a","ra-b","ra-k"].forEach(id=>$("#"+id).oninput=r);r()};
+SIMS.recipe=el=>{simShell(el,t("tool_recipe"),`
+ <div class="sim-controls"><label>${L("Bilangan hidangan:","Servings:")}</label><input type="range" id="rc-v" min="1" max="12" value="4"><b id="rc-o">4</b></div>
+ <div id="rc-out"></div>`);
+ const BASE=[["Tepung (cawan)",2],["Susu (cawan)",3],["Gula (sudu)",1],["Telur (biji)",2]];
+ const r=()=>{const s=+$("#rc-v").value;$("#rc-o").textContent=s;const k=s/4;
+  $("#rc-out").innerHTML=`<table class="data"><tr><th>${L("Bahan","Ingredient")}</th><th>${L("Jumlah","Amount")}</th></tr>${BASE.map(([n,v])=>`<tr><td>${n}</td><td>${(v*k).toFixed(1).replace(/\.0$/,"")}</td></tr>`).join("")}</table>
+  <p class="muted">${L("Resipi asal untuk 4 hidangan. Semua bahan didarab dengan faktor yang sama!","Original recipe for 4 servings. All ingredients multiplied by the same factor!")}</p>`};
+ $("#rc-v").oninput=r;r()};
+SIMS.chart=el=>{simShell(el,t("tool_chart"),`
+ <p class="muted">${L("Masukkan data, kemudian lihat carta bar!","Enter data, then see the bar chart!")}</p>
+ <div class="sim-controls"><label>${L("Kategori 1:","Category 1:")}</label><input type="text" id="ch-n1" value="Epal" style="max-width:110px"><input type="number" id="ch-v1" value="8" min="0" max="50" style="max-width:80px">
+ <label>${L("Kategori 2:","Category 2:")}</label><input type="text" id="ch-n2" value="Pisang" style="max-width:110px"><input type="number" id="ch-v2" value="11" min="0" max="50" style="max-width:80px">
+ <label>${L("Kategori 3:","Category 3:")}</label><input type="text" id="ch-n3" value="Oren" style="max-width:110px"><input type="number" id="ch-v3" value="5" min="0" max="50" style="max-width:80px">
+ <button class="btn small" id="ch-go">${L("Lukis Carta","Draw Chart")}</button></div><div id="ch-out"></div>`);
+ const draw=()=>{const d=[[$("#ch-n1").value||"A",+$("#ch-v1").value||0],[$("#ch-n2").value||"B",+$("#ch-v2").value||0],[$("#ch-n3").value||"C",+$("#ch-v3").value||0]];
+  const mx=Math.max(...d.map(x=>x[1]),1);const cols=["#4f46e5","#059669","#db2777"];
+  $("#ch-out").innerHTML=`<svg class="mathviz" viewBox="0 0 420 240">${d.map(([n,v],i)=>{const h=v/mx*160;return `<rect x="${50+i*120}" y="${190-h}" width="70" height="${h}" rx="6" fill="${cols[i]}"/>
+   <text x="${85+i*120}" y="${182-h}" text-anchor="middle" font-weight="900" fill="#1e1b4b">${v}</text>
+   <text x="${85+i*120}" y="212" text-anchor="middle" font-size="12" fill="#64748b">${esc(n)}</text>`}).join("")}
+   <line x1="30" y1="190" x2="400" y2="190" stroke="#94a3b8" stroke-width="2"/></svg>
+   <p class="center"><b>${L("Jumlah","Total")}: ${d.reduce((s,x)=>s+x[1],0)}</b> &nbsp;|&nbsp; <b>${L("Tertinggi","Highest")}: ${d.reduce((a,b)=>a[1]>b[1]?a:b)[0]}</b></p>`};
+ $("#ch-go").onclick=draw;draw()};
+SIMS.table=el=>{simShell(el,t("tool_table"),`
+ <p class="muted">${L("Edit nilai dalam jadual untuk mengira jumlah dan purata.","Edit values in the table to calculate totals and averages.")}</p>
+ <table class="data" id="tb-t"><tr><th>${L("Nama","Name")}</th><th>${L("Markah","Marks")}</th></tr>
+ ${["Ali","Mei","Raj","Sara","Ahmad"].map((n,i)=>`<tr><td>${n}</td><td><input type="number" class="tb-v" value="${[70,80,90,85,75][i]}" min="0" max="100" style="max-width:90px"></td></tr>`).join("")}</table>
+ <div id="tb-out" class="center" style="font-weight:800;margin-top:10px"></div>`);
+ const r=()=>{const vs=$$(".tb-v").map(i=>+i.value||0);const sum=vs.reduce((a,b)=>a+b,0);
+  $("#tb-out").textContent=`${L("Jumlah","Total")}: ${sum} | ${L("Purata","Average")}: ${(sum/vs.length).toFixed(1)} | ${L("Tertinggi","Highest")}: ${Math.max(...vs)} | ${L("Terendah","Lowest")}: ${Math.min(...vs)}`};
+ $$(".tb-v").forEach(i=>i.oninput=r);r()};
+SIMS.dice=el=>{simShell(el,t("tool_dice"),`
+ <div class="center"><div id="di-face" style="font-size:5rem;line-height:1">🎲</div>
+ <button class="btn" id="di-roll">${L("Lontar Dadu","Roll Die")}</button>
+ <div id="di-hist" class="muted" style="margin-top:8px"></div>
+ <div id="di-freq" style="font-weight:800"></div></div>`);
+ let hist=[];$("#di-roll").onclick=()=>{const v=ri(1,6);hist.push(v);$("#di-face").textContent=["⚀","⚁","⚂","⚃","⚄","⚅"][v-1];sfx.click();
+  $("#di-hist").textContent=L("Sejarah: ","History: ")+hist.join(", ");
+  const f=[1,2,3,4,5,6].map(n=>`${n}: ${hist.filter(x=>x===n).length}`).join(" | ");
+  $("#di-freq").textContent=`${L("Kekerapan","Frequency")} — ${f} (${L("jumlah","total")} ${hist.length})`}};
+SIMS.coin=el=>{simShell(el,t("tool_coin"),`
+ <div class="center"><div id="cn-face" style="font-size:5rem;line-height:1">🪙</div>
+ <button class="btn" id="cn-toss">${L("Lontar Syiling","Toss Coin")}</button>
+ <div id="cn-hist" class="muted" style="margin-top:8px"></div>
+ <div id="cn-freq" style="font-weight:800"></div></div>`);
+ let hist=[];$("#cn-toss").onclick=()=>{const v=rng()<0.5?"H":"T";hist.push(v);$("#cn-face").textContent=v==="H"?"🪙":"🪙";sfx.click();
+  $("#cn-hist").textContent=L("Sejarah: ","History: ")+hist.map(x=>x==="H"?L("Kepala","Heads"):L("Ekor","Tails")).join(", ");
+  const h=hist.filter(x=>x==="H").length;$("#cn-freq").textContent=`${L("Kepala","Heads")}: ${h} | ${L("Ekor","Tails")}: ${hist.length-h} (${L("jumlah","total")} ${hist.length})`}};
+SIMS.spinner=el=>{simShell(el,t("tool_spinner"),`
+ <div class="center"><svg class="mathviz spinner-wheel" id="sp-w" viewBox="0 0 200 200" style="max-width:240px">
+ ${["#ef4444","#3b82f6","#22c55e","#eab308"].map((c,i)=>{const a0=i*Math.PI/2-Math.PI/2,a1=(i+1)*Math.PI/2-Math.PI/2;
+  return `<path d="M100 100 L${100+85*Math.cos(a0)} ${100+85*Math.sin(a0)} A85 85 0 0 1 ${100+85*Math.cos(a1)} ${100+85*Math.sin(a1)} Z" fill="${c}" stroke="#fff" stroke-width="3"/>`}).join("")}
+ <line x1="100" y1="100" x2="100" y2="22" stroke="#1e1b4b" stroke-width="5" stroke-linecap="round"/><circle cx="100" cy="100" r="10" fill="#1e1b4b"/></svg>
+ <button class="btn" id="sp-go">${L("Putar!","Spin!")}</button>
+ <div id="sp-out" style="font-weight:800;margin-top:8px"></div></div>`);
+ let rot=0;$("#sp-go").onclick=()=>{rot+=1440+ri(0,359);$("#sp-w").style.transform=`rotate(${rot}deg)`;sfx.click();
+  const cols=[L("Merah","Red"),L("Biru","Blue"),L("Hijau","Green"),L("Kuning","Yellow")];
+  const idx=Math.floor(((360-(rot%360))%360)/90);setTimeout(()=>{$("#sp-out").textContent=`🎯 ${cols[idx]}!`;sfx.good()},2500)}};
+/* ================= APP / ROUTER ================= */
+const app=$("#app");
+const mod=id=>MODULES.find(m=>m.id===id);
+const lesson=id=>{for(const m of MODULES){const l=m.lessons.find(x=>x.id===id);if(l)return{...l,module:m}}return null};
+const starsStr=n=>"★".repeat(n)+"☆".repeat(3-n);
+function topbar(){return `<header class="topbar"><a class="logo" href="#/home">${TIGER_SVG}<span>BIJAK<br><span class="tagline">MATEMATIK</span></span></a>
+ <span class="spacer"></span><span class="pill lvl">⭐ ${t("level")} ${level()}</span><span class="pill xp">⚡ ${S.xp} ${t("xp")}</span>
+ <button class="btn small ghost" id="lang-btn" aria-label="Language">${S.lang==="bm"?"EN 🇬🇧":"BM 🇲🇾"}</button></header>`}
+function bottomnav(active){const items=[["home","🏠","home"],["map","🗺️","map"],["practice","✏️","practice"],["arena","🏟️","arena"],["lab","🧪","lab"],["review","🔁","review"],["ach","🏅","ach"],["settings","⚙️","settings"]];
+ return `<nav class="bottomnav">${items.map(([id,ic,k])=>`<a href="#/${id}" class="${active===id?"active":""}"><span class="ni">${ic}</span>${t(k)}</a>`).join("")}</nav>`}
+function layout(content,active){app.innerHTML=topbar()+`<main>${content}</main>`+bottomnav(active);
+ $("#lang-btn").onclick=()=>{S.lang=S.lang==="bm"?"en":"bm";save();render()};window.scrollTo(0,0)}
+function route(){const h=location.hash.replace(/^#\/?/,"")||"home";const parts=h.split("/");
+ if(parts[0]==="home")return vHome();if(parts[0]==="map")return vMap();if(parts[0]==="module")return vModule(parts[1]);
+ if(parts[0]==="lesson")return vLesson(parts[1]);if(parts[0]==="practice")return vPractice();
+ if(parts[0]==="arena")return vArena();if(parts[0]==="lab")return vLab();if(parts[0]==="review")return vReview();
+ if(parts[0]==="ach")return vAch();if(parts[0]==="toolbox")return vToolbox();if(parts[0]==="progress")return vProgress();
+ if(parts[0]==="parent")return vParent();if(parts[0]==="settings")return vSettings();if(parts[0]==="sim")return vSim(parts[1]);
+ if(parts[0]==="quiz")return vQuizRoute(parts[1],parts[2]);return vHome()}
+function render(){route();document.documentElement.lang=S.lang==="en"?"en":"ms";
+ document.body.classList.toggle("reduced-motion",S.settings.motion==="reduced")}
+
+/* ---------- Views ---------- */
+function vHome(){if(!S.seenWelcome)return vWelcome();
+ const done=MODULES.filter(m=>(S.stars[m.id]||0)>0).length;
+ layout(`<section class="hero"><h1>${t("welcome")} <span class="grad">BIJAK MATEMATIK</span></h1>
+ <p><b>${t("tagline")}</b></p><p>${t("choose")}</p>
+ ${mascot(t("tigerHi"))}
+ <div class="grid cols3">
+  <a class="card menu-card" href="#/map"><div class="big-emoji">🗺️</div><h3>${t("map")}</h3><p class="muted">${done}/9 ${t("mastery")}</p></a>
+  <a class="card menu-card" href="#/practice"><div class="big-emoji">✏️</div><h3>${t("practice")}</h3><p class="muted">${t("independent")}</p></a>
+  <a class="card menu-card" href="#/arena"><div class="big-emoji">🏟️</div><h3>${t("arena")}</h3><p class="muted">${t("arenaDesc")}</p></a>
+  <a class="card menu-card" href="#/lab"><div class="big-emoji">🧪</div><h3>${t("lab")}</h3><p class="muted">${t("labDesc")}</p></a>
+  <a class="card menu-card" href="#/review"><div class="big-emoji">🔁</div><h3>${t("review")}</h3><p class="muted">${t("reviewDesc")}</p></a>
+  <a class="card menu-card" href="#/ach"><div class="big-emoji">🏅</div><h3>${t("ach")}</h3><p class="muted">${S.badges.length}/${BADGES.length} ${t("badges")}</p></a>
+ </div>
+ <div class="card mt"><h3>🎯 ${t("daily")}</h3><p class="muted">${L("5 soalan campuran setiap hari. Kumpul XP tambahan!","5 mixed questions every day. Earn bonus XP!")}</p>
+ <button class="btn orange" id="daily-btn">${t("play")}</button></div>
+ <div class="card mt"><h3>📊 ${t("progress")}</h3><div class="progressbar" role="progressbar" aria-label="${t("progress")}" aria-valuenow="${Math.min(100,Math.round(S.xp%200/2))}" aria-valuemin="0" aria-valuemax="100"><div style="width:${Math.min(100,S.xp%200/2)}%"></div></div>
+ <p class="muted">${t("level")} ${level()} · ${S.xp} ${t("xp")} · ${Object.values(S.stars).reduce((a,b)=>a+b,0)} ${t("stars")}</p>
+ <a class="btn ghost small" href="#/progress">${t("open")}</a> <a class="btn ghost small" href="#/parent">${t("parent")}</a></div>
+ <p class="muted center mt">🔒 ${t("privacy")}<br>📶 ${t("offline")}</p></section>`,"home");
+ $("#daily-btn").onclick=()=>startQuiz({title:t("daily"),skills:allSkills(),count:5,moduleId:"daily",daily:true})}
+function vWelcome(){layout(`<section class="hero"><div style="max-width:520px;margin:0 auto">${TIGER_SVG.replace('class="tiger floaty"','style="width:150px;height:150px"')}
+ <h1><span class="grad">BIJAK MATEMATIK</span></h1><p><b>${t("tagline")}</b></p>
+ <div class="card" style="text-align:left"><h3>🐯 ${t("howTo")}</h3><p>${t("how1")}<br>${t("how2")}<br>${t("how3")}</p>
+ <label><b>${t("nickname")}</b></label><input type="text" id="w-name" placeholder="${t("namePh")}" maxlength="20" style="width:100%;margin:8px 0">
+ <label><b>${t("language")}</b></label><select id="w-lang" style="width:100%;margin:8px 0"><option value="bm">🇲🇾 Bahasa Melayu</option><option value="en">🇬🇧 English</option></select>
+ <button class="btn" id="w-start" style="width:100%">${t("startBtn")}</button>
+ <button class="btn ghost small mt" id="w-diag">${t("diagnostic")}</button></div>
+ <p class="muted mt">🔒 ${t("privacy")}</p></div></section>`,"home");
+ $("#w-lang").value=S.lang;$("#w-lang").onchange=e=>{S.lang=e.target.value;save();render()};
+ $("#w-start").onclick=()=>{S.name=$("#w-name").value.trim()||"Bijak";S.seenWelcome=true;save();location.hash="#/map";render()};
+ $("#w-diag").onclick=()=>{S.seenWelcome=true;save();startQuiz({title:t("diagnostic"),skills:allSkills(),count:8,moduleId:"diag",diagnostic:true})}}
+function vMap(){layout(`<h2 class="center mt">🗺️ ${t("map")}</h2><p class="center muted">${t("choose")}</p>
+ ${mascot(t("tigerTry"))}<div class="map-wrap"><div class="map-path"></div>
+ ${MODULES.map(m=>{const st=S.stars[m.id]||0;return `<a class="map-node" href="#/module/${m.id}" style="--mc:${m.color}">
+  <span class="dot">${m.icon}</span><span class="info"><b>${L(m.title.bm,m.title.en)}</b><br><span class="muted">${L(m.desc.bm,m.desc.en)}</span><br>
+  <span class="stars">${starsStr(st)}</span> <span class="muted">${m.lessons.length} ${t("lessons")}</span></span></a>`}).join("")}</div>`,"map")}
+function vModule(mid){const m=mod(mid);if(!m)return vMap();
+ layout(`<p class="mt"><a href="#/map">← ${t("back")}</a></p><h2>${m.icon} ${L(m.title.bm,m.title.en)}</h2>
+ <p class="muted">${L(m.desc.bm,m.desc.en)}</p><div class="stars">${starsStr(S.stars[mid]||0)}</div>
+ ${mascot(t("tigerHi"))}<div class="grid cols2">
+ ${m.lessons.map((l,i)=>`<a class="card menu-card" href="#/lesson/${l.id}"><div class="big-emoji">${["📖","🧮","🎯"][i%3]}</div>
+  <h3>${i+1}. ${L(l.title.bm,l.title.en)}</h3><p class="muted">${l.ref}</p><span class="btn small">${t("learn")}</span></a>`).join("")}</div>
+ <div class="card mt"><h3>🏆 ${t("quiz")}</h3><p class="muted">${L("Uji penguasaan modul ini untuk memperoleh bintang!","Test mastery of this module to earn stars!")}</p>
+ <button class="btn green" id="mod-quiz">${t("quiz")}</button></div>`,"map");
+ $("#mod-quiz").onclick=()=>startQuiz({title:`${m.icon} ${L(m.title.bm,m.title.en)}`,skills:m.lessons.flatMap(l=>l.skills),count:8,moduleId:mid})}
+function vLesson(lid){const l=lesson(lid);if(!l)return vMap();
+ const lang=S.lang;
+ layout(`<p class="mt"><a href="#/module/${l.module.id}">← ${L(l.module.title.bm,l.module.title.en)}</a></p>
+ <h2>${l.icon||""} ${L(l.title.bm,l.title.en)}</h2><p class="muted">${l.ref} · ${t("curriculumRef")}</p>
+ ${mascot(t("tigerHi"))}
+ <nav class="lesson-nav">${["obj","learn","ex","sim","mist","app","sum"].map((s,i)=>`<a href="#sec-${s}" data-sec="${s}">${[t("objectives"),t("learn"),t("examples"),t("simulation"),t("mistakes"),t("application"),t("summary")][i]}</a>`).join("")}</nav>
+ <section id="sec-obj" class="card"><h3>🎯 ${t("objectives")}</h3><ul>${l.objectives[lang].map(o=>`<li>${esc(o)}</li>`).join("")}</ul>
+ <h3>📚 ${t("terms")}</h3><dl>${Object.entries(l.terms[lang]).map(([k,v])=>`<dt><b>${esc(k)}</b></dt><dd>${esc(v)}</dd>`).join("")}</dl></section>
+ <section id="sec-learn" class="card mt"><h3>📖 ${t("learn")}</h3>${l.explain[lang]}</section>
+ <section id="sec-ex" class="card mt"><h3>✏️ ${t("examples")}</h3>${l.examples.map((e,i)=>`<div class="qcard"><b>${t("question")} ${i+1}:</b> <span class="qtext">${esc(e.q[lang])}</span>
+  <button class="btn small ghost" data-ex="${i}">${t("showSteps")}</button><div class="steps" id="ex-${i}" hidden><ol>${e.steps[lang].map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div></div>`).join("")}</section>
+ <section id="sec-sim" class="mt"><div id="lesson-sim"></div></section>
+ <section id="sec-mist" class="card mt"><h3>⚠️ ${t("mistakes")}</h3><p>${esc(l.mistakes[lang])}</p></section>
+ <section id="sec-app" class="card mt"><h3>🌍 ${t("application")}</h3><p>${esc(l.application[lang])}</p></section>
+ <section id="sec-sum" class="card mt"><h3>📌 ${t("summary")}</h3><p>${esc(l.summary[lang])}</p></section>
+ <div class="flex mt"><button class="btn green" id="ls-guided">${t("guided")}</button>
+ <button class="btn" id="ls-ind">${t("independent")}</button>
+ <button class="btn orange" id="ls-quiz">🏆 ${t("quiz")}</button></div>`,"map");
+ $$("[data-ex]").forEach(b=>b.onclick=()=>{const d=$("#ex-"+b.dataset.ex);d.hidden=!d.hidden;sfx.click()});
+ if(SIMS[l.sim])SIMS[l.sim]($("#lesson-sim"));
+ $("#ls-guided").onclick=()=>startQuiz({title:L(l.title.bm,l.title.en),skills:l.skills,count:5,moduleId:l.module.id,guided:true});
+ $("#ls-ind").onclick=()=>startQuiz({title:L(l.title.bm,l.title.en),skills:l.skills,count:5,moduleId:l.module.id});
+ $("#ls-quiz").onclick=()=>startQuiz({title:L(l.title.bm,l.title.en),skills:l.skills,count:6,moduleId:l.module.id})}
+function vPractice(){layout(`<h2 class="center mt">✏️ ${t("practice")}</h2>${mascot(t("tigerTry"))}
+ <p class="center muted">${L("Latihan tanpa had dengan kesukaran adaptif. Pilih modul atau campuran!","Unlimited practice with adaptive difficulty. Choose a module or mixed!")}</p>
+ <div class="grid cols3">${MODULES.map(m=>`<button class="card menu-card" data-m="${m.id}" style="text-align:left"><div class="big-emoji">${m.icon}</div><h3>${L(m.title.bm,m.title.en)}</h3><span class="stars">${starsStr(S.stars[m.id]||0)}</span></button>`).join("")}
+ <button class="card menu-card" data-m="mixed" style="text-align:left"><div class="big-emoji">🎲</div><h3>${L("Campuran","Mixed")}</h3><p class="muted">${L("Semua modul","All modules")}</p></button></div>`,"practice");
+ $$("[data-m]").forEach(b=>b.onclick=()=>{const mid=b.dataset.m;const skills=mid==="mixed"?allSkills():mod(mid).lessons.flatMap(l=>l.skills);
+  startQuiz({title:t("practice"),skills,count:8,moduleId:mid==="mixed"?"mixed":mid})})}
+function vArena(){layout(`<h2 class="center mt">🏟️ ${t("arenaTitle")}</h2>${mascot(t("tigerWin"))}
+ <p class="center muted">${t("arenaDesc")}</p><div class="grid cols2">
+ <button class="card menu-card" id="ar-timed" style="text-align:left"><div class="big-emoji">⏱️</div><h3>${t("timed")}</h3><p class="muted">${L("Jawab sebanyak mungkin dalam 60 saat!","Answer as many as possible in 60 seconds!")}</p></button>
+ <button class="card menu-card" id="ar-untimed" style="text-align:left"><div class="big-emoji">🧘</div><h3>${t("untimed")}</h3><p class="muted">${L("10 soalan tanpa tekanan masa.","10 questions without time pressure.")}</p></button></div>`,"arena");
+ $("#ar-timed").onclick=()=>startQuiz({title:t("arenaTitle"),skills:allSkills(),count:99,moduleId:"arena",timed:60});
+ $("#ar-untimed").onclick=()=>startQuiz({title:t("arenaTitle"),skills:allSkills(),count:10,moduleId:"arena"})}
+function vLab(){layout(`<h2 class="center mt">🧪 ${t("labTitle")}</h2><p class="center muted">${t("labDesc")}</p>
+ <div class="grid cols3">${Object.keys(SIMS).map(k=>`<a class="card menu-card" href="#/sim/${k}"><div class="big-emoji">🧪</div><h3>${t("tool_"+k)}</h3><span class="btn small">${t("open")}</span></a>`).join("")}</div>`,"lab")}
+function vSim(k){layout(`<p class="mt"><a href="#/lab">← ${t("lab")}</a></p><div id="sim-root"></div>`,"lab");
+ if(SIMS[k])SIMS[k]($("#sim-root"))}
+function vReview(){const weak=weakSkills();const wrong=S.history.filter(h=>!h.ok).slice(0,10);
+ layout(`<h2 class="center mt">🔁 ${t("reviewTitle")}</h2><p class="center muted">${t("reviewDesc")}</p>${mascot(t("tigerHint"))}
+ <div class="card"><h3>⚠️ ${t("weak")}</h3>${weak.length?`<p>${weak.join(", ")}</p><button class="btn" id="rv-go">${L("Ulang Kaji Topik Lemah","Review Weak Topics")}</button>`:`<p class="muted">${t("noData")}</p>`}</div>
+ <div class="card mt"><h3>📝 ${L("Jawapan Salah Terkini","Recent Wrong Answers")}</h3>${wrong.length?`<ul>${wrong.map(h=>`<li>${esc(h.sk)} — ${new Date(h.ts).toLocaleDateString()}</li>`).join("")}</ul>`:`<p class="muted">${L("Tiada jawapan salah direkod. Hebat!","No wrong answers recorded. Great!")}</p>`}</div>`,"review");
+ const b=$("#rv-go");if(b)b.onclick=()=>startQuiz({title:t("reviewTitle"),skills:weak,count:6,moduleId:"review"})}
+function vAch(){layout(`<h2 class="center mt">🏅 ${t("ach")}</h2><p class="center muted">${S.badges.length}/${BADGES.length} ${t("badges")}</p>
+ <div class="badge-grid">${BADGES.map(b=>{const has=S.badges.includes(b.id);return `<div class="badge ${has?"":"locked"}"><div class="bi">${b.icon}</div><b>${L(b.bm,b.en)}</b><br><span class="muted">${L(b.desc.bm,b.desc.en)}</span><br><span>${has?"✅ "+t("earned"):"🔒 "+t("notYet")}</span></div>`}).join("")}</div>`,"ach")}
+function vToolbox(){layout(`<h2 class="center mt">🧰 ${t("toolbox")}</h2><div class="grid cols3">
+ ${Object.keys(SIMS).map(k=>`<a class="card menu-card" href="#/sim/${k}"><h3>🧪 ${t("tool_"+k)}</h3><span class="btn small">${t("open")}</span></a>`).join("")}</div>`,"lab")}
+function vProgress(){const total=S.history.length,correct=S.history.filter(h=>h.ok).length;
+ const acc=total?Math.round(correct/total*100):0;
+ layout(`<h2 class="center mt">📊 ${t("progress")}</h2>
+ <div class="grid cols3"><div class="card center"><div class="big-emoji">⚡</div><b>${S.xp} ${t("xp")}</b></div>
+ <div class="card center"><div class="big-emoji">⭐</div><b>${t("level")} ${level()}</b></div>
+ <div class="card center"><div class="big-emoji">🎯</div><b>${acc}% ${t("accuracy")}</b></div></div>
+ <div class="card mt"><h3>${t("mastery")}</h3>${MODULES.map(m=>{const st=S.stars[m.id]||0;return `<div class="flex"><span style="min-width:180px">${m.icon} ${L(m.title.bm,m.title.en)}</span><span class="stars">${starsStr(st)}</span><div class="progressbar" style="flex:1"><div style="width:${st/3*100}%"></div></div></div>`}).join("")}</div>
+ <div class="card mt"><h3>🏅 ${t("badges")}</h3><p>${S.badges.length}/${BADGES.length}</p><a class="btn small" href="#/ach">${t("open")}</a></div>`,"ach")}
+function vParent(){const weak=weakSkills();const strong=Object.keys(S.skill).filter(sk=>(skillAcc(sk)||0)>=0.8);
+ const total=S.history.length,correct=S.history.filter(h=>h.ok).length;
+ layout(`<h2 class="center mt">👨‍👩‍👧 ${t("parentTitle")}</h2><p class="center muted">${t("parentNote")}</p>
+ <div class="grid cols3"><div class="card center"><b>${S.xp} ${t("xp")}</b><br><span class="muted">${t("totalXP")}</span></div>
+ <div class="card center"><b>${total?Math.round(correct/total*100):0}%</b><br><span class="muted">${t("accuracy")} (${correct}/${total})</span></div>
+ <div class="card center"><b>${S.badges.length}/${BADGES.length}</b><br><span class="muted">${t("badges")}</span></div></div>
+ <div class="card mt"><h3>⚠️ ${t("weak")}</h3>${weak.length?`<ul>${weak.map(s=>`<li>${esc(s)} (${Math.round((skillAcc(s)||0)*100)}%)</li>`).join("")}</ul>`:`<p class="muted">${t("noData")}</p>`}
+ <h3>💪 ${t("strong")}</h3>${strong.length?`<p>${strong.join(", ")}</p>`:`<p class="muted">${t("noData")}</p>`}
+ <h3>💡 ${t("recommend")}</h3><p>${weak.length?L(`Ulang kaji topik berikut melalui Mod Ulang Kaji: ${weak.join(", ")}. Galakkan anak mencuba simulasi interaktif sebelum kuiz.`,"Review these topics via Review Mode: "+weak.join(", ")+". Encourage your child to try the interactive simulations before quizzes."):"Teruskan amalan harian! Anak anda sedang maju dengan baik."}</p></div>
+ <div class="card mt flex"><button class="btn small" id="p-export">${t("export")}</button><label class="btn small ghost" style="cursor:pointer">${t("import")}<input type="file" id="p-import" accept=".json" hidden></label></div>`,"settings");
+ $("#p-export").onclick=exportProgress;$("#p-import").onchange=e=>importProgress(e.target.files[0])}
+function vSettings(){layout(`<h2 class="center mt">⚙️ ${t("settingsTitle")}</h2>
+ <div class="card"><label><b>${t("language")}</b></label><select id="s-lang" style="width:100%;margin:8px 0"><option value="bm">🇲🇾 Bahasa Melayu</option><option value="en">🇬🇧 English</option></select>
+ <label><b>${t("nickname")}</b></label><input type="text" id="s-name" value="${esc(S.name)}" maxlength="20" style="width:100%;margin:8px 0">
+ <label><b>${t("sound")}</b></label><select id="s-sound" style="width:100%;margin:8px 0"><option value="on">${L("Hidup","On")}</option><option value="off">${L("Mati","Off")}</option></select>
+ <label><b>${t("motion")}</b></label><select id="s-motion" style="width:100%;margin:8px 0"><option value="full">${t("motionFull")}</option><option value="reduced">${t("motionReduced")}</option></select>
+ <button class="btn" id="s-save">${t("save")}</button></div>
+ <div class="card mt flex"><button class="btn small" id="s-export">${t("export")}</button>
+ <label class="btn small ghost" style="cursor:pointer">${t("import")}<input type="file" id="s-import" accept=".json" hidden></label>
+ <button class="btn small pink" id="s-reset">${t("resetAll")}</button></div>`,"settings");
+ $("#s-lang").value=S.lang;$("#s-sound").value=S.settings.sound?"on":"off";$("#s-motion").value=S.settings.motion;
+ $("#s-save").onclick=()=>{S.lang=$("#s-lang").value;S.name=$("#s-name").value.trim();S.settings.sound=$("#s-sound").value==="on";S.settings.motion=$("#s-motion").value;save();render();toast(t("save"))};
+ $("#s-export").onclick=exportProgress;$("#s-import").onchange=e=>importProgress(e.target.files[0]);
+ $("#s-reset").onclick=()=>{if(confirm(t("confirmReset"))){localStorage.removeItem("bijak_v1");S=JSON.parse(JSON.stringify(DEF));save();render()}}}
+function exportProgress(){const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="bijak-matematik-progress.json";a.click();toast(t("exportDone"))}
+function importProgress(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);
+  if(typeof d.xp!=="number"||!d.skill)throw 0;S=Object.assign({},DEF,d);save();toast(t("importDone"));render()}catch(e){toast(t("importFail"))}};r.readAsText(file)}
+
+/* ---------- Quiz runner ---------- */
+let QUIZ=null;
+function vQuizRoute(){layout(`<p class="mt"><a href="#/home">← ${t("home")}</a></p><div id="quiz-root"></div>`,"practice")}
+function startQuiz(cfg){QUIZ={...cfg,idx:0,score:0,qs:[],timer:null,timeLeft:cfg.timed||0,streak:0,bestStreak:0};
+ for(let i=0;i<cfg.count;i++){const sk=pick(cfg.skills);const diff=cfg.guided?"easy":nextDifficulty(sk);
+  QUIZ.qs.push(genQuestion(cfg.moduleId==="mixed"?"m1":cfg.moduleId,sk,diff))}
+ QUIZ.qs.forEach(q=>{if(!q.options||!q.options.length)q.options=mcqOpts(q.answer,[q.answer+" ",q.answer+"x",q.answer+"1"])});
+ location.hash="#/quiz";renderQuiz()}
+function renderQuiz(){const Q=QUIZ;if(!Q)return;
+ if(Q.timed&&Q.idx===0&&!Q.timer){Q.timer=setInterval(()=>{Q.timeLeft--;const el=$("#q-timer");if(el)el.textContent="⏱️ "+Q.timeLeft+"s";
+  if(Q.timeLeft<=0){clearInterval(Q.timer);finishQuiz()}},1000)}
+ if(Q.idx>=Q.qs.length)return finishQuiz();
+ const q=Q.qs[Q.idx];const isMCQ=q.options&&q.options.length>0;
+ layout(`<div class="qcard"><div class="flex"><b>${t("question")} ${Q.idx+1}/${Q.qs.length}</b>
+ <span class="pill">${t("difficulty")}: ${t(q.diff)}</span><span class="pill xp">⚡ ${Q.score*10} ${t("xp")}</span>
+ ${Q.timed?`<span class="pill" id="q-timer">⏱️ ${Q.timeLeft}s</span>`:""}<span class="spacer"></span>
+ <button class="btn small ghost" id="q-quit">${t("finish")}</button></div>
+ <p class="qtext">${esc(q.q)}</p>
+ ${isMCQ?`<div class="opts" role="group" aria-label="${t("question")} ${Q.idx+1}">${q.options.map(o=>`<button class="opt" role="radio" aria-checked="false" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div>`
+ :`<div class="sim-controls"><input type="text" id="q-input" class="answer-input" placeholder="${t("typeAnswer")}" autocomplete="off"><button class="btn" id="q-check">${t("check")}</button></div>`}
+ <div class="flex mt"><button class="btn small ghost" id="q-hint">💡 ${t("hint")}</button>
+ <button class="btn small ghost" id="q-steps">${t("showSteps")}</button></div>
+ <div id="q-hintbox" aria-live="polite"></div><div id="q-fb" role="status" aria-live="polite"></div></div>`,"practice");
+ $("#q-quit").onclick=()=>{if(Q.timer)clearInterval(Q.timer);finishQuiz(true)};
+ $("#q-hint").onclick=()=>{$("#q-hintbox").innerHTML=`<div class="feedback hint">💡 ${esc(q.hint||t("tigerHint"))}</div>`;sfx.click()};
+ $("#q-steps").onclick=()=>{$("#q-hintbox").innerHTML=`<div class="steps"><b>${t("explanation")}:</b> ${esc(q.expl||"")}</div>`;sfx.click()};
+ const answer=(val)=>{const ok=String(val).trim().toLowerCase()===String(q.answer).trim().toLowerCase();
+  recordAnswer(q.skill,ok);if(ok){Q.score++;Q.streak++;Q.bestStreak=Math.max(Q.bestStreak,Q.streak);addXP(10);sfx.good();
+   $("#q-fb").innerHTML=`<div class="feedback good">${t("correct")} ${t("tigerGood")}<br><b>${t("explanation")}:</b> ${esc(q.expl||"")}</div>`}
+  else{Q.streak=0;sfx.bad();$("#q-fb").innerHTML=`<div class="feedback bad">${t("wrong")} ${t("tigerBad")}<br><b>${t("answer")}: ${esc(q.answer)}</b><br><b>${t("explanation")}:</b> ${esc(q.expl||"")}</div>`}
+  $$(".opt").forEach(b=>{b.disabled=true;b.setAttribute("aria-checked",b.dataset.o===String(val)?"true":"false");
+   if(b.dataset.o===String(q.answer)){b.classList.add("correct");b.setAttribute("aria-label",b.textContent+" — "+t("answer"))}
+   else if(b.dataset.o===String(val))b.classList.add("wrong")});
+  const nb=document.createElement("button");nb.className="btn green mt";nb.textContent=Q.idx+1<Q.qs.length?t("next"):t("finish");
+  nb.onclick=()=>{Q.idx++;renderQuiz()};$("#q-fb").appendChild(nb);nb.focus()};
+ if(isMCQ)$$(".opt").forEach(b=>b.onclick=()=>answer(b.dataset.o));
+ else{$("#q-check").onclick=()=>answer($("#q-input").value);$("#q-input").addEventListener("keydown",e=>{if(e.key==="Enter")answer(e.target.value)})}}
+function finishQuiz(quit){const Q=QUIZ;if(!Q)return;if(Q.timer)clearInterval(Q.timer);
+ const total=Q.qs.length,score=Q.score,pct=total?score/total:0;
+ let stars=0;if(pct>=0.5)stars=1;if(pct>=0.75)stars=2;if(pct>=0.9)stars=3;
+ if(["m1","m2","m3","m4","m5","m6","m7","m8","m9"].includes(Q.moduleId)){S.stars[Q.moduleId]=Math.max(S.stars[Q.moduleId]||0,stars);save()}
+ if(pct>=0.6){sfx.win();confetti()}
+ const weak=Q.qs.filter((q,i)=>{const h=S.history.find(x=>x.sk===q.skill);return h&&!h.ok}).map(q=>q.skill);
+ layout(`<div class="card center mt"><div class="big-emoji">${pct>=0.6?"🎉":"💪"}</div>
+ <h2>${t("quizDone")}</h2><p style="font-size:1.4rem"><b>${t("yourScore")}: ${score}/${total} (${Math.round(pct*100)}%)</b></p>
+ <p class="stars" style="font-size:1.6rem">${starsStr(stars)}</p>
+ <p>${pct>=0.6?t("welldone")+" "+esc(Q.title):t("keepgoing")}</p>
+ ${weak.length?`<p class="muted">${t("weak")}: ${[...new Set(weak)].join(", ")}</p>`:""}
+ ${Q.diagnostic?`<p class="muted">${L("Berdasarkan keputusan ini, TIGER BIJAK akan mencadangkan topik untuk anda. Mulakan dari peta pengembaraan!","Based on these results, TIGER BIJAK will recommend topics for you. Start from the adventure map!")}</p>`:""}
+ <div class="flex" style="justify-content:center"><button class="btn" id="fq-again">${t("playAgain")}</button>
+ <a class="btn ghost" href="#/map">${t("backMap")}</a></div></div>`,"practice");
+ $("#fq-again").onclick=()=>startQuiz(Q);QUIZ=null;checkBadges()}
+
+/* ---------- Init ---------- */
+/* Offline support: register the service worker when served over http(s).
+   Fails silently on file:// and in sandboxed previews — the app still works online. */
+if("serviceWorker" in navigator&&location.protocol.startsWith("http")){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
+window.addEventListener("hashchange",()=>{if(location.hash.startsWith("#/quiz")&&QUIZ)renderQuiz();else render()});
+if(location.hash.startsWith("#/quiz")&&!QUIZ)location.hash="#/home";
+render();
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
